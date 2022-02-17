@@ -8,6 +8,7 @@ const defaultOptions: WebmRecorderOptions = {};
 
 export class WebmRecorder extends Recorder<WebmRecorderOptions> {
   protected state: CaptureState = "idle";
+  protected count: number = 0;
   protected chunks: BlobPart[] = [];
   protected recorder: MediaRecorder;
   protected margedOptions: WebmRecorderOptions;
@@ -28,6 +29,10 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     this.recorder = recorder;
   }
 
+  get capturedCount() {
+    return this.count;
+  }
+
   get captureState() {
     return this.state;
   }
@@ -42,13 +47,18 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     );
   }
 
+  protected reset() {
+    this.count = 0;
+    this.chunks = [];
+  }
+
   onDataAvailable(e: BlobEvent) {
     this.chunks.push(e.data);
   }
 
   onStart(_e: Event) {
     this.state = "capturing";
-    this.chunks = [];
+    this.reset();
   }
 
   onStop(_e: Event) {
@@ -56,7 +66,7 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     if (this.chunks.length === 0) return;
     const blob = new Blob(this.chunks, { type: "video/webm" });
     console.log(blob);
-    this.chunks = [];
+    this.reset();
   }
 
   onError(e: MediaRecorderErrorEvent) {
@@ -77,5 +87,11 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
       return;
     }
     this.recorder.stop();
+  }
+
+  postDraw() {
+    if (this.captureState === "capturing") {
+      this.count++;
+    }
   }
 }
