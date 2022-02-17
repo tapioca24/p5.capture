@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@types/p5@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@types/p5/-/p5-1.4.0.tgz#6d5e9874fa77b2906172633bddbb053e1d20cd96"
+  integrity sha512-rhRG1FWaqrr+dzx5gMeADw194Q25hs73bzW1meKU69qFec1EhDGXhljydVL2D/Php5IBmlbX6XW3d+WyEACy/g==
+
 esbuild-android-arm64@0.14.22:
   version "0.14.22"
   resolved "https://registry.yarnpkg.com/esbuild-android-arm64/-/esbuild-android-arm64-0.14.22.tgz#fb051169a63307d958aec85ad596cfc7d7770303"

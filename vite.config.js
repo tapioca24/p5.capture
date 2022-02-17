@@ -9,4 +9,12 @@ module.exports = defineConfig({
       fileName: (format) => `p5.capture.${format}.js`,
     },
   },
+  resolve: {
+    alias: [
+      {
+        find: /^@/,
+        replacement: resolve(__dirname, "src"),
+      },
+    ],
+  },
 });
