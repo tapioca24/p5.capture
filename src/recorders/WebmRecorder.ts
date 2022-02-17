@@ -1,18 +1,18 @@
 import { CaptureState, Recorder } from "@/recorders/types";
 
-export type MpegRecorderOptions = {
+export type WebmRecorderOptions = {
   mediaRecorderOptions?: MediaRecorderOptions;
 };
 
-const defaultOptions: MpegRecorderOptions = {};
+const defaultOptions: WebmRecorderOptions = {};
 
-export class MpegRecorder extends Recorder<MpegRecorderOptions> {
+export class WebmRecorder extends Recorder<WebmRecorderOptions> {
   protected state: CaptureState = "idle";
   protected chunks: BlobPart[] = [];
   protected recorder: MediaRecorder;
-  protected margedOptions: MpegRecorderOptions;
+  protected margedOptions: WebmRecorderOptions;
 
-  constructor(canvas: HTMLCanvasElement, options: MpegRecorderOptions = {}) {
+  constructor(canvas: HTMLCanvasElement, options: WebmRecorderOptions = {}) {
     super(canvas, options);
     this.margedOptions = { ...defaultOptions, ...options };
 
