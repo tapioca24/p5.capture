@@ -1,4 +1,5 @@
 import { CaptureState, Recorder } from "@/recorders/types";
+import { downloadBlob } from "@/download";
 
 export type WebmRecorderOptions = {
   mediaRecorderOptions?: MediaRecorderOptions;
@@ -37,42 +38,6 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     return this.state;
   }
 
-  protected get canStart() {
-    return this.captureState === "idle" && this.recorder.state === "inactive";
-  }
-
-  protected get canStop() {
-    return (
-      this.captureState === "capturing" && this.recorder.state === "recording"
-    );
-  }
-
-  protected reset() {
-    this.count = 0;
-    this.chunks = [];
-  }
-
-  onDataAvailable(e: BlobEvent) {
-    this.chunks.push(e.data);
-  }
-
-  onStart(_e: Event) {
-    this.state = "capturing";
-    this.reset();
-  }
-
-  onStop(_e: Event) {
-    this.state = "idle";
-    if (this.chunks.length === 0) return;
-    const blob = new Blob(this.chunks, { type: "video/webm" });
-    console.log(blob);
-    this.reset();
-  }
-
-  onError(e: MediaRecorderErrorEvent) {
-    console.error(`MediaRecorder error: ${e.error.message}`);
-  }
-
   start() {
     if (!this.canStart) {
       console.warn("capturing is already started");
@@ -93,5 +58,41 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     if (this.captureState === "capturing") {
       this.count++;
     }
+  }
+
+  protected get canStart() {
+    return this.captureState === "idle" && this.recorder.state === "inactive";
+  }
+
+  protected get canStop() {
+    return (
+      this.captureState === "capturing" && this.recorder.state === "recording"
+    );
+  }
+
+  protected reset() {
+    this.count = 0;
+    this.chunks = [];
+  }
+
+  protected onDataAvailable(e: BlobEvent) {
+    this.chunks.push(e.data);
+  }
+
+  protected onStart(_e: Event) {
+    this.state = "capturing";
+    this.reset();
+  }
+
+  protected onStop(_e: Event) {
+    this.state = "idle";
+    if (this.chunks.length === 0) return;
+    const blob = new Blob(this.chunks, { type: "video/webm" });
+    downloadBlob(blob, "video.webm");
+    this.reset();
+  }
+
+  protected onError(e: MediaRecorderErrorEvent) {
+    console.error(`MediaRecorder error: ${e.error.message}`);
   }
 }
