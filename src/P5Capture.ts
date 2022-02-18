@@ -3,27 +3,40 @@ import { Recorder } from "@/recorders/types";
 import { createUi } from "@/ui";
 
 export class P5Capture {
-  recorder: Recorder | null = null;
-  updateUi: (() => void) | null = null;
+  protected recorder: Recorder | null = null;
+  protected updateUi: (() => void) | null = null;
+
   captureState() {
-    if (!this.recorder) return "uninitialized";
+    if (!this.recorder) return "idle";
     return this.recorder.captureState;
   }
 
-  startCapturing = () => {
+  async startCapturing() {
     if (!this.recorder) {
       const canvas = (window as any).canvas;
       this.recorder = new WebmRecorder(canvas);
     }
-    this.recorder.start();
-    this.updateUi?.();
-  };
+    try {
+      this.recorder.start();
+      this.updateUi?.();
+    } catch (e) {
+      if (e instanceof Error) {
+        console.warn(e.message);
+      }
+    }
+  }
 
-  stopCapturing = () => {
+  async stopCapturing() {
     if (!this.recorder) return;
-    this.recorder.stop();
-    this.updateUi?.();
-  };
+    try {
+      await this.recorder.stop();
+      this.updateUi?.();
+    } catch (e) {
+      if (e instanceof Error) {
+        console.warn(e.message);
+      }
+    }
+  }
 
   initialize() {
     const ui = createUi(document.body);
@@ -31,11 +44,9 @@ export class P5Capture {
       if (!this.recorder) return;
       ui.updateUi(this.recorder.captureState, this.recorder.capturedCount);
     };
-
     ui.button.addEventListener("click", (e) => {
       e.stopPropagation();
       switch (this.captureState()) {
-        case "uninitialized":
         case "idle":
           this.startCapturing();
           break;

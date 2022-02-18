@@ -25,7 +25,6 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     );
     recorder.ondataavailable = this.onDataAvailable.bind(this);
     recorder.onstart = this.onStart.bind(this);
-    recorder.onstop = this.onStop.bind(this);
     recorder.onerror = this.onError.bind(this);
     this.recorder = recorder;
   }
@@ -38,20 +37,26 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     return this.state;
   }
 
-  start() {
+  async start() {
     if (!this.canStart) {
-      console.warn("capturing is already started");
-      return;
+      throw new Error("capturing is already started");
     }
     this.recorder.start();
   }
 
-  stop() {
+  async stop() {
     if (!this.canStop) {
-      console.warn("capturing is already stopped");
-      return;
+      throw new Error("capturing is already stopped");
     }
+
+    const stopped = new Promise<void>((resolve) => {
+      this.recorder.onstop = (e) => {
+        this.onStop(e);
+        resolve();
+      };
+    });
     this.recorder.stop();
+    await stopped;
   }
 
   postDraw() {

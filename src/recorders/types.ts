@@ -9,7 +9,7 @@ export abstract class Recorder<
   ) {}
   abstract get capturedCount(): number;
   abstract get captureState(): CaptureState;
-  abstract start(): void;
-  abstract stop(): void;
+  abstract start(): Promise<void>;
+  abstract stop(): Promise<void>;
   abstract postDraw(): void;
 }
