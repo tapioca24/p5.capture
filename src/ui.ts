@@ -1,4 +1,4 @@
-import { CaptureState } from "@/recorders/types";
+import { CaptureState } from "@/recorders/base";
 
 const START_CAPTURING_TEXT = "Start capturing";
 const STOP_CAPTURING_TEXT = "Stop capturing";

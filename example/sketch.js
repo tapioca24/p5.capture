@@ -1,5 +1,8 @@
 P5_CAPTURE_OPTIONS = {
-  format: "gif",
+  format: "jpg",
+  recorderOptions: {
+    quality: 1,
+  },
   verbose: true,
 };
 

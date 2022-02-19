@@ -1,5 +1,5 @@
 import GIF from "gif.js";
-import { CaptureState, Recorder } from "@/recorders/types";
+import { CaptureState, Recorder } from "@/recorders/base";
 import { getFilename, getWorkerUrl } from "@/utils";
 
 const GIF_WORKER_SCRIPT_URL =

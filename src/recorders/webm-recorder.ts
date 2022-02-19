@@ -1,4 +1,4 @@
-import { CaptureState, Recorder } from "@/recorders/types";
+import { CaptureState, Recorder } from "@/recorders/base";
 import { getFilename } from "@/utils";
 
 export type WebmRecorderOptions = {

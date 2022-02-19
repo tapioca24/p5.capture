@@ -2,6 +2,10 @@ import { format } from "date-fns";
 
 const DATETIME_FORMAT = "yyyyMMdd-HHmmss";
 
+export const getDirname = (date: Date) => {
+  return format(date, DATETIME_FORMAT);
+};
+
 export const getFilename = (date: Date, ext: string) => {
   const datetime = format(date, DATETIME_FORMAT);
   return `${datetime}.${ext}`;
