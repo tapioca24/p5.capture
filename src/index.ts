@@ -1,4 +1,4 @@
-import { P5Capture } from "@/P5Capture";
+import { P5Capture } from "@/p5.capture";
 
 const p5Capture = new P5Capture();
 

@@ -1,11 +1,13 @@
 import { CaptureState, Recorder } from "@/recorders/types";
-import { downloadBlob } from "@/download";
+import { getFilename } from "@/utils";
 
 export type WebmRecorderOptions = {
   mediaRecorderOptions?: MediaRecorderOptions;
 };
 
-const defaultOptions: WebmRecorderOptions = {};
+const defaultOptions: Required<WebmRecorderOptions> = {
+  mediaRecorderOptions: {},
+};
 
 export class WebmRecorder extends Recorder<WebmRecorderOptions> {
   protected state: CaptureState = "idle";
@@ -16,7 +18,12 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
 
   constructor(canvas: HTMLCanvasElement, options: WebmRecorderOptions = {}) {
     super(canvas, options);
-    this.margedOptions = { ...defaultOptions, ...options };
+    this.margedOptions = {
+      mediaRecorderOptions: {
+        ...defaultOptions.mediaRecorderOptions,
+        ...options.mediaRecorderOptions,
+      },
+    };
 
     const stream = canvas.captureStream();
     const recorder = new MediaRecorder(
@@ -25,6 +32,7 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     );
     recorder.ondataavailable = this.onDataAvailable.bind(this);
     recorder.onstart = this.onStart.bind(this);
+    recorder.onstop = this.onStop.bind(this);
     recorder.onerror = this.onError.bind(this);
     this.recorder = recorder;
   }
@@ -46,22 +54,15 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
 
   async stop() {
     if (!this.canStop) {
-      throw new Error("capturing is already stopped");
+      throw new Error("capturing is not started");
     }
-
-    const stopped = new Promise<void>((resolve) => {
-      this.recorder.onstop = (e) => {
-        this.onStop(e);
-        resolve();
-      };
-    });
     this.recorder.stop();
-    await stopped;
   }
 
   postDraw() {
     if (this.captureState === "capturing") {
       this.count++;
+      this.emit("added");
     }
   }
 
@@ -87,17 +88,19 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
   protected onStart(_e: Event) {
     this.state = "capturing";
     this.reset();
+    this.emit("start");
   }
 
   protected onStop(_e: Event) {
-    this.state = "idle";
-    if (this.chunks.length === 0) return;
+    this.emit("stop");
     const blob = new Blob(this.chunks, { type: "video/webm" });
-    downloadBlob(blob, "video.webm");
+    this.state = "idle";
     this.reset();
+    const filename = getFilename(new Date(), "webm");
+    this.emit("finished", blob, filename);
   }
 
   protected onError(e: MediaRecorderErrorEvent) {
-    console.error(`MediaRecorder error: ${e.error.message}`);
+    this.emit("error", e.error);
   }
 }
