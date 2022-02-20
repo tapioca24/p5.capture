@@ -2,7 +2,7 @@ import { ZippableFile, zipSync } from "fflate";
 import { CaptureState, Recorder } from "@/recorders/base";
 import { getDirname, getFilename } from "@/utils";
 
-export type ImageFormat = "png" | "jpg";
+export type ImageFormat = "png" | "jpg" | "webp";
 
 type Chunk = {
   index: number;
@@ -93,6 +93,8 @@ export class ImageRecorder<
         return "image/png";
       case "jpg":
         return "image/jpeg";
+      case "webp":
+        return "image/webp";
       default:
         throw new Error("unknown format");
     }

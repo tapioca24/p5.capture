@@ -4,6 +4,7 @@ import { WebmRecorder, WebmRecorderOptions } from "@/recorders/webm-recorder";
 import { GifRecorder, GifRecorderOptions } from "@/recorders/gif-recorder";
 import { PngRecorder, PngRecorderOptions } from "@/recorders/png-recorder";
 import { JpgRecorder, JpgRecorderOptions } from "@/recorders/jpg-recorder";
+import { WebpRecorder, WebpRecorderOptions } from "@/recorders/webp-recorder";
 import { ImageFormat } from "@/recorders/image-recorder";
 import { downloadBlob } from "@/utils";
 
@@ -13,12 +14,14 @@ export type P5CaptureOptions = {
     | WebmRecorderOptions
     | GifRecorderOptions
     | PngRecorderOptions
-    | JpgRecorderOptions;
+    | JpgRecorderOptions
+    | WebpRecorderOptions;
   verbose?: boolean;
 };
 
 export type P5CaptureGlobalOptions = P5CaptureOptions & {
   disableUi?: boolean;
+  disableScaling?: boolean;
 };
 
 const defaultOptions: Required<P5CaptureGlobalOptions> = {
@@ -26,6 +29,7 @@ const defaultOptions: Required<P5CaptureGlobalOptions> = {
   recorderOptions: {},
   verbose: false,
   disableUi: false,
+  disableScaling: false,
 };
 
 export class P5Capture {
@@ -87,6 +91,15 @@ export class P5Capture {
         }
       });
     }
+
+    if (this.margedOptions.disableScaling) {
+      const originalSetup = (window as any).setup as () => void;
+      const newSetup = () => {
+        pixelDensity(1);
+        originalSetup();
+      };
+      Object.assign(window, { setup: newSetup });
+    }
   }
 
   postDraw() {
@@ -123,6 +136,11 @@ export class P5Capture {
       case "jpg":
         recorder = new JpgRecorder(canvas, {
           ...(recorderOptions as JpgRecorderOptions),
+        });
+        break;
+      case "webp":
+        recorder = new WebpRecorder(canvas, {
+          ...(recorderOptions as WebpRecorderOptions),
         });
         break;
     }
@@ -167,6 +185,8 @@ export class P5Capture {
       verbose:
         options.verbose ?? globalOptions?.verbose ?? defaultOptions.verbose,
       disableUi: globalOptions?.disableUi ?? defaultOptions.disableUi,
+      disableScaling:
+        globalOptions?.disableScaling ?? defaultOptions.disableScaling,
     };
   }
 
