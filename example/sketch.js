@@ -1,8 +1,6 @@
 P5_CAPTURE_OPTIONS = {
   format: "jpg",
-  recorderOptions: {
-    quality: 0.95,
-  },
+  recorderOptions: { quality: 0.95 },
   verbose: true,
   disableScaling: true,
 };
