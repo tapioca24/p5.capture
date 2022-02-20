@@ -16,6 +16,7 @@ export type P5CaptureOptions = {
     | PngRecorderOptions
     | JpgRecorderOptions
     | WebpRecorderOptions;
+  duration?: number | null;
   verbose?: boolean;
 };
 
@@ -27,6 +28,7 @@ export type P5CaptureGlobalOptions = P5CaptureOptions & {
 const defaultOptions: Required<P5CaptureGlobalOptions> = {
   format: "webm",
   recorderOptions: {},
+  duration: null,
   verbose: false,
   disableUi: false,
   disableScaling: false,
@@ -103,6 +105,13 @@ export class P5Capture {
   }
 
   postDraw() {
+    if (this.captureState() === "capturing") {
+      const duration = this.margedOptions?.duration;
+      const count = this.recorder?.capturedCount;
+      if (duration && count && count >= duration) {
+        this.stopCapturing();
+      }
+    }
     this.recorder?.postDraw();
   }
 
@@ -176,17 +185,9 @@ export class P5Capture {
       | undefined;
 
     this.margedOptions = {
-      format: options.format ?? globalOptions?.format ?? defaultOptions.format,
-      recorderOptions: {
-        ...defaultOptions.recorderOptions,
-        ...globalOptions?.recorderOptions,
-        ...options.recorderOptions,
-      },
-      verbose:
-        options.verbose ?? globalOptions?.verbose ?? defaultOptions.verbose,
-      disableUi: globalOptions?.disableUi ?? defaultOptions.disableUi,
-      disableScaling:
-        globalOptions?.disableScaling ?? defaultOptions.disableScaling,
+      ...defaultOptions,
+      ...globalOptions,
+      ...options,
     };
   }
 
