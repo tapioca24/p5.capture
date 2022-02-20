@@ -1,9 +1,10 @@
 P5_CAPTURE_OPTIONS = {
   format: "jpg",
   recorderOptions: {
-    quality: 1,
+    quality: 0.95,
   },
   verbose: true,
+  disableScaling: true,
 };
 
 function setup() {
@@ -16,12 +17,4 @@ function draw() {
   rotateX(frameCount * 0.01);
   rotateY(frameCount * 0.015);
   torus(width * 0.2, width * 0.1, 64, 64);
-}
-
-function keyPressed() {
-  if (keyCode === ENTER) {
-    captureState() === "idle"
-      ? startCapturing({ format: "webm", verbose: false })
-      : stopCapturing();
-  }
 }
