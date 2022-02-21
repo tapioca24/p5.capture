@@ -7,6 +7,19 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/p5"></script>
     <script src="../dist/p5.capture.umd.js"></script>
+    <script>
+      P5_CAPTURE_OPTIONS = {
+        format: "gif",
+        recorderOptions: {
+          frameRate: 60,
+          gifOptions: {
+            quality: 5,
+          },
+        },
+        verbose: true,
+        disableScaling: true,
+      };
+    </script>
     <script src="./sketch.js"></script>
   </head>
   <body style="margin: 0"></body>

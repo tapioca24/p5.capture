@@ -1,10 +1,3 @@
-P5_CAPTURE_OPTIONS = {
-  format: "jpg",
-  recorderOptions: { quality: 0.95 },
-  verbose: true,
-  disableScaling: true,
-};
-
 function setup() {
   createCanvas(400, 400, WEBGL);
 }
