@@ -1,22 +1,8 @@
-# p5.capture 📸
+![p5.capture](https://user-images.githubusercontent.com/67893738/155303598-97d0c558-27bb-4e28-8e0a-5ae810573696.gif)
 
-Super easy capturing for [p5.js](https://p5js.org/) animations
+Super easy capturing for [p5.js](https://p5js.org/) animations 📸
 
-# Table of contents
-
-- [Why p5.capture?](#why-p5capture)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Export formats](#export-formats)
-  - [API](#api)
-- [Options](#options)
-  - [Recorder options](#recorder-options)
-    - [WebM](#webm)
-    - [GIF](#gif)
-    - [PNG](#png)
-    - [JPEG](#jpeg)
-    - [WebP](#webp)
-- [Limitations](#limitations)
+Assuming you would like to capture p5.js animations easily, this package is the right choice for you.
 
 # Why p5.capture?
 
