@@ -1,9 +1,38 @@
 {
   "name": "p5.capture",
-  "private": true,
   "version": "0.0.0",
+  "description": "super easy capturing for p5.js animations 📸",
+  "keywords": [
+    "sketch",
+    "p5js",
+    "p5",
+    "p5.js",
+    "processing",
+    "art",
+    "creative",
+    "creative-coding"
+  ],
+  "homepage": "https://github.com/tapioca24/p5.capture",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tapioca24/p5.capture.git"
+  },
+  "license": "MIT",
+  "author": "tapioca24",
+  "main": "dist/p5.capture.umd.js",
+  "module": "dist/p5.capture.es.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "date-fns": "^2.28.0",
+    "events": "^3.3.0",
+    "fflate": "^0.7.3",
+    "gif.js": "^0.2.0"
   },
   "devDependencies": {
     "@types/events": "^3.0.0",
@@ -12,11 +41,5 @@
     "strict-event-emitter-types": "^2.0.0",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
-  },
-  "dependencies": {
-    "date-fns": "^2.28.0",
-    "events": "^3.3.0",
-    "fflate": "^0.7.3",
-    "gif.js": "^0.2.0"
   }
 }
