@@ -1,8 +1,6 @@
 ![p5.capture](https://user-images.githubusercontent.com/67893738/155303598-97d0c558-27bb-4e28-8e0a-5ae810573696.gif)
 
-Super easy capturing for [p5.js](https://p5js.org/) animations 📸
-
-Assuming you would like to capture p5.js animations easily, this package is the right choice for you.
+Assuming you would like to capture [p5.js](https://p5js.org/) animations super easily, this package is the right choice for you.
 
 # Why p5.capture?
 
