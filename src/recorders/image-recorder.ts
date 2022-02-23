@@ -46,7 +46,7 @@ export class ImageRecorder<
     if (!this.canStop) {
       throw new Error("capturing is already started");
     }
-    this.state = "captured";
+    this.state = "encoding";
     this.emit("stop");
   }
 
@@ -59,7 +59,7 @@ export class ImageRecorder<
           this.count++;
           this.emit("added");
           break;
-        case "captured":
+        case "encoding":
           this.state = "idle";
           const chunks = await Promise.all(this.tasks);
           const { blob, filename } = this.createZip(chunks);

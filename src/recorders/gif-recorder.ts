@@ -61,7 +61,7 @@ export class GifRecorder extends Recorder<GifRecorderOptions> {
     if (!this.canStop) {
       throw new Error("capturing is already stopped");
     }
-    this.state = "captured";
+    this.state = "encoding";
     this.emit("stop");
     this.recorder.render();
   }

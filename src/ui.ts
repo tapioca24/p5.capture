@@ -52,7 +52,7 @@ export const createUi = (parent: HTMLElement) => {
         button.disabled = false;
         span.innerText = getIndicator(count);
         break;
-      case "captured":
+      case "encoding":
         button.innerText = STOP_CAPTURING_TEXT;
         button.disabled = true;
         span.innerText = getIndicator(count);

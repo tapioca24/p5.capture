@@ -68,7 +68,7 @@ You can also use functions to control the capture programmatically.
 | ------------------------- | ----------------------------------------------------------------------------------- |
 | `startCapturing(options)` | Start capturing                                                                     |
 | `stopCapturing()`         | Stop capturing                                                                      |
-| `captureState()`          | Returns the capture status as a string of `"idle"`, `"capturing"`, or `"captured"`. |
+| `captureState()`          | Returns the capture status as a string of `"idle"`, `"capturing"`, or `"encoding"`. |
 
 The following example captures the first 100 frames:
 

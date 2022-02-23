@@ -13,7 +13,7 @@ type RecorderEmitter = StrictEventEmitter<
   }
 >;
 
-export type CaptureState = "idle" | "capturing" | "captured";
+export type CaptureState = "idle" | "capturing" | "encoding";
 
 export abstract class Recorder<
   RecorderOptions extends Record<string, any> = {}
