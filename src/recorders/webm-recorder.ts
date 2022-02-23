@@ -6,7 +6,9 @@ export type WebmRecorderOptions = {
 };
 
 const defaultOptions: Required<WebmRecorderOptions> = {
-  mediaRecorderOptions: {},
+  mediaRecorderOptions: {
+    videoBitsPerSecond: 1024 * 1024 * 20, // 20Mbps
+  },
 };
 
 export class WebmRecorder extends Recorder<WebmRecorderOptions> {

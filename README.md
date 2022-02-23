@@ -96,7 +96,7 @@ function draw() {
 | Name            | Default  | Description                                                                           |
 | --------------- | -------- | ------------------------------------------------------------------------------------- |
 | format          | `"webm"` | export format. `"webm"`, `"gif"`, `"png"`, `"jpg"`, and `"webp"`                      |
-| recorderOptions | `{}`     | [Recorder options](#recorder-options)                                                 |
+| recorderOptions | `{}`     | see [Recorder options](#recorder-options)                                             |
 | duration        | `null`   | maximum capture duration in number of frames                                          |
 | verbose         | `false`  | dumps info on the console                                                             |
 | disableUi       | `false`  | (only global variable options) hides the UI                                           |
@@ -129,7 +129,7 @@ Depends on the format.
 
 | Name                 | Default | Description                                                                                                      |
 | -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| mediaRecorderOptions | `{}`    | [MediaRecorder options](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder#parameters) |
+| mediaRecorderOptions | see [Default mediaRecorderOptions](#default-mediarecorderoptions)    | [MediaRecorder options](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder#parameters) |
 
 Example of using the vp9 codec:
 
@@ -144,12 +144,18 @@ P5_CAPTURE_OPTIONS = {
 };
 ```
 
+#### Default mediaRecorderOptions
+
+- `videoBitsPerSecond`: `1024 * 1024 * 20` (20Mbps)
+
+`mediaRecorderOptions` properties will be merged appropriately.
+
 ### GIF
 
 | Name       | Default | Description                                                   |
 | ---------- | ------- | ------------------------------------------------------------- |
 | frameRate  | `60`    | target framerate for the capture                              |
-| gifOptions | [Default gifOptions](#default-gifoptions) | [gif.js options](https://github.com/jnordberg/gif.js#options) |
+| gifOptions | see [Default gifOptions](#default-gifoptions) | [gif.js options](https://github.com/jnordberg/gif.js#options) |
 
 Example of setting quality:
 
