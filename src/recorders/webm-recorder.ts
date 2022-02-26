@@ -1,4 +1,4 @@
-import { CaptureState, Recorder } from "@/recorders/base";
+import { Recorder } from "@/recorders/base";
 import { getFilename } from "@/utils";
 
 export type WebmRecorderOptions = {
@@ -12,8 +12,6 @@ const defaultOptions: Required<WebmRecorderOptions> = {
 };
 
 export class WebmRecorder extends Recorder<WebmRecorderOptions> {
-  protected state: CaptureState = "idle";
-  protected count: number = 0;
   protected chunks: BlobPart[] = [];
   protected recorder: MediaRecorder;
   protected margedOptions: WebmRecorderOptions;
@@ -39,33 +37,14 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     this.recorder = recorder;
   }
 
-  get capturedCount() {
-    return this.count;
-  }
-
-  get captureState() {
-    return this.state;
-  }
-
-  async start() {
-    if (!this.canStart) {
-      throw new Error("capturing is already started");
-    }
+  start() {
+    this.checkStartable();
     this.recorder.start();
   }
 
-  async stop() {
-    if (!this.canStop) {
-      throw new Error("capturing is not started");
-    }
+  stop() {
+    this.checkStoppable();
     this.recorder.stop();
-  }
-
-  postDraw() {
-    if (this.captureState === "capturing") {
-      this.count++;
-      this.emit("added");
-    }
   }
 
   protected get canStart() {
@@ -79,7 +58,7 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
   }
 
   protected reset() {
-    this.count = 0;
+    super.reset();
     this.chunks = [];
   }
 

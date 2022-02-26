@@ -1,5 +1,5 @@
 import GIF from "gif.js";
-import { CaptureState, Recorder } from "@/recorders/base";
+import { Recorder } from "@/recorders/base";
 import { getFilename, getWorkerUrl } from "@/utils";
 
 const GIF_WORKER_SCRIPT_URL =
@@ -19,8 +19,6 @@ const defaultOptions: Required<GifRecorderOptions> = {
 };
 
 export class GifRecorder extends Recorder<GifRecorderOptions> {
-  protected state: CaptureState = "idle";
-  protected count = 0;
   protected recorder: GIF;
   protected margedOptions: Required<GifRecorderOptions>;
 
@@ -40,27 +38,15 @@ export class GifRecorder extends Recorder<GifRecorderOptions> {
     this.recorder = recorder;
   }
 
-  get capturedCount() {
-    return this.count;
-  }
-
-  get captureState() {
-    return this.state;
-  }
-
-  async start() {
-    if (!this.canStart) {
-      throw new Error("capturing is already started");
-    }
+  start() {
+    this.checkStartable();
     this.state = "capturing";
     this.reset();
     this.emit("start");
   }
 
-  async stop() {
-    if (!this.canStop) {
-      throw new Error("capturing is already stopped");
-    }
+  stop() {
+    this.checkStoppable();
     this.state = "encoding";
     this.emit("stop");
     this.recorder.render();
@@ -72,21 +58,8 @@ export class GifRecorder extends Recorder<GifRecorderOptions> {
         delay: 1000 / this.margedOptions.frameRate,
         copy: true,
       });
-      this.count++;
-      this.emit("added");
     }
-  }
-
-  protected get canStart() {
-    return this.captureState === "idle";
-  }
-
-  protected get canStop() {
-    return this.captureState === "capturing";
-  }
-
-  protected reset() {
-    this.count = 0;
+    super.postDraw();
   }
 
   protected onFinished(blob: Blob) {

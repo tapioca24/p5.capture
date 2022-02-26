@@ -1,5 +1,5 @@
 import { ZippableFile, zipSync } from "fflate";
-import { CaptureState, Recorder } from "@/recorders/base";
+import { Recorder } from "@/recorders/base";
 import { getDirname, getFilename } from "@/utils";
 
 export type ImageFormat = "png" | "jpg" | "webp";
@@ -13,8 +13,6 @@ type Chunk = {
 export class ImageRecorder<
   ImageRecorderOptions extends Record<string, any>
 > extends Recorder<ImageRecorderOptions> {
-  protected state: CaptureState = "idle";
-  protected count = 0;
   protected tasks: Promise<Chunk>[] = [];
 
   constructor(
@@ -25,27 +23,15 @@ export class ImageRecorder<
     super(canvas, options);
   }
 
-  get capturedCount() {
-    return this.count;
-  }
-
-  get captureState() {
-    return this.state;
-  }
-
-  async start() {
-    if (!this.canStart) {
-      throw new Error("capturing is already started");
-    }
+  start() {
+    this.checkStartable();
     this.state = "capturing";
     this.reset();
     this.emit("start");
   }
 
-  async stop() {
-    if (!this.canStop) {
-      throw new Error("capturing is already started");
-    }
+  stop() {
+    this.checkStoppable();
     this.state = "encoding";
     this.emit("stop");
   }
@@ -56,8 +42,7 @@ export class ImageRecorder<
         case "capturing":
           const task = this.makeChunk(this.count);
           this.tasks.push(task);
-          this.count++;
-          this.emit("added");
+          super.postDraw();
           break;
         case "encoding":
           this.state = "idle";
@@ -74,16 +59,8 @@ export class ImageRecorder<
     }
   }
 
-  protected get canStart() {
-    return this.captureState === "idle";
-  }
-
-  protected get canStop() {
-    return this.captureState === "capturing";
-  }
-
   protected reset() {
-    this.count = 0;
+    super.reset();
     this.tasks = [];
   }
 
