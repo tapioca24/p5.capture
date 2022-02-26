@@ -1,87 +1,67 @@
+import WebMWriter, { WebMWriterOptions } from "webm-writer";
 import { Recorder } from "@/recorders/base";
 import { getFilename } from "@/utils";
 
 export type WebmRecorderOptions = {
-  mediaRecorderOptions?: MediaRecorderOptions;
+  webmWriterOptions?: WebMWriterOptions;
 };
 
 const defaultOptions: Required<WebmRecorderOptions> = {
-  mediaRecorderOptions: {
-    videoBitsPerSecond: 1024 * 1024 * 20, // 20Mbps
+  webmWriterOptions: {
+    frameRate: 60,
   },
 };
 
 export class WebmRecorder extends Recorder<WebmRecorderOptions> {
-  protected chunks: BlobPart[] = [];
-  protected recorder: MediaRecorder;
-  protected margedOptions: WebmRecorderOptions;
+  protected webmWriter: WebMWriter;
+  protected margedOptions: Required<WebmRecorderOptions>;
 
   constructor(canvas: HTMLCanvasElement, options: WebmRecorderOptions = {}) {
     super(canvas, options);
     this.margedOptions = {
-      mediaRecorderOptions: {
-        ...defaultOptions.mediaRecorderOptions,
-        ...options.mediaRecorderOptions,
+      webmWriterOptions: {
+        ...defaultOptions.webmWriterOptions,
+        ...options.webmWriterOptions,
       },
     };
 
-    const stream = canvas.captureStream();
-    const recorder = new MediaRecorder(
-      stream,
-      this.margedOptions.mediaRecorderOptions
-    );
-    recorder.ondataavailable = this.onDataAvailable.bind(this);
-    recorder.onstart = this.onStart.bind(this);
-    recorder.onstop = this.onStop.bind(this);
-    recorder.onerror = this.onError.bind(this);
-    this.recorder = recorder;
+    this.webmWriter = new WebMWriter(this.margedOptions.webmWriterOptions);
   }
 
   start() {
     this.checkStartable();
-    this.recorder.start();
-  }
-
-  stop() {
-    this.checkStoppable();
-    this.recorder.stop();
-  }
-
-  protected get canStart() {
-    return this.captureState === "idle" && this.recorder.state === "inactive";
-  }
-
-  protected get canStop() {
-    return (
-      this.captureState === "capturing" && this.recorder.state === "recording"
-    );
-  }
-
-  protected reset() {
-    super.reset();
-    this.chunks = [];
-  }
-
-  protected onDataAvailable(e: BlobEvent) {
-    this.chunks.push(e.data);
-  }
-
-  protected onStart(_e: Event) {
     this.state = "capturing";
     this.reset();
     this.emit("start");
   }
 
-  protected onStop(_e: Event) {
+  stop() {
+    this.checkStoppable();
+    this.state = "encoding";
     this.emit("stop");
-    const blob = new Blob(this.chunks, { type: "video/webm" });
-    this.state = "idle";
-    this.reset();
-    const filename = getFilename(new Date(), "webm");
-    this.emit("finished", blob, filename);
   }
 
-  protected onError(e: MediaRecorderErrorEvent) {
-    this.emit("error", e.error);
+  async postDraw() {
+    try {
+      switch (this.captureState) {
+        case "capturing":
+          this.webmWriter.addFrame(this.canvas);
+          super.postDraw();
+          break;
+        case "encoding":
+          this.state = "idle";
+          const blob = await this.webmWriter.complete();
+          this.reset();
+          if (blob) {
+            const filename = getFilename(new Date(), "webm");
+            this.emit("finished", blob, filename);
+          }
+          break;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        this.emit("error", error);
+      }
+    }
   }
 }

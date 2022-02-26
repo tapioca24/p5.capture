@@ -52,7 +52,7 @@ This is useful for capturing interactively.
 
 p5.capture supports multiple export formats:
 
-- WebM (default): export WebM video using [MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder)
+- WebM (default): export WebM video using [webm-writer-js](https://github.com/thenickdude/webm-writer-js)
 - GIF: export animated GIF using [gif.js](http://jnordberg.github.io/gif.js/)
 - PNG: export PNG images in a ZIP file
 - JPEG: export JPEG images in a ZIP file
@@ -127,28 +127,28 @@ Depends on the format.
 
 ### WebM
 
-| Name                 | Default | Description                                                                                                      |
-| -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| mediaRecorderOptions | see [Default mediaRecorderOptions](#default-mediarecorderoptions)    | [MediaRecorder options](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder#parameters) |
+| Name              | Default                                                     | Description                                                                          |
+| ----------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| webmWriterOptions | see [Default webmWriterOptions](#default-webmwriteroptions) | [webm-writer-js options](https://github.com/thenickdude/webm-writer-js#usage-chrome) |
 
-Example of using the vp9 codec:
+Example of setting quality:
 
 ```js
 P5_CAPTURE_OPTIONS = {
   format: "webm",
   recorderOptions: {
-    mediaRecorderOptions: {
-      mimeType: "video/webm;codecs=vp9",
+    webmWriterOptions: {
+      quality: 0.98
     },
   },
 };
 ```
 
-#### Default mediaRecorderOptions
+#### Default webmWriterOptions
 
-- `videoBitsPerSecond`: `1024 * 1024 * 20` (20Mbps)
+- `frameRate`: `60`
 
-`mediaRecorderOptions` properties will be merged appropriately.
+`webmWriterOptions` properties will be merged appropriately.
 
 ### GIF
 
