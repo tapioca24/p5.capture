@@ -19,20 +19,7 @@ export class WebpRecorder extends ImageRecorder<WebpRecorderOptions> {
     };
   }
 
-  protected async makeBlob() {
-    return new Promise<Blob>((resolve, reject) => {
-      const mimeType = this.makeMimeType(this.format);
-      this.canvas.toBlob(
-        (blob) => {
-          if (!blob) {
-            reject(new Error("failed to make blob"));
-            return;
-          }
-          resolve(blob);
-        },
-        mimeType,
-        this.margedOptions.quality
-      );
-    });
+  protected get qualityOption() {
+    return this.margedOptions.quality;
   }
 }

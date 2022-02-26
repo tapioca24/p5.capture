@@ -77,16 +77,24 @@ export class ImageRecorder<
     }
   }
 
+  protected get qualityOption(): number | undefined {
+    return undefined;
+  }
+
   protected async makeBlob() {
     return new Promise<Blob>((resolve, reject) => {
       const mimeType = this.makeMimeType(this.format);
-      this.canvas.toBlob((blob) => {
-        if (!blob) {
-          reject(new Error("failed to make blob"));
-          return;
-        }
-        resolve(blob);
-      }, mimeType);
+      this.canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error("failed to make blob"));
+            return;
+          }
+          resolve(blob);
+        },
+        mimeType,
+        this.qualityOption
+      );
     });
   }
 
