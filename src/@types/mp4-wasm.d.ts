@@ -1,4 +1,4 @@
-declare module "mp4-wasm" {
+declare module "https://unpkg.com/mp4-wasm@1.0.6" {
   type VideoEncoderOptions = {
     codec?: string;
     width?: number;

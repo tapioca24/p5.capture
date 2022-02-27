@@ -1,4 +1,7 @@
-import loadMP4Module, { MP4Encoder, MP4EncoderOptions } from "mp4-wasm";
+import loadMP4Module, {
+  MP4Encoder,
+  MP4EncoderOptions,
+} from "https://unpkg.com/mp4-wasm@1.0.6";
 import { Recorder } from "@/recorders/base";
 import { getFilename } from "@/utils";
 
