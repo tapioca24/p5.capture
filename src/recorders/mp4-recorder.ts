@@ -8,7 +8,7 @@ export type Mp4RecorderOptions = {
 
 const defaultOptions: Required<Mp4RecorderOptions> = {
   mp4EncoderOptions: {
-    fps: 30,
+    bitrate: 1024 * 1024 * 2.5, // 2.5Mbps
   },
 };
 
@@ -19,8 +19,10 @@ export class Mp4Recorder extends Recorder<Mp4RecorderOptions> {
   constructor(canvas: HTMLCanvasElement, options: Mp4RecorderOptions = {}) {
     super(canvas, options);
     this.margedOptions = {
-      ...defaultOptions,
-      ...options,
+      mp4EncoderOptions: {
+        ...defaultOptions.mp4EncoderOptions,
+        ...options.mp4EncoderOptions,
+      },
     };
   }
 
@@ -29,10 +31,7 @@ export class Mp4Recorder extends Recorder<Mp4RecorderOptions> {
     this.encoder = MP4.createWebCodecsEncoder({
       width: this.canvas.width,
       height: this.canvas.height,
-      encoderOptions: {
-        framerate: 30,
-      },
-      fps: 30,
+      ...this.margedOptions.mp4EncoderOptions,
     });
   }
 

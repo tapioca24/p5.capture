@@ -37,7 +37,7 @@ declare module "mp4-wasm" {
     bitrate?: VideoEncoderOptions["bitrate"];
     error?: (error: Error) => void;
     encoderOptions?: VideoEncoderOptions;
-    flushFrequency?: number;
+    flushFrequency?: number | null;
   };
 
   export function createFile(initialCapacity?: number): {
