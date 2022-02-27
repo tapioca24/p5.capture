@@ -1,3 +1,7 @@
+# 0.1.2 (February 27, 2022)
+
+- (BREAKING!!) Fix package defalut file
+
 # 0.1.1 (February 27, 2022)
 
 - (BREAKING!!) Fix mp4-wasm to import from URL
