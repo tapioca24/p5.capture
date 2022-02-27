@@ -33,6 +33,7 @@
     "events": "^3.3.0",
     "fflate": "^0.7.3",
     "gif.js": "^0.2.0",
+    "mp4-wasm": "^1.0.6",
     "webm-writer": "^1.0.0"
   },
   "devDependencies": {

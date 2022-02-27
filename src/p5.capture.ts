@@ -1,5 +1,6 @@
 import { createUi } from "@/ui";
 import { Recorder } from "@/recorders/base";
+import { Mp4Recorder, Mp4RecorderOptions } from "@/recorders/mp4-recorder";
 import { WebmRecorder, WebmRecorderOptions } from "@/recorders/webm-recorder";
 import { GifRecorder, GifRecorderOptions } from "@/recorders/gif-recorder";
 import { PngRecorder, PngRecorderOptions } from "@/recorders/png-recorder";
@@ -9,8 +10,9 @@ import { ImageFormat } from "@/recorders/image-recorder";
 import { downloadBlob } from "@/utils";
 
 export type P5CaptureOptions = {
-  format?: "webm" | "gif" | ImageFormat;
+  format?: "mp4" | "webm" | "gif" | ImageFormat;
   recorderOptions?:
+    | Mp4RecorderOptions
     | WebmRecorderOptions
     | GifRecorderOptions
     | PngRecorderOptions
@@ -47,7 +49,7 @@ export class P5Capture {
   async startCapturing(options: P5CaptureOptions = {}) {
     try {
       this.margeOptions(options);
-      this.recorder = this.createRecorder();
+      this.recorder = await this.createRecorder();
       this.recorder.start();
     } catch (e) {
       if (e instanceof Error) {
@@ -115,7 +117,7 @@ export class P5Capture {
     this.recorder?.postDraw();
   }
 
-  protected createRecorder() {
+  protected async createRecorder() {
     if (!this.margedOptions) {
       throw new Error("options are not set");
     }
@@ -125,6 +127,13 @@ export class P5Capture {
 
     let recorder;
     switch (format) {
+      case "mp4":
+        recorder = new Mp4Recorder(
+          canvas,
+          recorderOptions as Mp4RecorderOptions
+        );
+        await recorder.initialize();
+        break;
       case "webm":
         recorder = new WebmRecorder(
           canvas,
