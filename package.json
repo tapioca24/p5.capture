@@ -19,8 +19,8 @@
   },
   "license": "MIT",
   "author": "tapioca24",
-  "main": "dist/p5.capture.umd.js",
   "module": "dist/p5.capture.es.js",
+  "browser": "dist/p5.capture.es.js",
   "files": [
     "dist"
   ],
