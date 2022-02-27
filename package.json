@@ -26,7 +26,8 @@
   ],
   "scripts": {
     "build": "tsc && vite build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postinstall": "./bin/postinstall.sh"
   },
   "dependencies": {
     "date-fns": "^2.28.0",
