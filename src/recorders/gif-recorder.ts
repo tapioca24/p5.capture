@@ -1,21 +1,22 @@
 import GIF from "gif.js";
 import { Recorder } from "@/recorders/base";
-import { getFilename, getWorkerUrl } from "@/utils";
+import { getFilename, getWorkerUrl, mathClamp, mathMap } from "@/utils";
 
 const GIF_WORKER_SCRIPT_URL =
   "https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js";
 
+const calcGifQuality = (quality: number) => {
+  return mathClamp(mathMap(quality, 0, 1, 30, 1), 1, 30);
+};
+
 export type GifRecorderOptions = {
-  frameRate?: number;
-  gifOptions?: GIF.Options;
+  framerate?: number;
+  quality?: number;
 };
 
 const defaultOptions: Required<GifRecorderOptions> = {
-  frameRate: 60,
-  gifOptions: {
-    workerScript: getWorkerUrl(GIF_WORKER_SCRIPT_URL),
-    workers: 4,
-  },
+  framerate: 30,
+  quality: 0.7,
 };
 
 export class GifRecorder extends Recorder<GifRecorderOptions> {
@@ -25,14 +26,17 @@ export class GifRecorder extends Recorder<GifRecorderOptions> {
   constructor(canvas: HTMLCanvasElement, options: GifRecorderOptions = {}) {
     super(canvas, options);
     this.margedOptions = {
-      frameRate: options.frameRate ?? defaultOptions.frameRate,
-      gifOptions: {
-        ...defaultOptions.gifOptions,
-        ...options.gifOptions,
-      },
+      ...defaultOptions,
+      ...options,
     };
 
-    const recorder = new GIF(this.margedOptions.gifOptions);
+    const gifOptions: GIF.Options = {
+      quality: calcGifQuality(this.margedOptions.quality),
+      workers: 4,
+      workerScript: getWorkerUrl(GIF_WORKER_SCRIPT_URL),
+    };
+
+    const recorder = new GIF(gifOptions);
     recorder.on("finished", this.onFinished.bind(this));
     recorder.on("progress", this.onProgress.bind(this));
     this.recorder = recorder;
@@ -55,7 +59,7 @@ export class GifRecorder extends Recorder<GifRecorderOptions> {
   postDraw() {
     if (this.captureState === "capturing") {
       this.recorder.addFrame(this.canvas, {
-        delay: 1000 / this.margedOptions.frameRate,
+        delay: 1000 / this.margedOptions.framerate,
         copy: true,
       });
     }

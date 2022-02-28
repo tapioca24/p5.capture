@@ -8,7 +8,8 @@ export type WebmRecorderOptions = {
 
 const defaultOptions: Required<WebmRecorderOptions> = {
   webmWriterOptions: {
-    frameRate: 60,
+    frameRate: 30,
+    quality: 0.95,
   },
 };
 

@@ -11,6 +11,7 @@ export type Mp4RecorderOptions = {
 
 const defaultOptions: Required<Mp4RecorderOptions> = {
   mp4EncoderOptions: {
+    fps: 30,
     bitrate: 1024 * 1024 * 2.5, // 2.5Mbps
   },
 };

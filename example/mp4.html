@@ -10,11 +10,8 @@
     <script>
       P5_CAPTURE_OPTIONS = {
         format: "mp4",
-        recorderOptions: {
-          mp4EncoderOptions: {
-            bitrate: 1024 * 1024 * 5, // 5Mbps
-          },
-        },
+        framerate: 30,
+        bitrate: 1024 * 1024 * 2, // 2Mbps
         verbose: true,
         disableScaling: true,
       };

@@ -11,13 +11,9 @@ import { downloadBlob } from "@/utils";
 
 export type P5CaptureOptions = {
   format?: "mp4" | "webm" | "gif" | ImageFormat;
-  recorderOptions?:
-    | Mp4RecorderOptions
-    | WebmRecorderOptions
-    | GifRecorderOptions
-    | PngRecorderOptions
-    | JpgRecorderOptions
-    | WebpRecorderOptions;
+  framerate?: number;
+  bitrate?: number;
+  quality?: number;
   duration?: number | null;
   verbose?: boolean;
 };
@@ -27,10 +23,10 @@ export type P5CaptureGlobalOptions = P5CaptureOptions & {
   disableScaling?: boolean;
 };
 
-const defaultOptions: Required<P5CaptureGlobalOptions> = {
+const defaultOptions: P5CaptureGlobalOptions = {
   format: "webm",
-  recorderOptions: {},
   duration: null,
+  framerate: 30,
   verbose: false,
   disableUi: false,
   disableScaling: false,
@@ -39,7 +35,7 @@ const defaultOptions: Required<P5CaptureGlobalOptions> = {
 export class P5Capture {
   protected recorder: Recorder | null = null;
   protected updateUi: (() => void) | null = null;
-  protected margedOptions: Required<P5CaptureGlobalOptions> | null = null;
+  protected margedOptions: P5CaptureGlobalOptions | null = null;
 
   captureState() {
     if (!this.recorder) return "idle";
@@ -123,44 +119,53 @@ export class P5Capture {
     }
 
     const canvas = (window as any).canvas;
-    const { format, recorderOptions } = this.margedOptions;
-
+    const { format, framerate, bitrate, quality } = this.margedOptions;
     let recorder;
+
     switch (format) {
       case "mp4":
-        recorder = new Mp4Recorder(
-          canvas,
-          recorderOptions as Mp4RecorderOptions
-        );
+        const mp4RecorderOptions: Mp4RecorderOptions = {
+          mp4EncoderOptions: {
+            fps: framerate,
+            bitrate,
+          },
+        };
+        recorder = new Mp4Recorder(canvas, mp4RecorderOptions);
         await recorder.initialize();
         break;
+
       case "webm":
-        recorder = new WebmRecorder(
-          canvas,
-          recorderOptions as WebmRecorderOptions
-        );
+        const webmRecorderOptions: WebmRecorderOptions = {
+          webmWriterOptions: {
+            frameRate: framerate,
+            quality,
+          },
+        };
+        recorder = new WebmRecorder(canvas, webmRecorderOptions);
         break;
+
       case "gif":
-        recorder = new GifRecorder(
-          canvas,
-          recorderOptions as GifRecorderOptions
-        );
+        const gifRecorderOptions: GifRecorderOptions = { framerate, quality };
+        recorder = new GifRecorder(canvas, gifRecorderOptions);
         break;
+
       case "png":
-        recorder = new PngRecorder(canvas, {
-          ...(recorderOptions as PngRecorderOptions),
-        });
+        const pngRecorderOptions: PngRecorderOptions = {};
+        recorder = new PngRecorder(canvas, pngRecorderOptions);
         break;
+
       case "jpg":
-        recorder = new JpgRecorder(canvas, {
-          ...(recorderOptions as JpgRecorderOptions),
-        });
+        const jpgRecorderOptions: JpgRecorderOptions = { quality };
+        recorder = new JpgRecorder(canvas, jpgRecorderOptions);
         break;
+
       case "webp":
-        recorder = new WebpRecorder(canvas, {
-          ...(recorderOptions as WebpRecorderOptions),
-        });
+        const webpRecorderOptions: WebpRecorderOptions = { quality };
+        recorder = new WebpRecorder(canvas, webpRecorderOptions);
         break;
+
+      default:
+        throw new Error(`invalid format: ${format}`);
     }
 
     recorder.on("start", () => {

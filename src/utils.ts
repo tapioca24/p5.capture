@@ -24,3 +24,17 @@ export const downloadBlob = (blob: Blob, filename: string) => {
   link.click();
   URL.revokeObjectURL(url);
 };
+
+export const mathClamp = (value: number, min: number, max: number) => {
+  return Math.min(Math.max(min, value), max);
+};
+
+export const mathMap = (
+  value: number,
+  inMin: number,
+  inMax: number,
+  outMin: number,
+  outMax: number
+) => {
+  return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+};

@@ -21,7 +21,7 @@ Of course, you can also use the API to integrate it into your code.
 ## Wide variety of export formats 🤹
 
 Tired of having to use different libraries for different formats?
-p5.capture supports a wide variety of export formats: WebM, GIF, PNG, JPEG, and WebP.
+p5.capture supports a wide variety of export formats: WebM, GIF, MP4, PNG, JPG, and WebP.
 Say goodbye to having to use multiple libraries for recording.
 
 # Installation
@@ -30,14 +30,10 @@ Add a link *after* p5.js in your html file:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5"></script>
-<script src="https://cdn.jsdelivr.net/npm/p5.capture"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/p5.capture"></script>
 ```
 
-Or install with npm:
-
-```sh
-npm install p5.capture
-```
+⚠️ Note that it loads as a JavaScript module.
 
 # Usage
 
@@ -54,8 +50,9 @@ p5.capture supports multiple export formats:
 
 - WebM (default): export WebM video using [webm-writer-js](https://github.com/thenickdude/webm-writer-js)
 - GIF: export animated GIF using [gif.js](http://jnordberg.github.io/gif.js/)
+- MP4: export MP4 video using [mp4-wasm](https://github.com/mattdesl/mp4-wasm) (🧪 Experimental)
 - PNG: export PNG images in a ZIP file
-- JPEG: export JPEG images in a ZIP file
+- JPG: export JPG images in a ZIP file
 - WebP: export WebP images in a ZIP file
 
 ## API
@@ -93,14 +90,16 @@ function draw() {
 
 # Options
 
-| Name            | Default  | Description                                                                           |
-| --------------- | -------- | ------------------------------------------------------------------------------------- |
-| format          | `"webm"` | export format. `"webm"`, `"gif"`, `"png"`, `"jpg"`, and `"webp"`                      |
-| recorderOptions | `{}`     | see [Recorder options](#recorder-options)                                             |
-| duration        | `null`   | maximum capture duration in number of frames                                          |
-| verbose         | `false`  | dumps info on the console                                                             |
-| disableUi       | `false`  | (only global variable options) hides the UI                                           |
-| disableScaling  | `false`  | (only global variable options) disables pixel scaling for high pixel density displays |
+| Name           | Default                               | Description                                                                           |
+| -------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
+| format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`             |
+| framerate      | `30`                                  | recording framerate. valid for WebM, GIF, and MP4                                     |
+| bitrate        | `2621440` (2.5Mbps)                   | recording bitrate. only valid for MP4.                                                |
+| quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP      |
+| duration       | `null`                                | maximum capture duration in number of frames                                          |
+| verbose        | `false`                               | dumps info on the console                                                             |
+| disableUi      | `false`                               | (only global variable options) hides the UI                                           |
+| disableScaling | `false`                               | (only global variable options) disables pixel scaling for high pixel density displays |
 
 There are two ways to pass the options object.
 
@@ -121,99 +120,16 @@ startCapturing({
 })
 ```
 
-## Recorder options
+## Quality option
 
-Depends on the format.
+The default value of the `quality` option is different for each format.
 
-### WebM
-
-| Name              | Default                                                     | Description                                                                          |
-| ----------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| webmWriterOptions | see [Default webmWriterOptions](#default-webmwriteroptions) | [webm-writer-js options](https://github.com/thenickdude/webm-writer-js#usage-chrome) |
-
-Example of setting quality:
-
-```js
-P5_CAPTURE_OPTIONS = {
-  format: "webm",
-  recorderOptions: {
-    webmWriterOptions: {
-      quality: 0.98
-    },
-  },
-};
-```
-
-#### Default webmWriterOptions
-
-- `frameRate`: `60`
-
-`webmWriterOptions` properties will be merged appropriately.
-
-### GIF
-
-| Name       | Default | Description                                                   |
-| ---------- | ------- | ------------------------------------------------------------- |
-| frameRate  | `60`    | target framerate for the capture                              |
-| gifOptions | see [Default gifOptions](#default-gifoptions) | [gif.js options](https://github.com/jnordberg/gif.js#options) |
-
-Example of setting quality:
-
-```js
-P5_CAPTURE_OPTIONS = {
-  format: "gif",
-  recorderOptions: {
-    gifOptions: {
-      quality: 5,
-    },
-  },
-};
-```
-
-#### Default gifOptions
-
-- `workers`: `4`
-- `workerScript`: Import `gif.worker.js` from [CDN](https://www.jsdelivr.com/package/npm/gif.js?path=dist)
-
-`gifOptions` properties will be merged appropriately.
-
-### PNG
-
-No options available.
-
-### JPEG
-
-| Name    | Default | Description                                  |
-| ------- | ------- | -------------------------------------------- |
-| quality | `0.92`  | image quality (a number between `0` and `1`) |
-
-Example of setting quality:
-
-```js
-P5_CAPTURE_OPTIONS = {
-  format: "jpg",
-  recorderOptions: {
-    quality: 0.95
-  },
-};
-```
-
-### WebP
-
-| Name    | Default | Description                                  |
-| ------- | ------- | -------------------------------------------- |
-| quality | `0.8`   | image quality (a number between `0` and `1`) |
-
-Example of setting quality:
-
-```js
-P5_CAPTURE_OPTIONS = {
-  format: "webp",
-  recorderOptions: {
-    quality: 0.85
-  },
-};
-```
+| Format | Default |
+| ------ | ------- |
+| WebM   | `0.95`  |
+| GIF    | `0.7`   |
+| JPG    | `0.92`  |
+| WebP   | `0.8`   |
 
 # Limitations
 
