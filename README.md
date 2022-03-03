@@ -33,7 +33,7 @@ Add a link *after* p5.js in your html file:
 <script type="module" src="https://cdn.jsdelivr.net/npm/p5.capture"></script>
 ```
 
-⚠️ Note that it loads as a JavaScript module.
+⚠️ Note that `type="module"` must be specified.
 
 # Usage
 
@@ -41,15 +41,14 @@ Basically, the capture is controlled by the GUI.
 
 ![usage](https://user-images.githubusercontent.com/12683107/154848445-327433f6-3d4f-431f-8e97-98495f36e3f5.gif)
 
-That's all 🎉  
-This is useful for capturing interactively.
+That's all 🎉
 
 ## Export formats
 
 p5.capture supports multiple export formats:
 
 - WebM (default): export WebM video using [webm-writer-js](https://github.com/thenickdude/webm-writer-js)
-- GIF: export animated GIF using [gif.js](http://jnordberg.github.io/gif.js/)
+- GIF: export animated GIF using [gif.js](https://github.com/jnordberg/gif.js)
 - MP4: export MP4 video using [mp4-wasm](https://github.com/mattdesl/mp4-wasm) (🧪 Experimental)
 - PNG: export PNG images in a ZIP file
 - JPG: export JPG images in a ZIP file
