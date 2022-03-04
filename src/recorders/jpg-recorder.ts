@@ -1,15 +1,16 @@
 import { ImageRecorder } from "@/recorders/image-recorder";
+import { RecorderOptions } from "@/recorders/base";
 
-export type JpgRecorderOptions = {
+export type JpgRecorderOptions = RecorderOptions & {
   quality?: number;
 };
 
-const defaultOptions: Required<JpgRecorderOptions> = {
+const defaultOptions: JpgRecorderOptions = {
   quality: 0.92,
 };
 
-export class JpgRecorder extends ImageRecorder<JpgRecorderOptions> {
-  protected margedOptions: Required<JpgRecorderOptions>;
+export class JpgRecorder extends ImageRecorder {
+  protected margedOptions: JpgRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: JpgRecorderOptions = {}) {
     super(canvas, "jpg", options);

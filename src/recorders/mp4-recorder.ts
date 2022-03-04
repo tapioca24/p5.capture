@@ -2,27 +2,29 @@ import loadMP4Module, {
   MP4Encoder,
   MP4EncoderOptions,
 } from "https://unpkg.com/mp4-wasm@1.0.6";
-import { Recorder } from "@/recorders/base";
+import { Recorder, RecorderOptions } from "@/recorders/base";
 import { getFilename } from "@/utils";
 
-export type Mp4RecorderOptions = {
+export type Mp4RecorderOptions = RecorderOptions & {
   mp4EncoderOptions?: Partial<MP4EncoderOptions>;
 };
 
-const defaultOptions: Required<Mp4RecorderOptions> = {
+const defaultOptions: Mp4RecorderOptions = {
   mp4EncoderOptions: {
     fps: 30,
     bitrate: 1024 * 1024 * 2.5, // 2.5Mbps
   },
 };
 
-export class Mp4Recorder extends Recorder<Mp4RecorderOptions> {
+export class Mp4Recorder extends Recorder {
   protected encoder: MP4Encoder | null = null;
-  protected margedOptions: Required<Mp4RecorderOptions>;
+  protected margedOptions: Mp4RecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: Mp4RecorderOptions = {}) {
     super(canvas, options);
     this.margedOptions = {
+      ...defaultOptions,
+      ...options,
       mp4EncoderOptions: {
         ...defaultOptions.mp4EncoderOptions,
         ...options.mp4EncoderOptions,
@@ -56,9 +58,10 @@ export class Mp4Recorder extends Recorder<Mp4RecorderOptions> {
     try {
       switch (this.captureState) {
         case "capturing":
+          this.copyCanvas();
           const bitmap = await createImageBitmap(this.canvas);
           await this.encoder?.addFrame(bitmap);
-          super.postDraw();
+          this.increment();
           break;
         case "encoding":
           this.state = "idle";

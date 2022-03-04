@@ -1,11 +1,12 @@
 import { ImageRecorder } from "@/recorders/image-recorder";
+import { RecorderOptions } from "@/recorders/base";
 
-export type PngRecorderOptions = {};
+export type PngRecorderOptions = RecorderOptions & {};
 
-const defaultOptions: Required<PngRecorderOptions> = {};
+const defaultOptions: PngRecorderOptions = {};
 
-export class PngRecorder extends ImageRecorder<PngRecorderOptions> {
-  protected margedOptions: Required<PngRecorderOptions>;
+export class PngRecorder extends ImageRecorder {
+  protected margedOptions: PngRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: PngRecorderOptions = {}) {
     super(canvas, "png", options);

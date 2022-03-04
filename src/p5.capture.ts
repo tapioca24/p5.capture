@@ -14,6 +14,8 @@ export type P5CaptureOptions = {
   framerate?: number;
   bitrate?: number;
   quality?: number;
+  width?: number;
+  height?: number;
   duration?: number | null;
   verbose?: boolean;
 };
@@ -68,7 +70,7 @@ export class P5Capture {
   }
 
   initialize() {
-    this.margeOptions({});
+    this.margeOptions();
     if (!this.margedOptions) {
       throw new Error("options are not set");
     }
@@ -119,12 +121,15 @@ export class P5Capture {
     }
 
     const canvas = (window as any).canvas;
-    const { format, framerate, bitrate, quality } = this.margedOptions;
+    const { format, framerate, bitrate, quality, width, height } =
+      this.margedOptions;
     let recorder;
 
     switch (format) {
       case "mp4":
         const mp4RecorderOptions: Mp4RecorderOptions = {
+          width,
+          height,
           mp4EncoderOptions: {
             fps: framerate,
             bitrate,
@@ -136,6 +141,8 @@ export class P5Capture {
 
       case "webm":
         const webmRecorderOptions: WebmRecorderOptions = {
+          width,
+          height,
           webmWriterOptions: {
             frameRate: framerate,
             quality,
@@ -145,22 +152,38 @@ export class P5Capture {
         break;
 
       case "gif":
-        const gifRecorderOptions: GifRecorderOptions = { framerate, quality };
+        const gifRecorderOptions: GifRecorderOptions = {
+          framerate,
+          quality,
+          width,
+          height,
+        };
         recorder = new GifRecorder(canvas, gifRecorderOptions);
         break;
 
       case "png":
-        const pngRecorderOptions: PngRecorderOptions = {};
+        const pngRecorderOptions: PngRecorderOptions = {
+          width,
+          height,
+        };
         recorder = new PngRecorder(canvas, pngRecorderOptions);
         break;
 
       case "jpg":
-        const jpgRecorderOptions: JpgRecorderOptions = { quality };
+        const jpgRecorderOptions: JpgRecorderOptions = {
+          quality,
+          width,
+          height,
+        };
         recorder = new JpgRecorder(canvas, jpgRecorderOptions);
         break;
 
       case "webp":
-        const webpRecorderOptions: WebpRecorderOptions = { quality };
+        const webpRecorderOptions: WebpRecorderOptions = {
+          quality,
+          width,
+          height,
+        };
         recorder = new WebpRecorder(canvas, webpRecorderOptions);
         break;
 
@@ -193,7 +216,7 @@ export class P5Capture {
     return recorder;
   }
 
-  protected margeOptions(options: P5CaptureOptions) {
+  protected margeOptions(options: P5CaptureOptions = {}) {
     const globalOptions = (window as any).P5_CAPTURE_OPTIONS as
       | P5CaptureGlobalOptions
       | undefined;

@@ -1,5 +1,5 @@
 import { ZippableFile, zipSync } from "fflate";
-import { Recorder } from "@/recorders/base";
+import { Recorder, RecorderOptions } from "@/recorders/base";
 import { getDirname, getFilename } from "@/utils";
 
 export type ImageFormat = "png" | "jpg" | "webp";
@@ -10,15 +10,13 @@ type Chunk = {
   uint8array: Uint8Array;
 };
 
-export class ImageRecorder<
-  ImageRecorderOptions extends Record<string, any>
-> extends Recorder<ImageRecorderOptions> {
+export class ImageRecorder extends Recorder {
   protected tasks: Promise<Chunk>[] = [];
 
   constructor(
     canvas: HTMLCanvasElement,
     protected format: ImageFormat,
-    options?: ImageRecorderOptions
+    options: RecorderOptions = {}
   ) {
     super(canvas, options);
   }
@@ -40,9 +38,10 @@ export class ImageRecorder<
     try {
       switch (this.captureState) {
         case "capturing":
+          this.copyCanvas();
           const task = this.makeChunk(this.count);
           this.tasks.push(task);
-          super.postDraw();
+          this.increment();
           break;
         case "encoding":
           this.state = "idle";

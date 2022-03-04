@@ -1,15 +1,16 @@
 import { ImageRecorder } from "@/recorders/image-recorder";
+import { RecorderOptions } from "@/recorders/base";
 
-export type WebpRecorderOptions = {
+export type WebpRecorderOptions = RecorderOptions & {
   quality?: number;
 };
 
-const defaultOptions: Required<WebpRecorderOptions> = {
+const defaultOptions: WebpRecorderOptions = {
   quality: 0.8,
 };
 
-export class WebpRecorder extends ImageRecorder<WebpRecorderOptions> {
-  protected margedOptions: Required<WebpRecorderOptions>;
+export class WebpRecorder extends ImageRecorder {
+  protected margedOptions: WebpRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: WebpRecorderOptions = {}) {
     super(canvas, "webp", options);

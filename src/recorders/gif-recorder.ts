@@ -1,27 +1,28 @@
 import GIF from "gif.js";
-import { Recorder } from "@/recorders/base";
+import { Recorder, RecorderOptions } from "@/recorders/base";
 import { getFilename, getWorkerUrl, mathClamp, mathMap } from "@/utils";
 
 const GIF_WORKER_SCRIPT_URL =
   "https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js";
 
-const calcGifQuality = (quality: number) => {
-  return mathClamp(mathMap(quality, 0, 1, 30, 1), 1, 30);
-};
-
-export type GifRecorderOptions = {
+export type GifRecorderOptions = RecorderOptions & {
   framerate?: number;
   quality?: number;
 };
 
-const defaultOptions: Required<GifRecorderOptions> = {
+const defaultOptions = {
   framerate: 30,
   quality: 0.7,
 };
 
-export class GifRecorder extends Recorder<GifRecorderOptions> {
+const calcGifQuality = (quality?: number) => {
+  const q = quality ?? defaultOptions.quality;
+  return mathClamp(mathMap(q, 0, 1, 30, 1), 1, 30);
+};
+
+export class GifRecorder extends Recorder {
   protected recorder: GIF;
-  protected margedOptions: Required<GifRecorderOptions>;
+  protected margedOptions: GifRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: GifRecorderOptions = {}) {
     super(canvas, options);
@@ -57,13 +58,21 @@ export class GifRecorder extends Recorder<GifRecorderOptions> {
   }
 
   postDraw() {
-    if (this.captureState === "capturing") {
+    if (this.captureState !== "capturing") return;
+
+    try {
+      this.copyCanvas();
+      const fps = this.margedOptions.framerate ?? defaultOptions.framerate;
       this.recorder.addFrame(this.canvas, {
-        delay: 1000 / this.margedOptions.framerate,
+        delay: 1000 / fps,
         copy: true,
       });
+      this.increment();
+    } catch (error) {
+      if (error instanceof Error) {
+        this.emit("error", error);
+      }
     }
-    super.postDraw();
   }
 
   protected onFinished(blob: Blob) {

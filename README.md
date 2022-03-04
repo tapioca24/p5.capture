@@ -58,11 +58,11 @@ p5.capture supports multiple export formats:
 
 You can also use functions to control the capture programmatically.
 
-| Functions                 | Description                                                                         |
-| ------------------------- | ----------------------------------------------------------------------------------- |
-| `startCapturing(options)` | Start capturing                                                                     |
-| `stopCapturing()`         | Stop capturing                                                                      |
-| `captureState()`          | Returns the capture status as a string of `"idle"`, `"capturing"`, or `"encoding"`. |
+| Functions                 | Description                                                                        |
+| ------------------------- | ---------------------------------------------------------------------------------- |
+| `startCapturing(options)` | Start capturing                                                                    |
+| `stopCapturing()`         | Stop capturing                                                                     |
+| `captureState()`          | Returns the capture status as a string of `"idle"`, `"capturing"`, or `"encoding"` |
 
 The following example captures the first 100 frames:
 
@@ -92,9 +92,11 @@ function draw() {
 | Name           | Default                               | Description                                                                           |
 | -------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
 | format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`             |
-| framerate      | `30`                                  | recording framerate. valid for WebM, GIF, and MP4                                     |
-| bitrate        | `2621440` (2.5Mbps)                   | recording bitrate. only valid for MP4.                                                |
+| framerate      | `30`                                  | recording framerate, valid for WebM, GIF, and MP4                                     |
+| bitrate        | `2621440` (2.5Mbps)                   | recording bitrate, only valid for MP4                                                 |
 | quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP      |
+| width          | canvas width                          | output image width                                                                    |
+| height         | canvas height                         | output image height                                                                   |
 | duration       | `null`                                | maximum capture duration in number of frames                                          |
 | verbose        | `false`                               | dumps info on the console                                                             |
 | disableUi      | `false`                               | (only global variable options) hides the UI                                           |

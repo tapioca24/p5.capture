@@ -1,25 +1,27 @@
 import WebMWriter, { WebMWriterOptions } from "webm-writer";
-import { Recorder } from "@/recorders/base";
+import { Recorder, RecorderOptions } from "@/recorders/base";
 import { getFilename } from "@/utils";
 
-export type WebmRecorderOptions = {
+export type WebmRecorderOptions = RecorderOptions & {
   webmWriterOptions?: WebMWriterOptions;
 };
 
-const defaultOptions: Required<WebmRecorderOptions> = {
+const defaultOptions: WebmRecorderOptions = {
   webmWriterOptions: {
     frameRate: 30,
     quality: 0.95,
   },
 };
 
-export class WebmRecorder extends Recorder<WebmRecorderOptions> {
+export class WebmRecorder extends Recorder {
   protected webmWriter: WebMWriter;
-  protected margedOptions: Required<WebmRecorderOptions>;
+  protected margedOptions: WebmRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: WebmRecorderOptions = {}) {
     super(canvas, options);
     this.margedOptions = {
+      ...defaultOptions,
+      ...options,
       webmWriterOptions: {
         ...defaultOptions.webmWriterOptions,
         ...options.webmWriterOptions,
@@ -46,8 +48,9 @@ export class WebmRecorder extends Recorder<WebmRecorderOptions> {
     try {
       switch (this.captureState) {
         case "capturing":
+          this.copyCanvas();
           this.webmWriter.addFrame(this.canvas);
-          super.postDraw();
+          this.increment();
           break;
         case "encoding":
           this.state = "idle";
