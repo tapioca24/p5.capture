@@ -68,7 +68,8 @@ The following example captures the first 100 frames:
 
 ```js
 function setup() {
-  createCanvas(400, 400, WEBGL);
+  createCanvas(480, 480, WEBGL);
+  frameRate(30);
 }
 
 function draw() {
@@ -81,8 +82,8 @@ function draw() {
   }
   background(0);
   normalMaterial();
-  rotateX(frameCount * 0.01);
-  rotateY(frameCount * 0.015);
+  rotateX(frameCount * 0.02);
+  rotateY(frameCount * 0.03);
   torus(width * 0.2, width * 0.1, 64, 64);
 }
 ```
