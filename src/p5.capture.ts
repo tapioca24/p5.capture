@@ -81,7 +81,7 @@ export class P5Capture {
         if (!this.recorder) return;
         ui.updateUi(this.recorder.captureState, this.recorder.capturedCount);
       };
-      ui.button.addEventListener("click", (e) => {
+      ui.checkbox.addEventListener("click", (e) => {
         e.stopPropagation();
         switch (this.captureState()) {
           case "idle":
