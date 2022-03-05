@@ -12,7 +12,7 @@ type RecorderEmitter = StrictEventEmitter<
     start: void;
     stop: void;
     added: void;
-    progress: (parcent: number) => void;
+    progress: (progress: number) => void;
     finished: (blob: Blob, filename: string) => void;
     error: (error: Error) => void;
   }

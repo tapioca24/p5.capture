@@ -75,11 +75,11 @@
   .p5capture-btn-container
   .p5capture-label::before {
   background: #a0aec0;
-  cursor: wait;
+  cursor: not-allowed;
 }
 .p5capture-container.encoding .p5capture-btn-container .p5capture-label::after {
   background: #718096;
-  cursor: wait;
+  cursor: not-allowed;
 }
 .p5capture-container.idle .p5capture-counter {
   opacity: 0;

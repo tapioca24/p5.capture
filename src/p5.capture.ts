@@ -9,8 +9,11 @@ import { WebpRecorder, WebpRecorderOptions } from "@/recorders/webp-recorder";
 import { ImageFormat } from "@/recorders/image-recorder";
 import { downloadBlob } from "@/utils";
 
+export type MovieFormat = "webm" | "gif" | "mp4";
+export type OutputFormat = MovieFormat | ImageFormat;
+
 export type P5CaptureOptions = {
-  format?: "mp4" | "webm" | "gif" | ImageFormat;
+  format?: OutputFormat;
   framerate?: number;
   bitrate?: number;
   quality?: number;
@@ -36,7 +39,9 @@ const defaultOptions: P5CaptureGlobalOptions = {
 
 export class P5Capture {
   protected recorder: Recorder | null = null;
-  protected updateUi: (() => void) | null = null;
+  protected updateUi:
+    | ((framerate?: number, encodingProgress?: number) => void)
+    | null = null;
   protected margedOptions: P5CaptureGlobalOptions | null = null;
 
   captureState() {
@@ -77,9 +82,14 @@ export class P5Capture {
 
     if (!this.margedOptions.disableUi) {
       const ui = createUi(document.body);
-      this.updateUi = () => {
+      this.updateUi = (framerate?: number, encodingProgress?: number) => {
         if (!this.recorder) return;
-        ui.updateUi(this.recorder.captureState, this.recorder.capturedCount);
+        ui.updateUi(
+          this.recorder.captureState,
+          this.recorder.capturedCount,
+          framerate,
+          encodingProgress
+        );
       };
       ui.checkbox.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -126,19 +136,6 @@ export class P5Capture {
     let recorder;
 
     switch (format) {
-      case "mp4":
-        const mp4RecorderOptions: Mp4RecorderOptions = {
-          width,
-          height,
-          mp4EncoderOptions: {
-            fps: framerate,
-            bitrate,
-          },
-        };
-        recorder = new Mp4Recorder(canvas, mp4RecorderOptions);
-        await recorder.initialize();
-        break;
-
       case "webm":
         const webmRecorderOptions: WebmRecorderOptions = {
           width,
@@ -159,6 +156,19 @@ export class P5Capture {
           height,
         };
         recorder = new GifRecorder(canvas, gifRecorderOptions);
+        break;
+
+      case "mp4":
+        const mp4RecorderOptions: Mp4RecorderOptions = {
+          width,
+          height,
+          mp4EncoderOptions: {
+            fps: framerate,
+            bitrate,
+          },
+        };
+        recorder = new Mp4Recorder(canvas, mp4RecorderOptions);
+        await recorder.initialize();
         break;
 
       case "png":
@@ -193,21 +203,22 @@ export class P5Capture {
 
     recorder.on("start", () => {
       this.log("🎥 start capturing");
-      this.updateUi?.();
+      this.updateUi?.(framerate);
     });
     recorder.on("stop", () => {
       this.log("🎥 stop capturing");
-      this.updateUi?.();
+      this.updateUi?.(framerate);
     });
-    recorder.on("added", () => this.updateUi?.());
-    recorder.on("progress", (parcent) => {
-      const p = Math.round(parcent * 1000) / 10;
+    recorder.on("added", () => this.updateUi?.(framerate));
+    recorder.on("progress", (progress) => {
+      const p = Math.round(progress * 100);
       this.log(`⏳ encoding ${p}%`);
+      this.updateUi?.(framerate, progress);
     });
     recorder.on("finished", (blob, filename) => {
       this.log("✅ done");
       downloadBlob(blob, filename);
-      this.updateUi?.();
+      this.updateUi?.(framerate);
     });
     recorder.on("error", (error) => {
       console.error(error.message);

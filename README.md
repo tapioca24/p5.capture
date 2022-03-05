@@ -39,7 +39,7 @@ Add a link *after* p5.js in your html file:
 
 Basically, the capture is controlled by the GUI.
 
-![usage](https://user-images.githubusercontent.com/12683107/154848445-327433f6-3d4f-431f-8e97-98495f36e3f5.gif)
+![usage](https://user-images.githubusercontent.com/12683107/156887588-111a1220-d819-486a-bb1a-33e73fdc1c9e.gif)
 
 That's all 🎉
 
@@ -93,7 +93,7 @@ function draw() {
 | Name           | Default                               | Description                                                                           |
 | -------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
 | format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`             |
-| framerate      | `30`                                  | recording framerate, valid for WebM, GIF, and MP4                                     |
+| framerate      | `30`                                  | recording framerate                                                                   |
 | bitrate        | `2621440` (2.5Mbps)                   | recording bitrate, only valid for MP4                                                 |
 | quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP      |
 | width          | canvas width                          | output image width                                                                    |

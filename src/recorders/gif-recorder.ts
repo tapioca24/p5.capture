@@ -82,7 +82,7 @@ export class GifRecorder extends Recorder {
     this.emit("finished", blob, filename);
   }
 
-  protected onProgress(percent: number) {
-    this.emit("progress", percent);
+  protected onProgress(progress: number) {
+    this.emit("progress", progress);
   }
 }

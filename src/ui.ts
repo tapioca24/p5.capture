@@ -1,8 +1,28 @@
 import { CaptureState } from "@/recorders/base";
 import styleStr from "@/style.css";
 
-const getIndicator = (count: number) => {
+const getFrameCountStr = (count: number) => {
   return `${count}`.padStart(7, "0");
+};
+
+const getElapsedTimeStr = (count: number, framerate: number) => {
+  const elapsedTime = Math.floor((count * 1000) / framerate);
+  const hours = Math.floor(elapsedTime / 3600000);
+  const minutes = Math.floor((elapsedTime % 3600000) / 60000);
+  const seconds = Math.floor((elapsedTime % 60000) / 1000);
+  const milliseconds = Math.floor((elapsedTime % 1000) / 100);
+
+  const minutesStr = minutes.toString().padStart(2, "0");
+  const secondsStr = seconds.toString().padStart(2, "0");
+  return `${hours}:${minutesStr}:${secondsStr}.${milliseconds}`;
+};
+
+const getEncodingProgressStr = (progress?: number) => {
+  if (progress == null) {
+    return "encoding...";
+  }
+  const percentage = Math.round(progress * 100);
+  return `encoding... ${percentage}%`;
 };
 
 const createStyle = (parent: HTMLElement) => {
@@ -43,7 +63,6 @@ const createCheckbox = (parent: HTMLElement) => {
 const createCounter = (parent: HTMLElement) => {
   const counter = document.createElement("span");
   counter.classList.add("p5capture-counter");
-  counter.innerText = getIndicator(0);
   parent.appendChild(counter);
   return counter;
 };
@@ -56,15 +75,32 @@ export const createUi = (parent: HTMLElement) => {
   const checkbox = createCheckbox(label);
   const counter = createCounter(container);
 
-  const updateUi = (state: CaptureState, count: number) => {
+  const updateUi = (
+    state: CaptureState,
+    count: number,
+    framerate?: number,
+    encodingProgress?: number
+  ) => {
     const status: CaptureState[] = ["idle", "capturing", "encoding"];
 
     status.forEach((s) => {
       container.classList.toggle(s, state === s);
     });
     checkbox.disabled = state === "encoding";
-    counter.innerText =
-      state === "encoding" ? "encoding..." : getIndicator(count);
+
+    if (state === "encoding") {
+      counter.innerText = getEncodingProgressStr(encodingProgress);
+      return;
+    }
+    if (state === "idle") {
+      counter.innerText = "";
+      return;
+    }
+    if (!framerate) {
+      counter.innerText = getFrameCountStr(count);
+      return;
+    }
+    counter.innerText = getElapsedTimeStr(count, framerate);
   };
 
   return {
