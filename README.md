@@ -133,6 +133,30 @@ The default value of the `quality` option is different for each format.
 | JPG    | `0.92`  |
 | WebP   | `0.8`   |
 
+# Browser compatibility
+
+It may not work depending on your environment.  
+Tested in the following environments:
+
+|      | Chrome | Edge | Firefox | Safari |
+| ---- | ------ | ---- | ------- | ------ |
+| WebM | ✅     | ✅   | ✅      | ❌     |
+| GIF  | ✅     | ✅   | ✅      | ✅     |
+| MP4  | ✅     | ✅   | ❌      | ❌     |
+| PNG  | ✅     | ✅   | ✅      | ✅     |
+| JPG  | ✅     | ✅   | ✅      | ✅     |
+| WebP | ✅     | ✅   | ✅      | ✅     |
+
+The browser versions used for testing are
+
+- Chrome 98.0.4758.109
+- Edge 98.0.1108.62
+- Firefox 97.0.2
+- Safari 15.3
+
 # Limitations
 
-p5.capture currently only supports [p5.js global mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode).
+- p5.capture currently only supports [p5.js global mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode)
+- Currently there are some limitations with mp4 export
+  - Maximum framerate is 30
+  - Minimum output height is 480
