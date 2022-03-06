@@ -1,9 +1,16 @@
 ![p5.capture](https://user-images.githubusercontent.com/67893738/155303598-97d0c558-27bb-4e28-8e0a-5ae810573696.gif)
 
-[![npm version](https://badge.fury.io/js/p5.capture.svg)](https://badge.fury.io/js/p5.capture)
-[![install size](https://packagephobia.com/badge?p=p5.capture)](https://packagephobia.com/result?p=p5.capture)
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/p5.capture/badge?style=rounded)](https://www.jsdelivr.com/package/npm/p5.capture)
-[![NPM](https://img.shields.io/npm/l/p5.capture)](https://github.com/tapioca24/p5.capture/blob/main/LICENSE)
+<p align="center">
+  <a aria-label="npm" href="https://badge.fury.io/js/p5.capture">
+    <img src="https://img.shields.io/npm/v/p5.capture?style=for-the-badge&labelColor=223843">
+  </a>
+  <a aria-label="jsDelivr hits (npm)" href="https://www.jsdelivr.com/package/npm/p5.capture">
+    <img src="https://img.shields.io/jsdelivr/npm/hm/p5.capture?style=for-the-badge&labelColor=223843">
+  </a>
+  <a aria-label="license" href="https://github.com/tapioca24/p5.capture/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/p5.capture?style=for-the-badge&labelColor=223843">
+  </a>
+</p>
 
 Assuming you would like to capture [p5.js](https://p5js.org/) animations super easily, this package is the right choice for you.
 
