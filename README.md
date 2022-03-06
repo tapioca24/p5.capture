@@ -189,5 +189,6 @@ The browser versions used for testing are
 
 - p5.capture currently only supports [p5.js global mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode)
 - Currently there are some limitations with mp4 export
+  - Does not work on Windows (see [Issue #6 · mattdesl/mp4-wasm](https://github.com/mattdesl/mp4-wasm/issues/6))
   - Maximum framerate is 30
   - Minimum output height is 480
