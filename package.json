@@ -28,7 +28,6 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "date-fns": "^2.28.0",
     "events": "^3.3.0",
     "fflate": "^0.7.3",
     "gif.js": "^0.2.0",
