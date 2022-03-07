@@ -1,5 +1,6 @@
 import { CaptureState } from "@/recorders/base";
 import styleStr from "@/style.css";
+import { OutputFormat } from "@/p5.capture";
 
 const getFrameCountStr = (count: number) => {
   return `${count}`.padStart(7, "0");
@@ -19,10 +20,10 @@ const getElapsedTimeStr = (count: number, framerate: number) => {
 
 const getEncodingProgressStr = (progress?: number) => {
   if (progress == null) {
-    return "encoding...";
+    return "encoding";
   }
   const percentage = Math.round(progress * 100);
-  return `encoding... ${percentage}%`;
+  return `encoding ${percentage}%`;
 };
 
 const createStyle = (parent: HTMLElement) => {
@@ -33,47 +34,136 @@ const createStyle = (parent: HTMLElement) => {
 
 const createContainer = (parent: HTMLElement) => {
   const container = document.createElement("div");
-  container.classList.add("p5capture-container", "idle");
+  container.classList.add("p5c-container", "idle");
   parent.appendChild(container);
-  return container;
+  return { container };
 };
 
-const createButtonContainer = (parent: HTMLElement) => {
+const createButtonAndCounter = (parent: HTMLElement) => {
+  const main = document.createElement("div");
+  main.classList.add("p5c-main");
+  parent.appendChild(main);
+
   const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("p5capture-btn-container");
-  parent.appendChild(buttonContainer);
-  return buttonContainer;
-};
+  buttonContainer.classList.add("p5c-btn-container");
+  main.appendChild(buttonContainer);
 
-const createLabel = (parent: HTMLElement) => {
   const label = document.createElement("label");
-  label.classList.add("p5capture-label");
-  parent.appendChild(label);
-  return label;
-};
+  label.classList.add("p5c-label");
+  buttonContainer.appendChild(label);
 
-const createCheckbox = (parent: HTMLElement) => {
   const checkbox = document.createElement("input");
-  checkbox.classList.add("p5capture-btn");
+  checkbox.classList.add("p5c-btn");
   checkbox.type = "checkbox";
-  parent.appendChild(checkbox);
-  return checkbox;
-};
+  label.appendChild(checkbox);
 
-const createCounter = (parent: HTMLElement) => {
   const counter = document.createElement("span");
-  counter.classList.add("p5capture-counter");
-  parent.appendChild(counter);
-  return counter;
+  counter.classList.add("p5c-counter");
+  main.appendChild(counter);
+
+  return { main, buttonContainer, label, checkbox, counter };
 };
 
-export const createUi = (parent: HTMLElement) => {
+const createFormatSelector = (parent: HTMLElement) => {
+  const label = document.createElement("label");
+  label.htmlFor = "p5c-format";
+  label.textContent = "format";
+  parent.appendChild(label);
+
+  const select = document.createElement("select");
+  select.id = "p5c-format";
+  select.classList.add("p5c-format");
+  parent.appendChild(select);
+
+  [
+    { value: "webm", label: "WebM" },
+    { value: "gif", label: "GIF" },
+    { value: "mp4", label: "MP4" },
+    { value: "png", label: "PNG" },
+    { value: "jpg", label: "JPG" },
+    { value: "webp", label: "WebP" },
+  ].forEach(({ value, label }) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    select.appendChild(option);
+  });
+
+  return { label, select };
+};
+
+const createFramerateInput = (parent: HTMLElement) => {
+  const label = document.createElement("label");
+  label.htmlFor = "p5c-framerate";
+  label.textContent = "framerate";
+  parent.appendChild(label);
+
+  const input = document.createElement("input");
+  input.id = "p5c-framerate";
+  input.classList.add("p5c-framerate");
+  input.type = "number";
+  input.min = "1";
+  parent.appendChild(input);
+
+  return { label, input };
+};
+
+const createOptions = (parent: HTMLElement) => {
+  const options = document.createElement("div");
+  options.classList.add("p5c-options");
+  parent.appendChild(options);
+
+  const { label: formatLabel, select: formatSelect } =
+    createFormatSelector(options);
+  const { label: framerateLabel, input: framerateInput } =
+    createFramerateInput(options);
+
+  return {
+    options,
+    formatLabel,
+    formatSelect,
+    framerateLabel,
+    framerateInput,
+  };
+};
+
+export type UiState = {
+  format?: OutputFormat;
+  framerate?: number;
+};
+
+export type UiEventHandlers = {
+  onClickRecordButton?: (e: MouseEvent) => void;
+  onChangeFormat?: (e: Event) => void;
+  onChangeFramerate?: (e: Event) => void;
+};
+
+export const createUi = (
+  parent: HTMLElement,
+  initialState: UiState,
+  eventHandlers: UiEventHandlers = {}
+) => {
   createStyle(document.head);
-  const container = createContainer(parent);
-  const buttonContainer = createButtonContainer(container);
-  const label = createLabel(buttonContainer);
-  const checkbox = createCheckbox(label);
-  const counter = createCounter(container);
+  const { container } = createContainer(parent);
+  const { formatSelect, framerateInput } = createOptions(container);
+  const { checkbox: recordButton, counter } = createButtonAndCounter(container);
+
+  if (initialState.format) {
+    formatSelect.value = initialState.format;
+  }
+  if (initialState.framerate) {
+    framerateInput.value = `${initialState.framerate}`;
+  }
+
+  if (eventHandlers.onClickRecordButton) {
+    recordButton.addEventListener("click", eventHandlers.onClickRecordButton);
+  }
+  if (eventHandlers.onChangeFormat) {
+    formatSelect.addEventListener("change", eventHandlers.onChangeFormat);
+  }
+  if (eventHandlers.onChangeFramerate) {
+    framerateInput.addEventListener("change", eventHandlers.onChangeFramerate);
+  }
 
   const updateUi = (
     state: CaptureState,
@@ -86,29 +176,23 @@ export const createUi = (parent: HTMLElement) => {
     status.forEach((s) => {
       container.classList.toggle(s, state === s);
     });
-    checkbox.disabled = state === "encoding";
+    recordButton.disabled = state === "encoding";
+    formatSelect.disabled = state !== "idle";
+    framerateInput.disabled = state !== "idle";
 
     if (state === "encoding") {
-      counter.innerText = getEncodingProgressStr(encodingProgress);
+      counter.textContent = getEncodingProgressStr(encodingProgress);
       return;
     }
-    if (state === "idle") {
-      counter.innerText = "";
-      return;
-    }
+
     if (!framerate) {
-      counter.innerText = getFrameCountStr(count);
+      counter.textContent = getFrameCountStr(count);
       return;
     }
-    counter.innerText = getElapsedTimeStr(count, framerate);
+    counter.textContent = getElapsedTimeStr(count, framerate);
   };
 
   return {
-    container,
-    buttonContainer,
-    label,
-    checkbox,
-    counter,
     updateUi,
   };
 };

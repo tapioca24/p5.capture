@@ -1,4 +1,4 @@
-import { createUi } from "@/ui";
+import { createUi, UiState } from "@/ui";
 import { Recorder } from "@/recorders/base";
 import { Mp4Recorder, Mp4RecorderOptions } from "@/recorders/mp4-recorder";
 import { WebmRecorder, WebmRecorderOptions } from "@/recorders/webm-recorder";
@@ -39,6 +39,7 @@ const defaultOptions: P5CaptureGlobalOptions = {
 
 export class P5Capture {
   protected recorder: Recorder | null = null;
+  protected uiState: UiState = {};
   protected updateUi:
     | ((framerate?: number, encodingProgress?: number) => void)
     | null = null;
@@ -81,17 +82,12 @@ export class P5Capture {
     }
 
     if (!this.margedOptions.disableUi) {
-      const ui = createUi(document.body);
-      this.updateUi = (framerate?: number, encodingProgress?: number) => {
-        if (!this.recorder) return;
-        ui.updateUi(
-          this.recorder.captureState,
-          this.recorder.capturedCount,
-          framerate,
-          encodingProgress
-        );
+      this.uiState = {
+        format: this.margedOptions.format,
+        framerate: this.margedOptions.framerate,
       };
-      ui.checkbox.addEventListener("click", (e) => {
+
+      const onClickRecordButton = (e: MouseEvent) => {
         e.stopPropagation();
         switch (this.captureState()) {
           case "idle":
@@ -101,7 +97,37 @@ export class P5Capture {
             this.stopCapturing();
             break;
         }
+      };
+
+      const onChangeFormat = (e: Event) => {
+        e.stopPropagation();
+        const format = (e.target as HTMLSelectElement).value as OutputFormat;
+        this.uiState.format = format;
+      };
+
+      const onChangeFramerate = (e: Event) => {
+        e.stopPropagation();
+        const framerate = (e.target as HTMLInputElement).valueAsNumber;
+        if (framerate > 0) {
+          this.uiState.framerate = framerate;
+        }
+      };
+
+      const { updateUi } = createUi(document.body, this.uiState, {
+        onClickRecordButton: onClickRecordButton.bind(this),
+        onChangeFormat: onChangeFormat.bind(this),
+        onChangeFramerate: onChangeFramerate.bind(this),
       });
+
+      this.updateUi = (framerate?: number, encodingProgress?: number) => {
+        if (!this.recorder) return;
+        updateUi(
+          this.recorder.captureState,
+          this.recorder.capturedCount,
+          framerate,
+          encodingProgress
+        );
+      };
     }
 
     if (this.margedOptions.disableScaling) {
@@ -235,6 +261,7 @@ export class P5Capture {
     this.margedOptions = {
       ...defaultOptions,
       ...globalOptions,
+      ...this.uiState,
       ...options,
     };
   }
