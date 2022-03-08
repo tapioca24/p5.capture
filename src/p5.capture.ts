@@ -87,8 +87,7 @@ export class P5Capture {
         framerate: this.margedOptions.framerate,
       };
 
-      const onClickRecordButton = (e: MouseEvent) => {
-        e.stopPropagation();
+      const onClickRecordButton = (_: MouseEvent) => {
         switch (this.captureState()) {
           case "idle":
             this.startCapturing();
@@ -100,13 +99,11 @@ export class P5Capture {
       };
 
       const onChangeFormat = (e: Event) => {
-        e.stopPropagation();
         const format = (e.target as HTMLSelectElement).value as OutputFormat;
         this.uiState.format = format;
       };
 
       const onChangeFramerate = (e: Event) => {
-        e.stopPropagation();
         const framerate = (e.target as HTMLInputElement).valueAsNumber;
         if (framerate > 0) {
           this.uiState.framerate = framerate;
