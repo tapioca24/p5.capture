@@ -25,7 +25,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "events": "^3.3.0",
