@@ -18,31 +18,30 @@ Check out the demo:
 
 👉 [Demo on OpenProcessing](https://openprocessing.org/sketch/1494568)
 
-# Why p5.capture?
+## Why p5.capture?
 
-## Stable recording 🎩
+### Stable recording 🎩
 
 Recording p5.js animations with a screen recording tool often causes performance issues.
 This is because the recording timing is out of sync with the rendering timing.
 p5.capture hooks into the `draw` function of p5.js to perform the recording task, so it works like magic.
 
-## Keep your sketches clean ✨
+### Keep your sketch clean ✨
 
 Adding recording functionality to a sketch can be very tedious.
-A sketch messed up with recording code becomes less visible and harder to change.
-p5.capture provides a minimalistic GUI by default, designed to add recording functionality without messing up your sketch.
+p5.capture provides a minimal GUI and is designed to add recording functionality without adding any code to your sketch.
 Let's focus on your creative coding.
 Of course, you can also use the API to integrate it into your code.
 
-## Wide variety of export formats 🤹
+### Many export formats 🤹
 
 Tired of having to use different libraries for different formats?
-p5.capture supports a wide variety of export formats: WebM, GIF, MP4, PNG, JPG, and WebP.
-Say goodbye to having to use multiple libraries for recording.
+p5.capture supports many export formats: WebM, GIF, MP4, PNG, JPG, and WebP.
+There is sure to be something you want.
 
-# Installation
+## Installation
 
-## ES Modules (recommended)
+### ES Modules (recommended)
 
 Add a link *after* p5.js in your html file:
 
@@ -53,7 +52,7 @@ Add a link *after* p5.js in your html file:
 
 ⚠️ Note that `type="module"` must be specified.
 
-## UMD
+### UMD
 
 If ES Modules are not available, UMD can be used.  
 Use `p5.cautpre.umd.js` instead.
@@ -66,7 +65,7 @@ Use `p5.cautpre.umd.js` instead.
 The MP4 format is not available with UMD.
 
 
-# Usage
+## Usage
 
 Basically, the capture is controlled by the GUI.
 
@@ -74,7 +73,7 @@ Basically, the capture is controlled by the GUI.
 
 That's all 🎉
 
-## Export formats
+### Export formats
 
 p5.capture supports multiple export formats:
 
@@ -85,7 +84,7 @@ p5.capture supports multiple export formats:
 - JPG: export JPG images in a ZIP file
 - WebP: export WebP images in a ZIP file
 
-## API
+### API
 
 You can also use functions to control the capture programmatically.
 
@@ -119,7 +118,7 @@ function draw() {
 }
 ```
 
-# Options
+## Options
 
 | Name           | Default                               | Description                                                                           |
 | -------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -153,7 +152,7 @@ startCapturing({
 })
 ```
 
-## Quality option
+### Quality option
 
 The default value of the `quality` option is different for each format.
 
@@ -164,7 +163,7 @@ The default value of the `quality` option is different for each format.
 | JPG    | `0.92`  |
 | WebP   | `0.8`   |
 
-# Browser compatibility
+## Browser compatibility
 
 It may not work depending on your environment.  
 Tested in the following environments:
@@ -185,7 +184,7 @@ The browser versions used for testing are
 - Firefox 97.0.2
 - Safari 15.3
 
-# Limitations
+## Limitations
 
 - p5.capture currently only supports [p5.js global mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode)
 - Currently there are some limitations with mp4 export
