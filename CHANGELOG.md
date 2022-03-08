@@ -1,10 +1,14 @@
+## 0.3.0 (March 8, 2022)
+
+- Add UI for format and framerate
+
 ## 0.2.0 (March 6, 2022)
 
 - (BREAKING!!) Change options
 - Change the UI
 - Add width and height options for resize
 
-q## 0.1.2 (February 27, 2022)
+## 0.1.2 (February 27, 2022)
 
 - (BREAKING!!) Fix package defalut file
 

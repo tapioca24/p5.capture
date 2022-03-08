@@ -47,7 +47,7 @@ Add a link *after* p5.js in your html file:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5"></script>
-<script type="module" src="https://cdn.jsdelivr.net/npm/p5.capture@0.2.0"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/p5.capture@0.3.0"></script>
 ```
 
 ⚠️ Note that `type="module"` must be specified.
@@ -59,7 +59,7 @@ Use `p5.cautpre.umd.js` instead.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5"></script>
-<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.2.0/dist/p5.capture.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.3.0/dist/p5.capture.umd.js"></script>
 ```
 
 The MP4 format is not available with UMD.
