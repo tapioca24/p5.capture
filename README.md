@@ -69,7 +69,7 @@ The MP4 format is not available with UMD.
 
 Basically, the capture is controlled by the GUI.
 
-![usage](https://user-images.githubusercontent.com/12683107/157240990-c032d63b-66fc-4874-8159-b7211ad202ae.gif)
+![usage](https://user-images.githubusercontent.com/12683107/157575470-f78c0ae2-ad6f-4656-95b3-7ad6469ed255.gif)
 
 That's all 🎉
 
