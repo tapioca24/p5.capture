@@ -1,3 +1,7 @@
+## 0.3.1 (March 10, 2022)
+
+- Change the style of the UI
+
 ## 0.3.0 (March 8, 2022)
 
 - Add UI for format and framerate
