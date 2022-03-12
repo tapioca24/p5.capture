@@ -141,7 +141,7 @@ export type UiEventHandlers = {
 export const createUi = (
   parent: HTMLElement,
   initialState: UiState,
-  eventHandlers: UiEventHandlers = {}
+  eventHandlers: UiEventHandlers = {},
 ) => {
   createStyle(document.head);
   const { container } = createContainer(parent);
@@ -169,7 +169,7 @@ export const createUi = (
     state: CaptureState,
     count: number,
     framerate?: number,
-    encodingProgress?: number
+    encodingProgress?: number,
   ) => {
     const status: CaptureState[] = ["idle", "capturing", "encoding"];
 

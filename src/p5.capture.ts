@@ -122,7 +122,7 @@ export class P5Capture {
           this.recorder.captureState,
           this.recorder.capturedCount,
           framerate,
-          encodingProgress
+          encodingProgress,
         );
       };
     }

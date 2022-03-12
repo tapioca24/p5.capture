@@ -14,11 +14,11 @@ declare module "webm-writer" {
     addFrame(
       frame: HTMLCanvasElement | string,
       alpha?: HTMLCanvasElement | string,
-      overrideFrameDuration?: number
+      overrideFrameDuration?: number,
     ): void;
     addFrame(
       frame: HTMLCanvasElement | string,
-      overrideFrameDuration?: number
+      overrideFrameDuration?: number,
     ): void;
     complete(): Promise<Blob | null>;
   }

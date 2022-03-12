@@ -26,8 +26,9 @@
   ],
   "scripts": {
     "build": "tsc && vite build",
-    "test": "jest",
-    "prepublishOnly": "yarn test && yarn build"
+    "format": "prettier --write .",
+    "prepublishOnly": "yarn test && yarn build",
+    "test": "jest"
   },
   "dependencies": {
     "events": "^3.3.0",

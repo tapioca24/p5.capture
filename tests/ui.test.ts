@@ -45,7 +45,7 @@ describe("#createUi", () => {
       ui.createUi(
         parent,
         { format: "webm", framerate: 30 },
-        { onClickRecordButton }
+        { onClickRecordButton },
       );
       const checkbox = parent.querySelector<HTMLInputElement>(".p5c-btn");
       checkbox?.dispatchEvent(new Event("click"));
@@ -58,7 +58,7 @@ describe("#createUi", () => {
       ui.createUi(
         parent,
         { format: "webm", framerate: 30 },
-        { onChangeFormat }
+        { onChangeFormat },
       );
       const formatSelect =
         parent.querySelector<HTMLSelectElement>(".p5c-format");
@@ -72,7 +72,7 @@ describe("#createUi", () => {
       ui.createUi(
         parent,
         { format: "webm", framerate: 30 },
-        { onChangeFramerate }
+        { onChangeFramerate },
       );
       const framerateInput =
         parent.querySelector<HTMLInputElement>(".p5c-framerate");
@@ -114,7 +114,7 @@ describe("#createUi", () => {
         "has a container with a $expected class in $state state",
         ({ state, expected }) => {
           const unexpected = ["idle", "capturing", "encoding"].filter(
-            (state) => state !== expected
+            (state) => state !== expected,
           );
 
           updateUi(state, 0, 30);
@@ -122,7 +122,7 @@ describe("#createUi", () => {
           unexpected.forEach((state) => {
             expect(container!.classList.contains(state)).toBe(false);
           });
-        }
+        },
       );
     });
 
@@ -146,7 +146,7 @@ describe("#createUi", () => {
         ({ state, expected }) => {
           updateUi(state, 0, 30);
           expect(recordButton!.disabled).toBe(expected);
-        }
+        },
       );
     });
 
@@ -223,7 +223,7 @@ describe("#createUi", () => {
         ({ state, count, framerate, progress, expected }) => {
           updateUi(state, count, framerate, progress);
           expect(counter!.textContent).toBe(expected);
-        }
+        },
       );
     });
 
@@ -247,7 +247,7 @@ describe("#createUi", () => {
         ({ state, expected }) => {
           updateUi(state, 0, 30);
           expect(formatSelect!.disabled).toBe(expected);
-        }
+        },
       );
     });
 
@@ -272,7 +272,7 @@ describe("#createUi", () => {
         ({ state, expected }) => {
           updateUi(state, 0, 30);
           expect(framerateInput!.disabled).toBe(expected);
-        }
+        },
       );
     });
   });

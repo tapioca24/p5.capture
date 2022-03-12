@@ -101,7 +101,7 @@ export abstract class Recorder extends (EventEmitter as unknown as {
       0,
       0,
       this.canvas.width,
-      this.canvas.height
+      this.canvas.height,
     );
   }
 
@@ -114,7 +114,7 @@ export abstract class Recorder extends (EventEmitter as unknown as {
 
   private calcResizeSize(
     original: HTMLCanvasElement,
-    options: RecorderOptions
+    options: RecorderOptions,
   ) {
     const { width, height } = options;
     const { width: originalWidth, height: originalHeight } = original;

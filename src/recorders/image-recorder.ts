@@ -16,7 +16,7 @@ export class ImageRecorder extends Recorder {
   constructor(
     canvas: HTMLCanvasElement,
     protected format: ImageFormat,
-    options: RecorderOptions = {}
+    options: RecorderOptions = {},
   ) {
     super(canvas, options);
   }
@@ -92,7 +92,7 @@ export class ImageRecorder extends Recorder {
           resolve(blob);
         },
         mimeType,
-        this.qualityOption
+        this.qualityOption,
       );
     });
   }
