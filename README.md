@@ -4,6 +4,9 @@
   <a aria-label="npm" href="https://badge.fury.io/js/p5.capture">
     <img src="https://img.shields.io/npm/v/p5.capture?style=for-the-badge&labelColor=223843">
   </a>
+  <a aria-label="build" href="https://github.com/tapioca24/p5.capture/actions">
+    <img src="https://img.shields.io/github/workflow/status/tapioca24/p5.capture/Check?style=for-the-badge&labelColor=223843">
+  </a>
   <a aria-label="jsDelivr hits (npm)" href="https://www.jsdelivr.com/package/npm/p5.capture">
     <img src="https://img.shields.io/jsdelivr/npm/hm/p5.capture?style=for-the-badge&labelColor=223843">
   </a>
