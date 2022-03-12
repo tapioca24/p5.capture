@@ -15,7 +15,7 @@ const defaultOptions = {
   quality: 0.7,
 };
 
-const calcGifQuality = (quality?: number) => {
+export const calcGifQuality = (quality?: number) => {
   const q = quality ?? defaultOptions.quality;
   return mathClamp(mathMap(q, 0, 1, 30, 1), 1, 30);
 };

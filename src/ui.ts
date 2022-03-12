@@ -2,11 +2,11 @@ import { CaptureState } from "@/recorders/base";
 import styleStr from "@/style.css";
 import { OutputFormat } from "@/p5.capture";
 
-const getFrameCountStr = (count: number) => {
+export const getFrameCountStr = (count: number) => {
   return `${count}`.padStart(7, "0");
 };
 
-const getElapsedTimeStr = (count: number, framerate: number) => {
+export const getElapsedTimeStr = (count: number, framerate: number) => {
   const elapsedTime = Math.floor((count * 1000) / framerate);
   const hours = Math.floor(elapsedTime / 3600000);
   const minutes = Math.floor((elapsedTime % 3600000) / 60000);
@@ -18,7 +18,7 @@ const getElapsedTimeStr = (count: number, framerate: number) => {
   return `${hours}:${minutesStr}:${secondsStr}.${milliseconds}`;
 };
 
-const getEncodingProgressStr = (progress?: number) => {
+export const getEncodingProgressStr = (progress?: number) => {
   if (progress == null) {
     return "encoding";
   }
