@@ -28,7 +28,8 @@
     "build": "tsc && vite build",
     "format": "prettier --write .",
     "prepublishOnly": "yarn test && yarn build",
-    "test": "jest"
+    "test": "jest",
+    "update:readme": "node scripts/update-readme.js"
   },
   "dependencies": {
     "events": "^3.3.0",
