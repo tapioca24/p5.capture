@@ -29,8 +29,9 @@
   "scripts": {
     "build": "tsc && vite build",
     "format": "prettier --write .",
-    "prepublishOnly": "yarn test && yarn build",
-    "test": "jest",
+    "prepublishOnly": "yarn build && yarn test:unit && yarn test:e2e",
+    "test:unit": "jest",
+    "test:e2e": "playwright test --workers 1",
     "update:readme": "node scripts/update-readme.js"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
+    "@playwright/test": "^1.19.2",
     "@types/events": "^3.0.0",
     "@types/gif.js": "^0.2.2",
     "@types/jest": "^27.4.1",
