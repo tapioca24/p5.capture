@@ -29,4 +29,4 @@ jobs:
       - name: Run unit test
         run: yarn test:unit
       - name: Run e2e test
-        run: yarn test:e2e
+        run: yarn test:e2e:skipbuild

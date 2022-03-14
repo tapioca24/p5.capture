@@ -29,9 +29,10 @@
   "scripts": {
     "build": "tsc && vite build",
     "format": "prettier --write .",
-    "prepublishOnly": "yarn build && yarn test:unit && yarn test:e2e",
+    "prepublishOnly": "yarn build && yarn test:unit && yarn test:e2e:skipbuild",
     "test:unit": "jest",
-    "test:e2e": "playwright test --workers 1",
+    "test:e2e": "playwright test",
+    "test:e2e:skipbuild": "SKIP_BUILD=true yarn test:e2e",
     "update:readme": "node scripts/update-readme.js"
   },
   "dependencies": {

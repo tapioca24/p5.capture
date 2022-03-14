@@ -1,35 +1,22 @@
-import { test, expect } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "./fixture";
 import fs from "fs/promises";
-import { server } from "./server";
 
-const PAGE_URL = "http://localhost:3000/tests/e2e/public/index.html";
+const PAGE_PATH = "/tests/e2e/public/index.html";
 const VIDEO_FORMATS = ["webm", "gif"];
 const IMAGE_FORMATS = ["png", "jpg", "webp"];
 const CAPTURE_TIME = 200;
 
-test.beforeAll(() => {
-  return new Promise<void>((resolve) => {
-    const port = process.env.PORT || 3000;
-    server.listen(port, resolve);
-  });
-});
-
-test.afterAll(() => {
-  return new Promise<void>((resolve) => {
-    server.close(() => resolve());
-  });
-});
-
-test("display the ui", async ({ page }) => {
-  await page.goto(PAGE_URL);
+test("display the ui", async ({ page, port }) => {
+  await page.goto(`http://localhost:${port}${PAGE_PATH}`);
   const container = page.locator(".p5c-container");
   await expect(container).toBeVisible();
   await expect(container).toHaveClass(/idle/);
 });
 
 VIDEO_FORMATS.forEach((format) => {
-  test(`download ${format} video`, async ({ page }) => {
-    await page.goto(PAGE_URL);
+  test(`download ${format} video`, async ({ page, port }) => {
+    await page.goto(`http://localhost:${port}${PAGE_PATH}`);
 
     // Select format
     await page.locator(".p5c-format").selectOption(format);
@@ -59,8 +46,8 @@ VIDEO_FORMATS.forEach((format) => {
 });
 
 IMAGE_FORMATS.forEach((format) => {
-  test(`download zipped ${format} files`, async ({ page }) => {
-    await page.goto(PAGE_URL);
+  test(`download zipped ${format} files`, async ({ page, port }) => {
+    await page.goto(`http://localhost:${port}${PAGE_PATH}`);
 
     // Select format
     await page.locator(".p5c-format").selectOption(format);
