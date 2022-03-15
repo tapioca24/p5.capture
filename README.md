@@ -27,9 +27,9 @@ Check out the demo:
 
 ### Stable recording 🎩
 
-Recording p5.js animations with a screen recording tool often causes performance issues.
-This is because the recording timing is out of sync with the rendering timing.
-p5.capture hooks into the `draw` function of p5.js to perform the recording task, so it works like magic.
+Recording p5.js animations with screen recording tools can cause jerky recordings.
+Complex animations can slow down the framerate and make recording unstable.
+p5.capture hooks into the p5.js draw function and records the rendered frame, so it works like magic. 
 
 ### Keep your sketch clean ✨
 
@@ -38,10 +38,10 @@ p5.capture provides a minimal GUI and is designed to add recording functionality
 Let's focus on your creative coding.
 Of course, you can also use the API to integrate it into your code.
 
-### Many export formats 🤹
+### Any format • One API 🤹
 
 Tired of having to use different libraries for different formats?
-p5.capture supports many export formats: WebM, GIF, MP4, PNG, JPG, and WebP.
+p5.capture supports many export formats including WebM, GIF, MP4, PNG, JPG, and WebP.
 There is sure to be something you want.
 
 ## Installation
