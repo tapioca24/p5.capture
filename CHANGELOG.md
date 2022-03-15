@@ -1,3 +1,7 @@
+## 0.3.2 (March 15, 2022)
+
+- Add type definition
+
 ## 0.3.1 (March 10, 2022)
 
 - Change the style of the UI
