@@ -27,7 +27,7 @@ Check out the demo:
 
 Recording p5.js animations with screen recording tools can cause jerky recordings.
 Complex animations can slow down the framerate and make recording unstable.
-p5.capture hooks into the p5.js draw function and records the rendered frame, so it works like magic. 
+p5.capture hooks into the p5.js draw function and records the rendered frame, so it works like magic.
 
 ### Keep your sketch clean ✨
 
