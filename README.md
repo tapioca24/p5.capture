@@ -50,7 +50,7 @@ Add a link _after_ p5.js in your html file:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5"></script>
-<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.4.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.4.1"></script>
 ```
 
 ## Usage

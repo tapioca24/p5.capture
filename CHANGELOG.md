@@ -1,3 +1,7 @@
+## 0.4.1 (March 19, 2022)
+
+- Remove debug code
+
 ## 0.4.0 (March 19, 2022)
 
 - (BREAKING!!) Change how to change default options
