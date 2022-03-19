@@ -1,3 +1,8 @@
+## 0.4.0 (March 19, 2022)
+
+- (BREAKING!!) Change how to change default options
+- Use h264-mp4-encoder for mp4 format
+
 ## 0.3.2 (March 15, 2022)
 
 - Add type definition
