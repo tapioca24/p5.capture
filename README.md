@@ -21,6 +21,7 @@ Assuming you would like to capture [p5.js](https://p5js.org/) animations super e
 
 👇 Check out the demo:
 
+- [Demo on p5.js Web Editor](https://editor.p5js.org/tapioca24/sketches/gozcYyq4F)
 - [Demo on OpenProcessing](https://openprocessing.org/sketch/1494568)
 - [Demo on CodePen](https://codepen.io/tapioca24/pen/JjMdQMz)
 
