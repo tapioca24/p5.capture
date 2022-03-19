@@ -1,3 +1,7 @@
+## 0.4.2 (March 20, 2022)
+
+- Update documentation
+
 ## 0.4.1 (March 19, 2022)
 
 - Remove debug code

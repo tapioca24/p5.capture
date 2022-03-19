@@ -52,7 +52,7 @@ Add a link _after_ p5.js in your html file:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5"></script>
 <!-- insert after p5.js -->
-<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.4.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.4.2"></script>
 ```
 
 ## Usage
