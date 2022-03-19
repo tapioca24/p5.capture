@@ -7,13 +7,7 @@ module.exports = defineConfig({
       entry: resolve(__dirname, "src/index.ts"),
       name: "p5.capture",
       fileName: (format) => `p5.capture.${format}.js`,
-    },
-    rollupOptions: {
-      output: {
-        globals: {
-          "https://unpkg.com/mp4-wasm@1.0.6": "loadMP4Module",
-        },
-      },
+      formats: ["umd"],
     },
   },
   resolve: {

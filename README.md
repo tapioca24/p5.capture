@@ -46,28 +46,12 @@ There is sure to be something you want.
 
 ## Installation
 
-### ES Modules (recommended)
-
 Add a link _after_ p5.js in your html file:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5"></script>
-<script type="module" src="https://cdn.jsdelivr.net/npm/p5.capture@0.3.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.3.2"></script>
 ```
-
-⚠️ Note that `type="module"` must be specified.
-
-### UMD
-
-If ES Modules are not available, UMD can be used.  
-Use `p5.cautpre.umd.js` instead.
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/p5"></script>
-<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.3.2/dist/p5.capture.umd.js"></script>
-```
-
-The MP4 format is not available with UMD.
 
 ## Usage
 
@@ -83,7 +67,7 @@ p5.capture supports multiple export formats:
 
 - WebM (default): export WebM video using [webm-writer-js](https://github.com/thenickdude/webm-writer-js)
 - GIF: export animated GIF using [gif.js](https://github.com/jnordberg/gif.js)
-- MP4: export MP4 video using [mp4-wasm](https://github.com/mattdesl/mp4-wasm) (🧪 Experimental)
+- MP4: export MP4 video using [h264-mp4-encoder](https://github.com/TrevorSundberg/h264-mp4-encoder)
 - PNG: export PNG images in a ZIP file
 - JPG: export JPG images in a ZIP file
 - WebP: export WebP images in a ZIP file
@@ -128,7 +112,7 @@ function draw() {
 | -------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
 | format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`             |
 | framerate      | `30`                                  | recording framerate                                                                   |
-| bitrate        | `2621440` (2.5Mbps)                   | recording bitrate, only valid for MP4                                                 |
+| bitrate        | `5000`                                | recording bitrate in kbps, only valid for MP4                                         |
 | quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP      |
 | width          | canvas width                          | output image width                                                                    |
 | height         | canvas height                         | output image height                                                                   |
@@ -176,7 +160,7 @@ Tested in the following environments:
 | ---- | ------ | ---- | ------- | ------ |
 | WebM | ✅     | ✅   | ✅      | ❌     |
 | GIF  | ✅     | ✅   | ✅      | ✅     |
-| MP4  | ✅     | ✅   | ❌      | ❌     |
+| MP4  | ✅     | ✅   | ✅      | ✅     |
 | PNG  | ✅     | ✅   | ✅      | ✅     |
 | JPG  | ✅     | ✅   | ✅      | ✅     |
 | WebP | ✅     | ✅   | ✅      | ✅     |
@@ -191,7 +175,3 @@ The browser versions used for testing are
 ## Limitations
 
 - p5.capture currently only supports [p5.js global mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode)
-- Currently there are some limitations with mp4 export
-  - Does not work on Windows (see [Issue #6 · mattdesl/mp4-wasm](https://github.com/mattdesl/mp4-wasm/issues/6))
-  - Maximum framerate is 30
-  - Minimum output height is 480

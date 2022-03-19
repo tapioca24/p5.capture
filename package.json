@@ -19,8 +19,7 @@
   },
   "license": "MIT",
   "author": "tapioca24",
-  "module": "dist/p5.capture.es.js",
-  "browser": "dist/p5.capture.es.js",
+  "browser": "dist/p5.capture.umd.js",
   "types": "./index.d.ts",
   "files": [
     "dist",
@@ -39,6 +38,7 @@
     "events": "^3.3.0",
     "fflate": "^0.7.3",
     "gif.js": "^0.2.0",
+    "h264-mp4-encoder": "^1.0.12",
     "webm-writer": "^1.0.0"
   },
   "devDependencies": {

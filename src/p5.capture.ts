@@ -32,6 +32,7 @@ const defaultOptions: P5CaptureGlobalOptions = {
   format: "webm",
   duration: null,
   framerate: 30,
+  bitrate: 5000,
   verbose: false,
   disableUi: false,
   disableScaling: false,
@@ -183,12 +184,10 @@ export class P5Capture {
 
       case "mp4":
         const mp4RecorderOptions: Mp4RecorderOptions = {
+          framerate,
+          bitrate,
           width,
           height,
-          mp4EncoderOptions: {
-            fps: framerate,
-            bitrate,
-          },
         };
         recorder = new Mp4Recorder(canvas, mp4RecorderOptions);
         await recorder.initialize();

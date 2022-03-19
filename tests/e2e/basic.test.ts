@@ -3,7 +3,7 @@ import { test } from "./fixture";
 import fs from "fs/promises";
 
 const PAGE_PATH = "/tests/e2e/public/index.html";
-const VIDEO_FORMATS = ["webm", "gif"];
+const VIDEO_FORMATS = ["webm", "gif", "mp4"];
 const IMAGE_FORMATS = ["png", "jpg", "webp"];
 const CAPTURE_TIME = 200;
 
