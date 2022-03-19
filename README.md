@@ -19,9 +19,10 @@
 
 Assuming you would like to capture [p5.js](https://p5js.org/) animations super easily, this package is the right choice for you.
 
-Check out the demo:
+👇 Check out the demo:
 
-👉 [Demo on OpenProcessing](https://openprocessing.org/sketch/1494568)
+- [Demo on OpenProcessing](https://openprocessing.org/sketch/1494568)
+- [Demo on CodePen](https://codepen.io/tapioca24/pen/JjMdQMz)
 
 ## Why p5.capture?
 
@@ -50,6 +51,7 @@ Add a link _after_ p5.js in your html file:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5"></script>
+<!-- insert after p5.js -->
 <script src="https://cdn.jsdelivr.net/npm/p5.capture@0.4.1"></script>
 ```
 
@@ -76,13 +78,18 @@ p5.capture supports multiple export formats:
 
 Default options can be changed with `P5Capture.setDefaultOptions()` method.  
 Must be used _before_ p5.js initialization.
-See [example](https://github.com/tapioca24/p5.capture/tree/main/example/index.html).
 
 ```js
 P5Capture.setDefaultOptions({
-  format: "png",
-  verbose: true,
+  format: "gif",
+  framerate: 10,
+  quality: 0.5,
+  width: 320,
 });
+
+function setup() {
+  // do something...
+}
 ```
 
 ### API
@@ -98,11 +105,6 @@ You can also use functions to control the capture programmatically.
 The following example captures the first 100 frames of a GIF video:
 
 ```js
-function setup() {
-  createCanvas(480, 480, WEBGL);
-  frameRate(30);
-}
-
 function draw() {
   if (frameCount === 1) {
     startCapturing({
@@ -110,28 +112,35 @@ function draw() {
       duration: 100,
     });
   }
-  background(0);
-  normalMaterial();
-  rotateX(frameCount * 0.02);
-  rotateY(frameCount * 0.03);
-  torus(width * 0.2, width * 0.1, 64, 64);
+
+  // do something...
+}
+```
+
+If you want to control the capturing with keystrokes, you can do so by adding the following code to your sketch:
+
+```js
+function keyPressed() {
+  if (key === "c") {
+    captureState() === "idle" ? startCapturing() : stopCapturing();
+  }
 }
 ```
 
 ## Options
 
-| Name           | Default                               | Description                                                                        |
-| -------------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
-| format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`          |
-| framerate      | `30`                                  | recording framerate                                                                |
-| bitrate        | `5000`                                | recording bitrate in kbps, only valid for MP4                                      |
-| quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP   |
-| width          | canvas width                          | output image width                                                                 |
-| height         | canvas height                         | output image height                                                                |
-| duration       | `null`                                | maximum capture duration in number of frames                                       |
-| verbose        | `false`                               | dumps info on the console                                                          |
-| disableUi      | `false`                               | (only global configuration) hides the UI                                           |
-| disableScaling | `false`                               | (only global configuration) disables pixel scaling for high pixel density displays |
+| Name           | Default                               | Description                                                                                   |
+| -------------- | ------------------------------------- | --------------------------------------------------------------------------------------------- |
+| format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`                     |
+| framerate      | `30`                                  | recording framerate                                                                           |
+| bitrate        | `5000`                                | recording bitrate in kbps, only valid for MP4                                                 |
+| quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP              |
+| width          | canvas width                          | output image width                                                                            |
+| height         | canvas height                         | output image height                                                                           |
+| duration       | `null`                                | maximum capture duration in number of frames                                                  |
+| verbose        | `false`                               | dumps info on the console                                                                     |
+| disableUi      | `false`                               | (only `P5Capture.setDefaultOptions()`) hides the UI                                           |
+| disableScaling | `false`                               | (only `P5Capture.setDefaultOptions()`) disables pixel scaling for high pixel density displays |
 
 ### Quality option
 
