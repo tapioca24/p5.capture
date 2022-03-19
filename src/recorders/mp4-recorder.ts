@@ -35,7 +35,6 @@ export class Mp4Recorder extends Recorder {
     if (bitrate != null) {
       encoder.kbps = bitrate;
     }
-    encoder.debug = true;
 
     encoder.initialize();
     this.encoder = encoder;
