@@ -72,6 +72,19 @@ p5.capture supports multiple export formats:
 - JPG: export JPG images in a ZIP file
 - WebP: export WebP images in a ZIP file
 
+### Change default options
+
+Default options can be changed with `P5Capture.setDefaultOptions()` method.  
+Must be used _before_ p5.js initialization.
+See [example](https://github.com/tapioca24/p5.capture/tree/main/example/index.html).
+
+```js
+P5Capture.setDefaultOptions({
+  format: "png",
+  verbose: true,
+});
+```
+
 ### API
 
 You can also use functions to control the capture programmatically.
@@ -82,7 +95,7 @@ You can also use functions to control the capture programmatically.
 | `stopCapturing()`         | Stop capturing                                                                     |
 | `captureState()`          | Returns the capture status as a string of `"idle"`, `"capturing"`, or `"encoding"` |
 
-The following example captures the first 100 frames:
+The following example captures the first 100 frames of a GIF video:
 
 ```js
 function setup() {
@@ -95,7 +108,6 @@ function draw() {
     startCapturing({
       format: "gif",
       duration: 100,
-      verbose: true,
     });
   }
   background(0);
@@ -108,37 +120,18 @@ function draw() {
 
 ## Options
 
-| Name           | Default                               | Description                                                                           |
-| -------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
-| format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`             |
-| framerate      | `30`                                  | recording framerate                                                                   |
-| bitrate        | `5000`                                | recording bitrate in kbps, only valid for MP4                                         |
-| quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP      |
-| width          | canvas width                          | output image width                                                                    |
-| height         | canvas height                         | output image height                                                                   |
-| duration       | `null`                                | maximum capture duration in number of frames                                          |
-| verbose        | `false`                               | dumps info on the console                                                             |
-| disableUi      | `false`                               | (only global variable options) hides the UI                                           |
-| disableScaling | `false`                               | (only global variable options) disables pixel scaling for high pixel density displays |
-
-There are two ways to pass the options object.
-
-- the global variable `P5_CAPTURE_OPTIONS`
-- the argument of `startCapturing(options)`
-
-```js
-// global variable
-P5_CAPTURE_OPTIONS = {
-  format: "png",
-  verbose: true,
-};
-
-// or argument of startCapturing()
-startCapturing({
-  format: "png",
-  verbose: true,
-});
-```
+| Name           | Default                               | Description                                                                        |
+| -------------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
+| format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`          |
+| framerate      | `30`                                  | recording framerate                                                                |
+| bitrate        | `5000`                                | recording bitrate in kbps, only valid for MP4                                      |
+| quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP   |
+| width          | canvas width                          | output image width                                                                 |
+| height         | canvas height                         | output image height                                                                |
+| duration       | `null`                                | maximum capture duration in number of frames                                       |
+| verbose        | `false`                               | dumps info on the console                                                          |
+| disableUi      | `false`                               | (only global configuration) hides the UI                                           |
+| disableScaling | `false`                               | (only global configuration) disables pixel scaling for high pixel density displays |
 
 ### Quality option
 

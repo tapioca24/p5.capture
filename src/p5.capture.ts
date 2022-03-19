@@ -46,6 +46,12 @@ export class P5Capture {
     | null = null;
   protected margedOptions: P5CaptureGlobalOptions | null = null;
 
+  protected static globalOptions: P5CaptureGlobalOptions = {};
+
+  static setDefaultOptions(options: P5CaptureGlobalOptions) {
+    this.globalOptions = options;
+  }
+
   captureState() {
     if (!this.recorder) return "idle";
     return this.recorder.captureState;
@@ -250,13 +256,9 @@ export class P5Capture {
   }
 
   protected margeOptions(options: P5CaptureOptions = {}) {
-    const globalOptions = (window as any).P5_CAPTURE_OPTIONS as
-      | P5CaptureGlobalOptions
-      | undefined;
-
     this.margedOptions = {
       ...defaultOptions,
-      ...globalOptions,
+      ...P5Capture.globalOptions,
       ...this.uiState,
       ...options,
     };
