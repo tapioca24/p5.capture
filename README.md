@@ -48,13 +48,15 @@ There is sure to be something you want.
 
 ## Installation
 
-Add a link _after_ p5.js in your html file:
+Insert a link to the p5.capture _after_ p5.js in your html file:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5"></script>
 <!-- insert after p5.js -->
 <script src="https://cdn.jsdelivr.net/npm/p5.capture@0.4.2"></script>
 ```
+
+You can find all versions in the [p5.capture CDN](https://www.jsdelivr.com/package/npm/p5.capture).
 
 ## Usage
 
