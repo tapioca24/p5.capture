@@ -3,8 +3,6 @@ import prettier from "prettier";
 import { CaptureState } from "@/recorders/base";
 import * as ui from "@/ui";
 
-// jest.mock("@/style.css", () => "");
-
 describe("#getFrameCountStr", () => {
   it("returns a zero-padded string", () => {
     expect(ui.getFrameCountStr(1234)).toBe("0001234");
