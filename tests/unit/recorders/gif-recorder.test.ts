@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { calcGifQuality } from "@/recorders/gif-recorder";
 
 describe("#calcGifQuarity", () => {

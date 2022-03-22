@@ -29,9 +29,9 @@
     "build": "tsc && vite build",
     "format": "prettier --write .",
     "prepublishOnly": "yarn build && yarn test:unit && yarn test:e2e:skipbuild",
-    "test:unit": "jest",
     "test:e2e": "playwright test",
     "test:e2e:skipbuild": "SKIP_BUILD=true yarn test:e2e",
+    "test:unit": "vitest",
     "update:readme": "node scripts/update-readme.js"
   },
   "dependencies": {
@@ -46,9 +46,12 @@
     "@types/events": "^3.0.0",
     "@types/gif.js": "^0.2.2",
     "@types/p5": "^1.4.0",
+    "@types/prettier": "^2.4.4",
+    "happy-dom": "^2.49.2",
     "prettier": "^2.5.1",
     "strict-event-emitter-types": "^2.0.0",
     "typescript": "^4.5.4",
-    "vite": "^2.8.0"
+    "vite": "^2.8.0",
+    "vitest": "^0.7.7"
   }
 }

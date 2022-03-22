@@ -1,8 +1,9 @@
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import prettier from "prettier";
-import * as ui from "@/ui";
 import { CaptureState } from "@/recorders/base";
+import * as ui from "@/ui";
 
-jest.mock("@/style.css", () => "");
+// jest.mock("@/style.css", () => "");
 
 describe("#getFrameCountStr", () => {
   it("returns a zero-padded string", () => {
@@ -40,7 +41,7 @@ describe("#createUi", () => {
 
   describe("event handlers", () => {
     it("calls the onClickRecordButton event handler", () => {
-      const onClickRecordButton = jest.fn();
+      const onClickRecordButton = vi.fn();
       const parent = document.createElement("div");
       ui.createUi(
         parent,
@@ -53,7 +54,7 @@ describe("#createUi", () => {
     });
 
     it("calls the onChangeFormat event handler", () => {
-      const onChangeFormat = jest.fn();
+      const onChangeFormat = vi.fn();
       const parent = document.createElement("div");
       ui.createUi(
         parent,
@@ -67,7 +68,7 @@ describe("#createUi", () => {
     });
 
     it("calls the onChangeFramerate event handler", () => {
-      const onChangeFramerate = jest.fn();
+      const onChangeFramerate = vi.fn();
       const parent = document.createElement("div");
       ui.createUi(
         parent,

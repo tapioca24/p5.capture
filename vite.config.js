@@ -1,5 +1,5 @@
 const { resolve } = require("path");
-const { defineConfig } = require("vite");
+const { defineConfig } = require("vitest/config");
 
 module.exports = defineConfig({
   build: {
@@ -17,5 +17,9 @@ module.exports = defineConfig({
         replacement: resolve(__dirname, "src"),
       },
     ],
+  },
+  test: {
+    include: ["tests/unit/**/*.test.ts"],
+    environment: "happy-dom",
   },
 });
