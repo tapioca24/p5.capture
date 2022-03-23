@@ -17,7 +17,7 @@
   </a>
 </p>
 
-Assuming you would like to capture [p5.js](https://p5js.org/) animations super easily, this package is the right choice for you.
+Assuming you would like to record [p5.js](https://p5js.org/) animations super easily, this package is the right choice for you.
 
 👇 Check out the demo:
 
@@ -51,16 +51,16 @@ There is sure to be something you want.
 Insert a link to the p5.capture _after_ p5.js in your html file:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/p5"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.min.js"></script>
 <!-- insert after p5.js -->
-<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.4.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5.capture@0.4.2/dist/p5.capture.umd.min.js"></script>
 ```
 
-You can find all versions in the [p5.capture CDN](https://www.jsdelivr.com/package/npm/p5.capture).
+You can find all versions in the [jsDelivr](https://www.jsdelivr.com/package/npm/p5.capture).
 
 ## Usage
 
-Basically, the capture is controlled by the GUI.
+Basically, the GUI provided by p5.capture starts and stops recording.
 
 ![usage](https://user-images.githubusercontent.com/12683107/157575470-f78c0ae2-ad6f-4656-95b3-7ad6469ed255.gif)
 
@@ -68,7 +68,7 @@ That's all 🎉
 
 ### Export formats
 
-p5.capture supports multiple export formats:
+Supported formats include:
 
 - WebM (default): export WebM video using [webm-writer-js](https://github.com/thenickdude/webm-writer-js)
 - GIF: export animated GIF using [gif.js](https://github.com/jnordberg/gif.js)
@@ -167,7 +167,7 @@ function keyPressed() {
 | quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP              |
 | width          | canvas width                          | output image width                                                                            |
 | height         | canvas height                         | output image height                                                                           |
-| duration       | `null`                                | maximum capture duration in number of frames                                                  |
+| duration       | `null`                                | maximum recording duration in number of frames                                                |
 | verbose        | `false`                               | dumps info on the console                                                                     |
 | disableUi      | `false`                               | (only `P5Capture.setDefaultOptions()`) hides the UI                                           |
 | disableScaling | `false`                               | (only `P5Capture.setDefaultOptions()`) disables pixel scaling for high pixel density displays |

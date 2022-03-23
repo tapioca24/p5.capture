@@ -1,7 +1,7 @@
 {
   "name": "p5.capture",
   "version": "0.4.2",
-  "description": "super easy capturing for p5.js animations 📸",
+  "description": "super easy recording for p5.js animations 📸",
   "keywords": [
     "sketch",
     "p5js",
