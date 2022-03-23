@@ -15,10 +15,7 @@ exports[`#createUi > inserts the UI into the parent element 1`] = `
     ><input id=\\"p5c-framerate\\" class=\\"p5c-framerate\\" type=\\"number\\" min=\\"1\\" />
   </div>
   <div class=\\"p5c-main\\">
-    <div class=\\"p5c-btn-container\\">
-      <label class=\\"p5c-label\\"><input class=\\"p5c-btn\\" type=\\"checkbox\\" /></label>
-    </div>
-    <span class=\\"p5c-counter\\"></span>
+    <button class=\\"p5c-btn\\"></button><span class=\\"p5c-counter\\"></span>
   </div>
 </div>
 "

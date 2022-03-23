@@ -22,15 +22,14 @@ VIDEO_FORMATS.forEach((format) => {
     await page.locator(".p5c-format").selectOption(format);
 
     // Start capturing
-    const label = page.locator(".p5c-label");
-    await label.evaluate((elem: HTMLLabelElement) => elem.click());
+    await page.locator(".p5c-btn").click();
 
     await page.waitForTimeout(CAPTURE_TIME);
 
     // Stop capturing & download
     const [download] = await Promise.all([
       page.waitForEvent("download"),
-      label.evaluate((elem: HTMLLabelElement) => elem.click()),
+      page.locator(".p5c-btn").click(),
     ]);
 
     const filename = await download.suggestedFilename();
@@ -53,15 +52,14 @@ IMAGE_FORMATS.forEach((format) => {
     await page.locator(".p5c-format").selectOption(format);
 
     // Start capturing
-    const label = page.locator(".p5c-label");
-    await label.evaluate((elem: HTMLLabelElement) => elem.click());
+    await page.locator(".p5c-btn").click();
 
     await page.waitForTimeout(CAPTURE_TIME);
 
     // Stop capturing & download
     const [download] = await Promise.all([
       page.waitForEvent("download"),
-      label.evaluate((elem: HTMLLabelElement) => elem.click()),
+      page.locator(".p5c-btn").click(),
     ]);
 
     const filename = await download.suggestedFilename();

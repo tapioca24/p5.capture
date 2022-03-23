@@ -44,24 +44,15 @@ const createButtonAndCounter = (parent: HTMLElement) => {
   main.classList.add("p5c-main");
   parent.appendChild(main);
 
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("p5c-btn-container");
-  main.appendChild(buttonContainer);
-
-  const label = document.createElement("label");
-  label.classList.add("p5c-label");
-  buttonContainer.appendChild(label);
-
-  const checkbox = document.createElement("input");
-  checkbox.classList.add("p5c-btn");
-  checkbox.type = "checkbox";
-  label.appendChild(checkbox);
+  const button = document.createElement("button");
+  button.classList.add("p5c-btn");
+  main.appendChild(button);
 
   const counter = document.createElement("span");
   counter.classList.add("p5c-counter");
   main.appendChild(counter);
 
-  return { main, buttonContainer, label, checkbox, counter };
+  return { main, button, counter };
 };
 
 const createFormatSelector = (parent: HTMLElement) => {
@@ -146,7 +137,7 @@ export const createUi = (
   createStyle(document.head);
   const { container } = createContainer(parent);
   const { formatSelect, framerateInput } = createOptions(container);
-  const { checkbox: recordButton, counter } = createButtonAndCounter(container);
+  const { button: recordButton, counter } = createButtonAndCounter(container);
 
   if (initialState.format) {
     formatSelect.value = initialState.format;

@@ -46,8 +46,8 @@ describe("#createUi", () => {
         { format: "webm", framerate: 30 },
         { onClickRecordButton },
       );
-      const checkbox = parent.querySelector<HTMLInputElement>(".p5c-btn");
-      checkbox?.dispatchEvent(new Event("click"));
+      const button = parent.querySelector<HTMLInputElement>(".p5c-btn");
+      button?.dispatchEvent(new Event("click"));
       expect(onClickRecordButton).toHaveBeenCalledTimes(1);
     });
 
@@ -126,14 +126,14 @@ describe("#createUi", () => {
     });
 
     describe("record button", () => {
-      let recordButton: HTMLInputElement | null;
+      let recordButton: HTMLButtonElement | null;
 
       beforeEach(() => {
-        recordButton = parent.querySelector<HTMLInputElement>(".p5c-btn");
+        recordButton = parent.querySelector<HTMLButtonElement>(".p5c-btn");
       });
 
       it("has a enabled button in the initial state", () => {
-        expect(recordButton!.disabled).toBe(false);
+        expect(recordButton!.disabled).toBeFalsy();
       });
 
       it.each<{ state: CaptureState; expected: boolean }>([
