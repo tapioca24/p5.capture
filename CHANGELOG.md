@@ -1,3 +1,10 @@
+## 0.5.0 (March 23, 2022)
+
+- (BREAKING!!) Revamp API
+- Make the recording button focusable
+- Change the unit test runner to [Vitest](https://vitest.dev/)
+- Update documentation
+
 ## 0.4.2 (March 20, 2022)
 
 - Update documentation
