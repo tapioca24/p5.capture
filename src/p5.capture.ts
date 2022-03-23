@@ -47,17 +47,31 @@ export class P5Capture {
   protected margedOptions: P5CaptureGlobalOptions | null = null;
 
   protected static globalOptions: P5CaptureGlobalOptions = {};
+  protected static instance: P5Capture | null = null;
 
   static setDefaultOptions(options: P5CaptureGlobalOptions) {
     this.globalOptions = options;
   }
 
-  captureState() {
+  static getInstance() {
+    return this.instance;
+  }
+
+  constructor() {
+    if (P5Capture.instance) {
+      throw new Error(
+        "P5Capture is already instantiated. Consider using P5Capture.getInstance().",
+      );
+    }
+    P5Capture.instance = this;
+  }
+
+  get state() {
     if (!this.recorder) return "idle";
     return this.recorder.captureState;
   }
 
-  async startCapturing(options: P5CaptureOptions = {}) {
+  async start(options: P5CaptureOptions = {}) {
     try {
       this.margeOptions(options);
       this.recorder = await this.createRecorder();
@@ -69,7 +83,7 @@ export class P5Capture {
     }
   }
 
-  async stopCapturing() {
+  async stop() {
     try {
       if (!this.recorder) {
         throw new Error("capturing is not started");
@@ -95,12 +109,12 @@ export class P5Capture {
       };
 
       const onClickRecordButton = (_: MouseEvent) => {
-        switch (this.captureState()) {
+        switch (this.state) {
           case "idle":
-            this.startCapturing();
+            this.start();
             break;
           case "capturing":
-            this.stopCapturing();
+            this.stop();
             break;
         }
       };
@@ -145,11 +159,11 @@ export class P5Capture {
   }
 
   postDraw() {
-    if (this.captureState() === "capturing") {
+    if (this.state === "capturing") {
       const duration = this.margedOptions?.duration;
       const count = this.recorder?.capturedCount;
       if (duration && count && count >= duration) {
-        this.stopCapturing();
+        this.stop();
       }
     }
     this.recorder?.postDraw();

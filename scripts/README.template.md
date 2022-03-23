@@ -75,9 +75,20 @@ p5.capture supports multiple export formats:
 - JPG: export JPG images in a ZIP file
 - WebP: export WebP images in a ZIP file
 
-### Change default options
+## API
 
-Default options can be changed with `P5Capture.setDefaultOptions()` method.  
+The `P5Capture` class can be used to programmatically control recording.
+
+### Static methods
+
+#### `P5Capture.getInstance()`
+
+Returns a P5Capture instance.  
+Used to access the P5Capture instance automatically created when p5.capture is initialized.
+
+#### `P5Capture.setDefaultOptions(options)`
+
+Change default options.  
 Must be used _before_ p5.js initialization.
 
 ```js
@@ -93,22 +104,33 @@ function setup() {
 }
 ```
 
-### API
+### Instance methods
 
-You can also use functions to control the capture programmatically.
+#### `start(options?)`
 
-| Functions                 | Description                                                                        |
-| ------------------------- | ---------------------------------------------------------------------------------- |
-| `startCapturing(options)` | Start capturing                                                                    |
-| `stopCapturing()`         | Stop capturing                                                                     |
-| `captureState()`          | Returns the capture status as a string of `"idle"`, `"capturing"`, or `"encoding"` |
+Start recording with the specified options.  
+`options` can be omitted.
 
-The following example captures the first 100 frames of a GIF video:
+#### `stop()`
+
+Stop recording and start encoding.  
+Download files after encoding is complete.
+
+### Instance properties
+
+#### `state` (Read only)
+
+Returns the current recording state (`"idle"`, `"capturing"`, or `"encoding"`).
+
+### Examples
+
+The following example shows how to record the first 100 frames and create a GIF video:
 
 ```js
 function draw() {
   if (frameCount === 1) {
-    startCapturing({
+    const capture = P5Capture.getInstance();
+    capture.start({
       format: "gif",
       duration: 100,
     });
@@ -118,12 +140,17 @@ function draw() {
 }
 ```
 
-If you want to control the capturing with keystrokes, you can do so by adding the following code to your sketch:
+The following example shows how to add an event handler that starts and stops recording with a keystroke:
 
 ```js
 function keyPressed() {
   if (key === "c") {
-    captureState() === "idle" ? startCapturing() : stopCapturing();
+    const capture = P5Capture.getInstance();
+    if (capture.state === "idle") {
+      capture.start();
+    } else {
+      capture.stop();
+    }
   }
 }
 ```

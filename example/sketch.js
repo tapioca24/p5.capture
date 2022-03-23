@@ -1,3 +1,6 @@
+/// <reference types="p5/global" />
+/// <reference path="../index.d.ts" />
+
 function setup() {
   createCanvas(480, 480, WEBGL);
   frameRate(30);

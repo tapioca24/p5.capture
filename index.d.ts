@@ -18,10 +18,11 @@ export type P5CaptureGlobalOptions = P5CaptureOptions & {
 };
 
 declare global {
-  function startCapturing(options?: P5CaptureOptions): void;
-  function stopCapturing(): void;
-  function captureState(): P5CaptureState;
   class P5Capture {
     static setDefaultOptions(options: P5CaptureGlobalOptions): void;
+    static getInstance(): P5Capture;
+    get state(): P5CaptureState;
+    start(options?: P5CaptureOptions): Promise<void>;
+    stop(): Promise<void>;
   }
 }
