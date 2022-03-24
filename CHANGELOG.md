@@ -1,3 +1,7 @@
+## 1.0.0 (March 25, 2022)
+
+- First stable release 🎉
+
 ## 0.5.1 (March 24, 2022)
 
 - Update documentation
