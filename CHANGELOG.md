@@ -1,3 +1,7 @@
+## 0.5.1 (March 24, 2022)
+
+- Update documentation
+
 ## 0.5.0 (March 23, 2022)
 
 - (BREAKING!!) Revamp API
