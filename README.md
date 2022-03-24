@@ -90,7 +90,7 @@ Used to access the P5Capture instance automatically created when p5.capture is i
 
 #### `P5Capture.setDefaultOptions(options)`
 
-Change default options.  
+Change default options. These options affect both GUI and API recording.  
 Must be used _before_ p5.js initialization.
 
 ```js
