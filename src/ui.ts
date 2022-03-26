@@ -26,6 +26,29 @@ export const getEncodingProgressStr = (progress?: number) => {
   return `encoding ${percentage}%`;
 };
 
+const setDraggable = (container: HTMLDivElement) => {
+  let mousePos = { x: 0, y: 0 };
+  let containerPos = { x: 0, y: 0 };
+  let isDragging = false;
+
+  container.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    mousePos = { x: e.pageX, y: e.pageY };
+    containerPos = { x: container.offsetLeft, y: container.offsetTop };
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    const diff = { x: e.pageX - mousePos.x, y: e.pageY - mousePos.y };
+    container.style.left = `${containerPos.x + diff.x}px`;
+    container.style.top = `${containerPos.y + diff.y}px`;
+  });
+};
+
 const createStyle = (parent: HTMLElement) => {
   const style = document.createElement("style");
   style.innerHTML = styleStr;
@@ -35,6 +58,7 @@ const createStyle = (parent: HTMLElement) => {
 const createContainer = (parent: HTMLElement) => {
   const container = document.createElement("div");
   container.classList.add("p5c-container", "idle");
+  setDraggable(container);
   parent.appendChild(container);
   return { container };
 };
