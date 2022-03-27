@@ -1,3 +1,8 @@
+## 1.1.0 (March 27, 2022)
+
+- Enables the UI to be moved by dragging (https://github.com/tapioca24/p5.capture/pull/2)
+- Improve visibility (https://github.com/tapioca24/p5.capture/pull/3)
+
 ## 1.0.0 (March 25, 2022)
 
 - First stable release 🎉
