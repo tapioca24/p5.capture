@@ -1,11 +1,10 @@
 .p5c-container {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 12px;
+  left: 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: 12px;
   padding: 10px;
   font-family: Menlo, Consolas, monospace;
   font-size: 1rem;
@@ -15,6 +14,7 @@
   text-shadow: 2px 2px 4px #4a5568, 2px -2px 4px #4a5568, -2px 2px 4px #4a5568,
     -2px -2px 4px #4a5568;
   box-shadow: 0 0 4px #4a5568;
+  cursor: move;
 }
 .p5c-main {
   display: flex;
