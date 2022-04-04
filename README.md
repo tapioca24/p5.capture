@@ -17,6 +17,18 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="#about">About</a> • <a href="#why-p5capture">Why p5.capture?</a> • <a href="#getting-started">Getting started</a> • <a href="#api">API</a>
+  <br />
+  <a href="#options">Options</a> • <a href="#browser-compatibility">Browser compatibility</a> • <a href="#limitations">Limitations</a>
+</p>
+
+## About
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/12683107/161574420-6ff4141c-affa-410e-877b-f1ff36d7cc0d.png" width="300">
+</p>
+
 Assuming you would like to record [p5.js](https://p5js.org/) animations super easily, this package is the right choice for you.
 
 👇 Check out the demo:
@@ -27,26 +39,28 @@ Assuming you would like to record [p5.js](https://p5js.org/) animations super ea
 
 ## Why p5.capture?
 
-### Stable recording 🎩
+### 🎩 Stable recording
 
 Recording p5.js animations with screen recording tools can cause jerky recordings.
 Complex animations can slow down the framerate and make recording unstable.
 p5.capture hooks into the p5.js draw function and records the rendered frame, so it works like magic.
 
-### Keep your sketch clean ✨
+### ✨ Keep your sketch clean
 
 Adding recording functionality to a sketch can be very tedious.
 p5.capture provides a minimal GUI and is designed to add recording functionality without adding any code to your sketch.
 Let's focus on your creative coding.
 Of course, you can also use the API to integrate it into your code.
 
-### Any format • One API 🤹
+### 🤹 Any format • One API
 
 Tired of having to use different libraries for different formats?
 p5.capture supports many export formats including WebM, GIF, MP4, PNG, JPG, and WebP.
 There is sure to be something you want.
 
-## Installation
+## Getting started
+
+### Installation
 
 Insert a link to the p5.capture _after_ p5.js in your html file:
 
@@ -58,7 +72,7 @@ Insert a link to the p5.capture _after_ p5.js in your html file:
 
 You can find all versions in the [jsDelivr](https://www.jsdelivr.com/package/npm/p5.capture).
 
-## Usage
+### Usage
 
 Basically, the GUI provided by p5.capture starts and stops recording.
 
@@ -66,7 +80,7 @@ Basically, the GUI provided by p5.capture starts and stops recording.
 
 That's all 🎉
 
-### Export formats
+#### Export formats
 
 Supported formats include:
 
