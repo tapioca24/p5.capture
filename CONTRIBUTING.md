@@ -8,6 +8,7 @@ Make sure you have Node.js and Yarn installed.
 
 1. Fork this repository and clone your fork
 2. Install dependencies: `yarn install`
+3. Install browsers for E2E test: `yarn setup`
 
 ## Build
 
