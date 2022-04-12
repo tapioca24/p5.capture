@@ -1,3 +1,6 @@
+## 1.1.1 (April 12, 2022)
+
+- Fix the issue of installation failure via npm (https://github.com/tapioca24/p5.capture/pull/5)
 ## 1.1.0 (March 27, 2022)
 
 - Enables the UI to be moved by dragging (https://github.com/tapioca24/p5.capture/pull/2)
