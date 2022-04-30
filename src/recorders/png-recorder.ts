@@ -1,7 +1,9 @@
-import { ImageRecorder } from "@/recorders/image-recorder";
-import { RecorderOptions } from "@/recorders/base";
+import {
+  ImageRecorder,
+  ImageRecorderOptions,
+} from "@/recorders/image-recorder";
 
-export type PngRecorderOptions = RecorderOptions & {};
+export type PngRecorderOptions = ImageRecorderOptions & {};
 
 const defaultOptions: PngRecorderOptions = {};
 

@@ -1,7 +1,9 @@
-import { ImageRecorder } from "@/recorders/image-recorder";
-import { RecorderOptions } from "@/recorders/base";
+import {
+  ImageRecorder,
+  ImageRecorderOptions,
+} from "@/recorders/image-recorder";
 
-export type JpgRecorderOptions = RecorderOptions & {
+export type JpgRecorderOptions = ImageRecorderOptions & {
   quality?: number;
 };
 

@@ -20,6 +20,7 @@ export type P5CaptureOptions = {
   width?: number;
   height?: number;
   duration?: number | null;
+  autoSaveDuration?: number | null;
   verbose?: boolean;
 };
 
@@ -30,9 +31,10 @@ export type P5CaptureGlobalOptions = P5CaptureOptions & {
 
 const defaultOptions: P5CaptureGlobalOptions = {
   format: "webm",
-  duration: null,
   framerate: 30,
   bitrate: 5000,
+  duration: null,
+  autoSaveDuration: null,
   verbose: false,
   disableUi: false,
   disableScaling: false,
@@ -175,8 +177,15 @@ export class P5Capture {
     }
 
     const canvas = (window as any).canvas;
-    const { format, framerate, bitrate, quality, width, height } =
-      this.mergedOptions;
+    const {
+      format,
+      framerate,
+      bitrate,
+      quality,
+      width,
+      height,
+      autoSaveDuration,
+    } = this.mergedOptions;
     let recorder;
 
     switch (format) {
@@ -217,6 +226,7 @@ export class P5Capture {
         const pngRecorderOptions: PngRecorderOptions = {
           width,
           height,
+          autoSaveDuration,
         };
         recorder = new PngRecorder(canvas, pngRecorderOptions);
         break;
@@ -226,6 +236,7 @@ export class P5Capture {
           quality,
           width,
           height,
+          autoSaveDuration,
         };
         recorder = new JpgRecorder(canvas, jpgRecorderOptions);
         break;
@@ -235,6 +246,7 @@ export class P5Capture {
           quality,
           width,
           height,
+          autoSaveDuration,
         };
         recorder = new WebpRecorder(canvas, webpRecorderOptions);
         break;
@@ -261,6 +273,10 @@ export class P5Capture {
       this.log("✅ done");
       downloadBlob(blob, filename);
       this.updateUi?.(framerate);
+    });
+    recorder.on("segmented", (blob, filename) => {
+      this.log(`💾 save segmented file: ${filename}`);
+      downloadBlob(blob, filename);
     });
     recorder.on("error", (error) => {
       console.error(error.message);

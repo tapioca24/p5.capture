@@ -9,6 +9,7 @@ export type P5CaptureOptions = {
   width?: number;
   height?: number;
   duration?: number | null;
+  autoSaveDuration?: number | null;
   verbose?: boolean;
 };
 
