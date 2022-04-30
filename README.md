@@ -173,18 +173,19 @@ function keyPressed() {
 
 ## Options
 
-| Name           | Default                               | Description                                                                                   |
-| -------------- | ------------------------------------- | --------------------------------------------------------------------------------------------- |
-| format         | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`                     |
-| framerate      | `30`                                  | recording framerate                                                                           |
-| bitrate        | `5000`                                | recording bitrate in kbps, only valid for MP4                                                 |
-| quality        | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best), valid for WebM, GIF, JPG, WebP              |
-| width          | canvas width                          | output image width                                                                            |
-| height         | canvas height                         | output image height                                                                           |
-| duration       | `null`                                | maximum recording duration in number of frames                                                |
-| verbose        | `false`                               | dumps info on the console                                                                     |
-| disableUi      | `false`                               | (only `P5Capture.setDefaultOptions()`) hides the UI                                           |
-| disableScaling | `false`                               | (only `P5Capture.setDefaultOptions()`) disables pixel scaling for high pixel density displays |
+| Name             | Default                               | Description                                                                                            |
+| ---------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| format           | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`                              |
+| framerate        | `30`                                  | recording framerate                                                                                    |
+| bitrate          | `5000`                                | recording bitrate in kbps (only available for MP4)                                                     |
+| quality          | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best). (only available for WebM/GIF/JPG/WebP)               |
+| width            | canvas width                          | output image width                                                                                     |
+| height           | canvas height                         | output image height                                                                                    |
+| duration         | `null`                                | maximum recording duration in number of frames                                                         |
+| autoSaveDuration | `null`                                | automatically downloads every n frames. convenient for long captures (only available for PNG/JPG/WebP) |
+| verbose          | `false`                               | dumps info on the console                                                                              |
+| disableUi        | `false`                               | (only `P5Capture.setDefaultOptions()`) hides the UI                                                    |
+| disableScaling   | `false`                               | (only `P5Capture.setDefaultOptions()`) disables pixel scaling for high pixel density displays          |
 
 ### Quality option
 
