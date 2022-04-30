@@ -11,11 +11,11 @@ const defaultOptions = {};
 
 export class Mp4Recorder extends Recorder {
   protected encoder: H264MP4Encoder | null = null;
-  protected margedOptions: Mp4RecorderOptions;
+  protected mergedOptions: Mp4RecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: Mp4RecorderOptions = {}) {
     super(canvas, options);
-    this.margedOptions = {
+    this.mergedOptions = {
       ...defaultOptions,
       ...options,
     };
@@ -27,7 +27,7 @@ export class Mp4Recorder extends Recorder {
     encoder.height = this.canvas.height;
     encoder.outputFilename = getFilename(new Date(), "mp4");
 
-    const { framerate, bitrate } = this.margedOptions;
+    const { framerate, bitrate } = this.mergedOptions;
     if (framerate != null) {
       encoder.frameRate = framerate;
       encoder.groupOfPictures = Math.floor(framerate / 2);

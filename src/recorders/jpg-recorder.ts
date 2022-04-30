@@ -10,17 +10,17 @@ const defaultOptions: JpgRecorderOptions = {
 };
 
 export class JpgRecorder extends ImageRecorder {
-  protected margedOptions: JpgRecorderOptions;
+  protected mergedOptions: JpgRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: JpgRecorderOptions = {}) {
     super(canvas, "jpg", options);
-    this.margedOptions = {
+    this.mergedOptions = {
       ...defaultOptions,
       ...options,
     };
   }
 
   protected get qualityOption() {
-    return this.margedOptions.quality;
+    return this.mergedOptions.quality;
   }
 }

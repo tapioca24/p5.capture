@@ -15,11 +15,11 @@ const defaultOptions: WebmRecorderOptions = {
 
 export class WebmRecorder extends Recorder {
   protected webmWriter: WebMWriter;
-  protected margedOptions: WebmRecorderOptions;
+  protected mergedOptions: WebmRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: WebmRecorderOptions = {}) {
     super(canvas, options);
-    this.margedOptions = {
+    this.mergedOptions = {
       ...defaultOptions,
       ...options,
       webmWriterOptions: {
@@ -28,7 +28,7 @@ export class WebmRecorder extends Recorder {
       },
     };
 
-    this.webmWriter = new WebMWriter(this.margedOptions.webmWriterOptions);
+    this.webmWriter = new WebMWriter(this.mergedOptions.webmWriterOptions);
   }
 
   start() {

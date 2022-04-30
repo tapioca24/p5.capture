@@ -22,17 +22,17 @@ export const calcGifQuality = (quality?: number) => {
 
 export class GifRecorder extends Recorder {
   protected recorder: GIF;
-  protected margedOptions: GifRecorderOptions;
+  protected mergedOptions: GifRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: GifRecorderOptions = {}) {
     super(canvas, options);
-    this.margedOptions = {
+    this.mergedOptions = {
       ...defaultOptions,
       ...options,
     };
 
     const gifOptions: GIF.Options = {
-      quality: calcGifQuality(this.margedOptions.quality),
+      quality: calcGifQuality(this.mergedOptions.quality),
       workers: 4,
       workerScript: getWorkerUrl(GIF_WORKER_SCRIPT_URL),
     };
@@ -62,7 +62,7 @@ export class GifRecorder extends Recorder {
 
     try {
       this.copyCanvas();
-      const fps = this.margedOptions.framerate ?? defaultOptions.framerate;
+      const fps = this.mergedOptions.framerate ?? defaultOptions.framerate;
       this.recorder.addFrame(this.canvas, {
         delay: 1000 / fps,
         copy: true,

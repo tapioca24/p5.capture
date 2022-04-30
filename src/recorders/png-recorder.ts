@@ -6,11 +6,11 @@ export type PngRecorderOptions = RecorderOptions & {};
 const defaultOptions: PngRecorderOptions = {};
 
 export class PngRecorder extends ImageRecorder {
-  protected margedOptions: PngRecorderOptions;
+  protected mergedOptions: PngRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: PngRecorderOptions = {}) {
     super(canvas, "png", options);
-    this.margedOptions = {
+    this.mergedOptions = {
       ...defaultOptions,
       ...options,
     };

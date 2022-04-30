@@ -10,17 +10,17 @@ const defaultOptions: WebpRecorderOptions = {
 };
 
 export class WebpRecorder extends ImageRecorder {
-  protected margedOptions: WebpRecorderOptions;
+  protected mergedOptions: WebpRecorderOptions;
 
   constructor(canvas: HTMLCanvasElement, options: WebpRecorderOptions = {}) {
     super(canvas, "webp", options);
-    this.margedOptions = {
+    this.mergedOptions = {
       ...defaultOptions,
       ...options,
     };
   }
 
   protected get qualityOption() {
-    return this.margedOptions.quality;
+    return this.mergedOptions.quality;
   }
 }

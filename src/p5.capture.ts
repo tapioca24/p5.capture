@@ -44,7 +44,7 @@ export class P5Capture {
   protected updateUi:
     | ((framerate?: number, encodingProgress?: number) => void)
     | null = null;
-  protected margedOptions: P5CaptureGlobalOptions | null = null;
+  protected mergedOptions: P5CaptureGlobalOptions | null = null;
 
   protected static globalOptions: P5CaptureGlobalOptions = {};
   protected static instance: P5Capture | null = null;
@@ -73,7 +73,7 @@ export class P5Capture {
 
   async start(options: P5CaptureOptions = {}) {
     try {
-      this.margeOptions(options);
+      this.mergeOptions(options);
       this.recorder = await this.createRecorder();
       this.recorder.start();
     } catch (e) {
@@ -97,15 +97,15 @@ export class P5Capture {
   }
 
   initialize() {
-    this.margeOptions();
-    if (!this.margedOptions) {
+    this.mergeOptions();
+    if (!this.mergedOptions) {
       throw new Error("options are not set");
     }
 
-    if (!this.margedOptions.disableUi) {
+    if (!this.mergedOptions.disableUi) {
       this.uiState = {
-        format: this.margedOptions.format,
-        framerate: this.margedOptions.framerate,
+        format: this.mergedOptions.format,
+        framerate: this.mergedOptions.framerate,
       };
 
       const onClickRecordButton = (_: MouseEvent) => {
@@ -148,7 +148,7 @@ export class P5Capture {
       };
     }
 
-    if (this.margedOptions.disableScaling) {
+    if (this.mergedOptions.disableScaling) {
       const originalSetup = (window as any).setup as () => void;
       const newSetup = () => {
         pixelDensity(1);
@@ -160,7 +160,7 @@ export class P5Capture {
 
   postDraw() {
     if (this.state === "capturing") {
-      const duration = this.margedOptions?.duration;
+      const duration = this.mergedOptions?.duration;
       const count = this.recorder?.capturedCount;
       if (duration && count && count >= duration) {
         this.stop();
@@ -170,13 +170,13 @@ export class P5Capture {
   }
 
   protected async createRecorder() {
-    if (!this.margedOptions) {
+    if (!this.mergedOptions) {
       throw new Error("options are not set");
     }
 
     const canvas = (window as any).canvas;
     const { format, framerate, bitrate, quality, width, height } =
-      this.margedOptions;
+      this.mergedOptions;
     let recorder;
 
     switch (format) {
@@ -269,8 +269,8 @@ export class P5Capture {
     return recorder;
   }
 
-  protected margeOptions(options: P5CaptureOptions = {}) {
-    this.margedOptions = {
+  protected mergeOptions(options: P5CaptureOptions = {}) {
+    this.mergedOptions = {
       ...defaultOptions,
       ...P5Capture.globalOptions,
       ...this.uiState,
@@ -279,7 +279,7 @@ export class P5Capture {
   }
 
   protected log(message: string) {
-    if (this.margedOptions?.verbose) {
+    if (this.mergedOptions?.verbose) {
       console.log(message);
     }
   }
