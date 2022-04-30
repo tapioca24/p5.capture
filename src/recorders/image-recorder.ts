@@ -4,6 +4,12 @@ import { getDirname, getFilename } from "@/utils";
 
 export type ImageFormat = "png" | "jpg" | "webp";
 
+export type ImageRecorderOptions = RecorderOptions & {
+  autoSaveDuration?: number | null;
+};
+
+const defaultOptions = {};
+
 type Chunk = {
   index: number;
   filename: string;
@@ -12,6 +18,7 @@ type Chunk = {
 
 export class ImageRecorder extends Recorder {
   protected tasks: Promise<Chunk>[] = [];
+  protected mergedOptions: ImageRecorderOptions;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -19,6 +26,10 @@ export class ImageRecorder extends Recorder {
     options: RecorderOptions = {},
   ) {
     super(canvas, options);
+    this.mergedOptions = {
+      ...defaultOptions,
+      ...options,
+    };
   }
 
   start() {
@@ -38,9 +49,19 @@ export class ImageRecorder extends Recorder {
     try {
       switch (this.captureState) {
         case "capturing":
+          const { autoSaveDuration } = this.mergedOptions;
+          if (
+            autoSaveDuration &&
+            this.count > 0 &&
+            this.count % autoSaveDuration === 0
+          ) {
+            this.createSegmentedZip();
+          }
+
           this.copyCanvas();
           const task = this.makeChunk(this.count);
           this.tasks.push(task);
+
           this.increment();
           break;
         case "encoding":
@@ -125,5 +146,18 @@ export class ImageRecorder extends Recorder {
     const blob = new Blob([zip], { type: "application/zip" });
     const filename = getFilename(now, "zip");
     return { blob, filename };
+  }
+
+  protected async createSegmentedZip() {
+    if (!this.tasks.length) {
+      throw new Error("no tasks");
+    }
+
+    const tasks = [...this.tasks];
+    this.tasks = [];
+
+    const chunks = await Promise.all(tasks);
+    const { blob, filename } = this.createZip(chunks);
+    this.emit("segmented", blob, filename);
   }
 }
