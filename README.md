@@ -20,7 +20,7 @@
 <p align="center">
   <a href="#about">About</a> • <a href="#why-p5capture">Why p5.capture?</a> • <a href="#getting-started">Getting started</a> • <a href="#api">API</a>
   <br />
-  <a href="#options">Options</a> • <a href="#browser-compatibility">Browser compatibility</a> • <a href="#limitations">Limitations</a>
+  <a href="#options">Options</a> • <a href="#browser-compatibility">Browser compatibility</a> • <a href="#limitations">Limitations</a> • <a href="#donation">Donation</a>
 </p>
 
 ## About
@@ -222,3 +222,9 @@ The browser versions used for testing are
 ## Limitations
 
 - p5.capture currently only supports [p5.js global mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode)
+
+## Donation
+
+This project is open source and always will be, even if I don't get donations. That said, I know there are people out there that may still want to donate just to show their appreciation so this is for you guys. Thanks in advance!
+
+- [PayPal](https://paypal.me/tapioca24)
