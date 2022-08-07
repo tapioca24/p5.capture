@@ -25,7 +25,7 @@ export class Mp4Recorder extends Recorder {
     const encoder = await createH264MP4Encoder();
     encoder.width = this.canvas.width;
     encoder.height = this.canvas.height;
-    encoder.outputFilename = getFilename(new Date(), "mp4");
+    encoder.outputFilename = "video.mp4";
 
     const { framerate, bitrate } = this.mergedOptions;
     if (framerate != null) {
@@ -71,9 +71,11 @@ export class Mp4Recorder extends Recorder {
             throw new Error("encoder is not found");
           }
           this.encoder.finalize();
-          const filename = this.encoder.outputFilename;
-          const uint8Array = this.encoder.FS.readFile(filename);
+          const uint8Array = this.encoder.FS.readFile(
+            this.encoder.outputFilename,
+          );
           const blob = new Blob([uint8Array], { type: "video/mp4" });
+          const filename = getFilename(new Date(), "mp4");
           this.emit("finished", blob, filename);
           break;
       }
