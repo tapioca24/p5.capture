@@ -1,9 +1,28 @@
+import { omitUndefinedProperty } from "@/utils";
 import { EventEmitter } from "events";
 import { StrictEventEmitter } from "strict-event-emitter-types";
 
 export type RecorderOptions = {
   width?: number;
   height?: number;
+  baseFilename?: (date: Date) => string;
+};
+
+export type RecorderDefaultOptions = Required<
+  Pick<RecorderOptions, "baseFilename">
+>;
+
+export const defaultOptions: RecorderDefaultOptions = {
+  baseFilename(date) {
+    const zeroPadding = (n: number) => n.toString().padStart(2, "0");
+    const years = date.getFullYear();
+    const months = zeroPadding(date.getMonth() + 1);
+    const days = zeroPadding(date.getDate());
+    const hours = zeroPadding(date.getHours());
+    const minutes = zeroPadding(date.getMinutes());
+    const seconds = zeroPadding(date.getSeconds());
+    return `${years}${months}${days}-${hours}${minutes}${seconds}`;
+  },
 };
 
 type RecorderEmitter = StrictEventEmitter<
@@ -27,11 +46,17 @@ export abstract class Recorder extends (EventEmitter as unknown as {
   protected state: CaptureState = "idle";
   protected count = 0;
   protected canvas: HTMLCanvasElement;
+  private mergedOptions: RecorderOptions & RecorderDefaultOptions;
   private originalCanvas: HTMLCanvasElement | null = null;
   private shouldResize: boolean = false;
 
   constructor(canvas: HTMLCanvasElement, options: RecorderOptions = {}) {
     super();
+
+    this.mergedOptions = {
+      ...defaultOptions,
+      ...omitUndefinedProperty(options),
+    };
 
     this.shouldResize = !!(options.width || options.height);
     if (!this.shouldResize) {
@@ -79,6 +104,10 @@ export abstract class Recorder extends (EventEmitter as unknown as {
 
   protected reset() {
     this.count = 0;
+  }
+
+  protected getBaseFilename(date: Date) {
+    return this.mergedOptions.baseFilename(date);
   }
 
   protected copyCanvas() {

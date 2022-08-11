@@ -2,27 +2,36 @@ import {
   ImageRecorder,
   ImageRecorderOptions,
 } from "@/recorders/image-recorder";
+import { omitUndefinedProperty } from "@/utils";
 
-export type JpgRecorderOptions = ImageRecorderOptions & {
+type JpgRecorderOriginalOptions = {
   quality?: number;
 };
 
-const defaultOptions: JpgRecorderOptions = {
+export type JpgRecorderOptions = ImageRecorderOptions &
+  JpgRecorderOriginalOptions;
+
+type JpgRecorderDefaultOptions = Required<
+  Pick<JpgRecorderOriginalOptions, "quality">
+>;
+
+const defaultOptions: JpgRecorderDefaultOptions = {
   quality: 0.92,
 };
 
 export class JpgRecorder extends ImageRecorder {
-  protected mergedOptions: JpgRecorderOptions;
+  private mergedJpgOptions: JpgRecorderOriginalOptions &
+    JpgRecorderDefaultOptions;
 
   constructor(canvas: HTMLCanvasElement, options: JpgRecorderOptions = {}) {
     super(canvas, "jpg", options);
-    this.mergedOptions = {
+    this.mergedJpgOptions = {
       ...defaultOptions,
-      ...options,
+      ...omitUndefinedProperty(options),
     };
   }
 
   protected get qualityOption() {
-    return this.mergedOptions.quality;
+    return this.mergedJpgOptions.quality;
   }
 }

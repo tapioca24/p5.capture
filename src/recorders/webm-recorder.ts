@@ -1,12 +1,18 @@
 import WebMWriter, { WebMWriterOptions } from "webm-writer";
 import { Recorder, RecorderOptions } from "@/recorders/base";
-import { getFilename } from "@/utils";
+import { omitUndefinedProperty } from "@/utils";
 
-export type WebmRecorderOptions = RecorderOptions & {
+type WebmRecorderOriginalOptions = {
   webmWriterOptions?: WebMWriterOptions;
 };
 
-const defaultOptions: WebmRecorderOptions = {
+export type WebmRecorderOptions = RecorderOptions & WebmRecorderOriginalOptions;
+
+type WebmRecorderDefaultOptions = Required<
+  Pick<WebmRecorderOriginalOptions, "webmWriterOptions">
+>;
+
+const defaultOptions: WebmRecorderDefaultOptions = {
   webmWriterOptions: {
     frameRate: 30,
     quality: 0.95,
@@ -15,20 +21,21 @@ const defaultOptions: WebmRecorderOptions = {
 
 export class WebmRecorder extends Recorder {
   protected webmWriter: WebMWriter;
-  protected mergedOptions: WebmRecorderOptions;
+  private mergedWebmOptions: WebmRecorderOriginalOptions &
+    WebmRecorderDefaultOptions;
 
   constructor(canvas: HTMLCanvasElement, options: WebmRecorderOptions = {}) {
     super(canvas, options);
-    this.mergedOptions = {
+    this.mergedWebmOptions = {
       ...defaultOptions,
-      ...options,
+      ...omitUndefinedProperty(options),
       webmWriterOptions: {
         ...defaultOptions.webmWriterOptions,
-        ...options.webmWriterOptions,
+        ...omitUndefinedProperty(options.webmWriterOptions ?? {}),
       },
     };
 
-    this.webmWriter = new WebMWriter(this.mergedOptions.webmWriterOptions);
+    this.webmWriter = new WebMWriter(this.mergedWebmOptions.webmWriterOptions);
   }
 
   start() {
@@ -57,7 +64,7 @@ export class WebmRecorder extends Recorder {
           const blob = await this.webmWriter.complete();
           this.reset();
           if (blob) {
-            const filename = getFilename(new Date(), "webm");
+            const filename = `${this.getBaseFilename(new Date())}.webm`;
             this.emit("finished", blob, filename);
           }
           break;

@@ -21,6 +21,8 @@ export type P5CaptureOptions = {
   height?: number;
   duration?: number | null;
   autoSaveDuration?: number | null;
+  baseFilename?: (date: Date) => string;
+  imageFilename?: (index: number) => string;
   verbose?: boolean;
 };
 
@@ -185,6 +187,8 @@ export class P5Capture {
       width,
       height,
       autoSaveDuration,
+      baseFilename,
+      imageFilename,
     } = this.mergedOptions;
     let recorder;
 
@@ -193,6 +197,7 @@ export class P5Capture {
         const webmRecorderOptions: WebmRecorderOptions = {
           width,
           height,
+          baseFilename,
           webmWriterOptions: {
             frameRate: framerate,
             quality,
@@ -207,6 +212,7 @@ export class P5Capture {
           quality,
           width,
           height,
+          baseFilename,
         };
         recorder = new GifRecorder(canvas, gifRecorderOptions);
         break;
@@ -217,6 +223,7 @@ export class P5Capture {
           bitrate,
           width,
           height,
+          baseFilename,
         };
         recorder = new Mp4Recorder(canvas, mp4RecorderOptions);
         await recorder.initialize();
@@ -227,6 +234,8 @@ export class P5Capture {
           width,
           height,
           autoSaveDuration,
+          baseFilename,
+          imageFilename,
         };
         recorder = new PngRecorder(canvas, pngRecorderOptions);
         break;
@@ -237,6 +246,8 @@ export class P5Capture {
           width,
           height,
           autoSaveDuration,
+          baseFilename,
+          imageFilename,
         };
         recorder = new JpgRecorder(canvas, jpgRecorderOptions);
         break;
@@ -247,6 +258,8 @@ export class P5Capture {
           width,
           height,
           autoSaveDuration,
+          baseFilename,
+          imageFilename,
         };
         recorder = new WebpRecorder(canvas, webpRecorderOptions);
         break;

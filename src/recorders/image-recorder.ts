@@ -1,14 +1,26 @@
 import { ZippableFile, zipSync } from "fflate";
 import { Recorder, RecorderOptions } from "@/recorders/base";
-import { getDirname, getFilename } from "@/utils";
+import { omitUndefinedProperty } from "@/utils";
 
 export type ImageFormat = "png" | "jpg" | "webp";
 
-export type ImageRecorderOptions = RecorderOptions & {
+type ImageRecorderOriginalOptions = {
   autoSaveDuration?: number | null;
+  imageFilename?: (index: number) => string;
 };
 
-const defaultOptions = {};
+export type ImageRecorderOptions = RecorderOptions &
+  ImageRecorderOriginalOptions;
+
+type ImageRecorderDefaultOptions = Required<
+  Pick<ImageRecorderOriginalOptions, "imageFilename">
+>;
+
+export const defaultOptions: ImageRecorderDefaultOptions = {
+  imageFilename(index) {
+    return index.toString().padStart(7, "0");
+  },
+};
 
 type Chunk = {
   index: number;
@@ -18,7 +30,8 @@ type Chunk = {
 
 export class ImageRecorder extends Recorder {
   protected tasks: Promise<Chunk>[] = [];
-  protected mergedOptions: ImageRecorderOptions;
+  private mergedImageOptions: ImageRecorderOriginalOptions &
+    ImageRecorderDefaultOptions;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -26,9 +39,9 @@ export class ImageRecorder extends Recorder {
     options: RecorderOptions = {},
   ) {
     super(canvas, options);
-    this.mergedOptions = {
+    this.mergedImageOptions = {
       ...defaultOptions,
-      ...options,
+      ...omitUndefinedProperty(options),
     };
   }
 
@@ -49,7 +62,7 @@ export class ImageRecorder extends Recorder {
     try {
       switch (this.captureState) {
         case "capturing":
-          const { autoSaveDuration } = this.mergedOptions;
+          const { autoSaveDuration } = this.mergedImageOptions;
           if (
             autoSaveDuration &&
             this.count > 0 &&
@@ -82,6 +95,10 @@ export class ImageRecorder extends Recorder {
   protected reset() {
     super.reset();
     this.tasks = [];
+  }
+
+  protected getImageFilename(index: number) {
+    return this.mergedImageOptions.imageFilename(index);
   }
 
   protected makeMimeType(format: ImageFormat) {
@@ -119,9 +136,7 @@ export class ImageRecorder extends Recorder {
   }
 
   protected async makeChunk(index: number) {
-    const numbering = `${index}`.padStart(7, "0");
-    const filename = `${numbering}.${this.format}`;
-
+    const filename = `${this.getImageFilename(index)}.${this.format}`;
     const blob = await this.makeBlob();
     const arrayBuffer = await blob.arrayBuffer();
     const uint8array = new Uint8Array(arrayBuffer);
@@ -140,11 +155,10 @@ export class ImageRecorder extends Recorder {
         images[chunk.filename] = [chunk.uint8array, { level: 0 }];
       });
 
-    const now = new Date();
-    const dirname = getDirname(now);
+    const dirname = this.getBaseFilename(new Date());
     const zip = zipSync({ [dirname]: images });
     const blob = new Blob([zip], { type: "application/zip" });
-    const filename = getFilename(now, "zip");
+    const filename = `${dirname}.zip`;
     return { blob, filename };
   }
 
