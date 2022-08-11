@@ -1,23 +1,28 @@
 import { createH264MP4Encoder, H264MP4Encoder } from "h264-mp4-encoder";
 import { Recorder, RecorderOptions } from "@/recorders/base";
-import { getFilename } from "@/utils";
+import { omitUndefinedProperty } from "@/utils";
 
-export type Mp4RecorderOptions = RecorderOptions & {
+type Mp4RecorderOriginalOptions = {
   framerate?: number;
   bitrate?: number;
 };
 
-const defaultOptions = {};
+export type Mp4RecorderOptions = RecorderOptions & Mp4RecorderOriginalOptions;
+
+type Mp4RecorderDefaultOptions = {};
+
+const defaultOptions: Mp4RecorderDefaultOptions = {};
 
 export class Mp4Recorder extends Recorder {
   protected encoder: H264MP4Encoder | null = null;
-  protected mergedOptions: Mp4RecorderOptions;
+  private mergedMp4Options: Mp4RecorderOriginalOptions &
+    Mp4RecorderDefaultOptions;
 
   constructor(canvas: HTMLCanvasElement, options: Mp4RecorderOptions = {}) {
     super(canvas, options);
-    this.mergedOptions = {
+    this.mergedMp4Options = {
       ...defaultOptions,
-      ...options,
+      ...omitUndefinedProperty(options),
     };
   }
 
@@ -25,9 +30,9 @@ export class Mp4Recorder extends Recorder {
     const encoder = await createH264MP4Encoder();
     encoder.width = this.canvas.width;
     encoder.height = this.canvas.height;
-    encoder.outputFilename = getFilename(new Date(), "mp4");
+    encoder.outputFilename = "video.mp4";
 
-    const { framerate, bitrate } = this.mergedOptions;
+    const { framerate, bitrate } = this.mergedMp4Options;
     if (framerate != null) {
       encoder.frameRate = framerate;
       encoder.groupOfPictures = Math.floor(framerate / 2);
@@ -71,9 +76,11 @@ export class Mp4Recorder extends Recorder {
             throw new Error("encoder is not found");
           }
           this.encoder.finalize();
-          const filename = this.encoder.outputFilename;
-          const uint8Array = this.encoder.FS.readFile(filename);
+          const uint8Array = this.encoder.FS.readFile(
+            this.encoder.outputFilename,
+          );
           const blob = new Blob([uint8Array], { type: "video/mp4" });
+          const filename = `${this.getBaseFilename(new Date())}.mp4`;
           this.emit("finished", blob, filename);
           break;
       }

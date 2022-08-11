@@ -1,38 +1,49 @@
 import GIF from "gif.js";
 import { Recorder, RecorderOptions } from "@/recorders/base";
-import { getFilename, getWorkerUrl, mathClamp, mathMap } from "@/utils";
+import {
+  getWorkerUrl,
+  mathClamp,
+  mathMap,
+  omitUndefinedProperty,
+} from "@/utils";
 
 const GIF_WORKER_SCRIPT_URL =
   "https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js";
 
-export type GifRecorderOptions = RecorderOptions & {
+type GifRecorderOriginalOptions = {
   framerate?: number;
   quality?: number;
 };
 
-const defaultOptions = {
+export type GifRecorderOptions = RecorderOptions & GifRecorderOriginalOptions;
+
+type GifRecorderDefaultOptions = Required<
+  Pick<GifRecorderOriginalOptions, "framerate" | "quality">
+>;
+
+const defaultOptions: GifRecorderDefaultOptions = {
   framerate: 30,
   quality: 0.7,
 };
 
-export const calcGifQuality = (quality?: number) => {
-  const q = quality ?? defaultOptions.quality;
-  return mathClamp(mathMap(q, 0, 1, 30, 1), 1, 30);
+export const calcGifQuality = (quality: number) => {
+  return mathClamp(mathMap(quality, 0, 1, 30, 1), 1, 30);
 };
 
 export class GifRecorder extends Recorder {
   protected recorder: GIF;
-  protected mergedOptions: GifRecorderOptions;
+  private mergedGifOptions: GifRecorderOriginalOptions &
+    GifRecorderDefaultOptions;
 
   constructor(canvas: HTMLCanvasElement, options: GifRecorderOptions = {}) {
     super(canvas, options);
-    this.mergedOptions = {
+    this.mergedGifOptions = {
       ...defaultOptions,
-      ...options,
+      ...omitUndefinedProperty(options),
     };
 
     const gifOptions: GIF.Options = {
-      quality: calcGifQuality(this.mergedOptions.quality),
+      quality: calcGifQuality(this.mergedGifOptions.quality),
       workers: 4,
       workerScript: getWorkerUrl(GIF_WORKER_SCRIPT_URL),
     };
@@ -62,9 +73,8 @@ export class GifRecorder extends Recorder {
 
     try {
       this.copyCanvas();
-      const fps = this.mergedOptions.framerate ?? defaultOptions.framerate;
       this.recorder.addFrame(this.canvas, {
-        delay: 1000 / fps,
+        delay: 1000 / this.mergedGifOptions.framerate,
         copy: true,
       });
       this.increment();
@@ -78,7 +88,7 @@ export class GifRecorder extends Recorder {
   protected onFinished(blob: Blob) {
     this.state = "idle";
     this.reset();
-    const filename = getFilename(new Date(), "gif");
+    const filename = `${this.getBaseFilename(new Date())}.gif`;
     this.emit("finished", blob, filename);
   }
 

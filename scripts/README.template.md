@@ -171,19 +171,21 @@ function keyPressed() {
 
 ## Options
 
-| Name             | Default                               | Description                                                                                            |
-| ---------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| format           | `"webm"`                              | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`                              |
-| framerate        | `30`                                  | recording framerate                                                                                    |
-| bitrate          | `5000`                                | recording bitrate in kbps (only available for MP4)                                                     |
-| quality          | see [Quality option](#quality-option) | recording quality from `0` (worst) to `1` (best). (only available for WebM/GIF/JPG/WebP)               |
-| width            | canvas width                          | output image width                                                                                     |
-| height           | canvas height                         | output image height                                                                                    |
-| duration         | `null`                                | maximum recording duration in number of frames                                                         |
-| autoSaveDuration | `null`                                | automatically downloads every n frames. convenient for long captures (only available for PNG/JPG/WebP) |
-| verbose          | `false`                               | dumps info on the console                                                                              |
-| disableUi        | `false`                               | (only `P5Capture.setDefaultOptions()`) hides the UI                                                    |
-| disableScaling   | `false`                               | (only `P5Capture.setDefaultOptions()`) disables pixel scaling for high pixel density displays          |
+| Name             | Default                                             | Description                                                                                                              |
+| ---------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| format           | `"webm"`                                            | export format. `"webm"`, `"gif"`, `"mp4"`, `"png"`, `"jpg"`, and `"webp"`                                                |
+| framerate        | `30`                                                | recording framerate                                                                                                      |
+| bitrate          | `5000`                                              | recording bitrate in kbps (only available for MP4)                                                                       |
+| quality          | see [Quality option](#quality-option)               | recording quality from `0` (worst) to `1` (best). (only available for WebM/GIF/JPG/WebP)                                 |
+| width            | canvas width                                        | output image width                                                                                                       |
+| height           | canvas height                                       | output image height                                                                                                      |
+| duration         | `null`                                              | maximum recording duration in number of frames                                                                           |
+| autoSaveDuration | `null`                                              | automatically downloads every n frames. convenient for long captures (only available for PNG/JPG/WebP)                   |
+| baseFilename     | see [Base filename option](#base-filename-option)   | function to customize the filename of a video or zip file. see [Base filename option](#base-filename-option) for details |
+| imageFilename    | see [Image filename option](#image-filename-option) | function to customize the filename of a image file. see [Image filename option](#image-filename-option) for details      |
+| verbose          | `false`                                             | dumps info on the console                                                                                                |
+| disableUi        | `false`                                             | (only `P5Capture.setDefaultOptions()`) hides the UI                                                                      |
+| disableScaling   | `false`                                             | (only `P5Capture.setDefaultOptions()`) disables pixel scaling for high pixel density displays                            |
 
 ### Quality option
 
@@ -195,6 +197,45 @@ The default value of the `quality` option is different for each format.
 | GIF    | `0.7`   |
 | JPG    | `0.92`  |
 | WebP   | `0.8`   |
+
+### Base filename option
+
+You can customize the filename of **a video or zip file** by specifying a function that returns a filename string.
+A [`Date`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) object is passed as the first argument.
+This object indicates the time the encoding was completed and is useful for making the filename unique.
+
+By default, the following function is used to determine the filename.
+
+```js
+function baseFilename(date) {
+  const zeroPadding = (n) => n.toString().padStart(2, "0");
+  const years = date.getFullYear();
+  const months = zeroPadding(date.getMonth() + 1);
+  const days = zeroPadding(date.getDate());
+  const hours = zeroPadding(date.getHours());
+  const minutes = zeroPadding(date.getMinutes());
+  const seconds = zeroPadding(date.getSeconds());
+  return `${years}${months}${days}-${hours}${minutes}${seconds}`;
+};
+```
+
+Note that the extension is automatically assigned and is not included in the return value of the function.
+
+### Image filename option
+
+You can customize the filename of **a image file** by specifying a function that returns a filename string.
+The index of the recording frame is passed as the first argument.
+This is useful for making the filename unique.
+
+By default, the following function is used to determine the filename.
+
+```js
+function imageFilename(index) {
+  return index.toString().padStart(7, "0");
+};
+```
+
+Note that the extension is automatically assigned and is not included in the return value of the function.
 
 ## Browser compatibility
 

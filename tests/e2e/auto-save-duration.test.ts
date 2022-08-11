@@ -1,9 +1,9 @@
 import { Download, expect } from "@playwright/test";
 import { test } from "./fixture";
 import fs from "fs/promises";
+import { IMAGE_FORMATS } from "./helper";
 
 const PAGE_PATH = "/tests/e2e/public/auto-save-duration.html";
-const IMAGE_FORMATS = ["png", "jpg", "webp"];
 
 IMAGE_FORMATS.forEach((format) => {
   test(`download segmented zipped ${format} files`, async ({ page, port }) => {

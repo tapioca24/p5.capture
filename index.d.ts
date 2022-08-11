@@ -10,6 +10,8 @@ export type P5CaptureOptions = {
   height?: number;
   duration?: number | null;
   autoSaveDuration?: number | null;
+  baseFilename?: (date: Date) => string;
+  imageFilename?: (index: number) => string;
   verbose?: boolean;
 };
 
