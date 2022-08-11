@@ -3,18 +3,14 @@ import { test } from "./fixture";
 import fs from "fs/promises";
 import { IMAGE_FORMATS, VIDEO_FORMATS } from "./helper";
 
-const PAGE_PATH = "/tests/e2e/public/index.html";
+const PAGE_PATH = "/tests/e2e/public/base-filename.html";
 const CAPTURE_TIME = 200;
 
-test("display the ui", async ({ page, port }) => {
-  await page.goto(`http://localhost:${port}${PAGE_PATH}`);
-  const container = page.locator(".p5c-container");
-  await expect(container).toBeVisible();
-  await expect(container).toHaveClass(/idle/);
-});
-
 VIDEO_FORMATS.forEach((format) => {
-  test(`download ${format} video`, async ({ page, port }) => {
+  test(`download ${format} video with custom filename`, async ({
+    page,
+    port,
+  }) => {
     await page.goto(`http://localhost:${port}${PAGE_PATH}`);
 
     // Select format
@@ -32,8 +28,7 @@ VIDEO_FORMATS.forEach((format) => {
     ]);
 
     const filename = await download.suggestedFilename();
-    const pattern = new RegExp(`^\\d{8}-\\d{6}\\.${format}$`);
-    expect(filename).toMatch(pattern);
+    expect(filename).toBe(`custom-filename.${format}`);
 
     const path = await download.path();
     expect(path).toBeTruthy();
@@ -44,7 +39,10 @@ VIDEO_FORMATS.forEach((format) => {
 });
 
 IMAGE_FORMATS.forEach((format) => {
-  test(`download zipped ${format} files`, async ({ page, port }) => {
+  test(`download zip file for ${format} with custom filename`, async ({
+    page,
+    port,
+  }) => {
     await page.goto(`http://localhost:${port}${PAGE_PATH}`);
 
     // Select format
@@ -62,8 +60,7 @@ IMAGE_FORMATS.forEach((format) => {
     ]);
 
     const filename = await download.suggestedFilename();
-    const pattern = new RegExp(`^\\d{8}-\\d{6}\\.zip$`);
-    expect(filename).toMatch(pattern);
+    expect(filename).toMatch("custom-filename.zip");
 
     const path = await download.path();
     expect(path).toBeTruthy();
