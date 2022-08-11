@@ -1,27 +1,23 @@
 import { describe, it, expect } from "vitest";
 import * as utils from "@/utils";
 
-describe("#formatDateTime", () => {
-  it("returns a string in the format yyyyMMMdd-HHmmss", () => {
-    const date = new Date(2020, 0, 2, 3, 4, 5);
-    const result = utils.formatDateTime(date);
-    expect(result).toBe("20200102-030405");
+describe("#omitUndefinedProperty", () => {
+  it("returns a object without undefined properties", () => {
+    const obj = {
+      name: "James Bond",
+      age: undefined,
+    };
+    const result = utils.omitUndefinedProperty(obj);
+    expect(result).toStrictEqual({ name: "James Bond" });
   });
-});
 
-describe("#getDirname", () => {
-  it("returns a string in the format yyyyMMMdd-HHmmss", () => {
-    const date = new Date(2020, 0, 2, 3, 4, 5);
-    const result = utils.getDirname(date);
-    expect(result).toBe("20200102-030405");
-  });
-});
-
-describe("#getFilaname", () => {
-  it("returns a string in the format yyyyMMMdd-HHmmss.txt", () => {
-    const date = new Date(2020, 0, 2, 3, 4, 5);
-    const result = utils.getFilename(date, "txt");
-    expect(result).toBe("20200102-030405.txt");
+  it("does not change the object passed", () => {
+    const obj = {
+      name: "James Bond",
+      age: undefined,
+    };
+    utils.omitUndefinedProperty(obj);
+    expect(obj).toStrictEqual({ name: "James Bond", age: undefined });
   });
 });
 
