@@ -1,3 +1,7 @@
+## 1.3.0 (August 11, 2022)
+
+- Support for filename customization (https://github.com/tapioca24/p5.capture/pull/13)
+
 ## 1.2.0 (April 30, 2022)
 
 - Support segmented capture (https://github.com/tapioca24/p5.capture/pull/7)
