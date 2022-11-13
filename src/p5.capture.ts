@@ -24,6 +24,7 @@ export type P5CaptureOptions = {
   baseFilename?: (date: Date) => string;
   imageFilename?: (index: number) => string;
   verbose?: boolean;
+  p5?: any;
 };
 
 export type P5CaptureGlobalOptions = P5CaptureOptions & {
@@ -40,6 +41,7 @@ const defaultOptions: P5CaptureGlobalOptions = {
   verbose: false,
   disableUi: false,
   disableScaling: false,
+  p5: window as any,
 };
 
 export class P5Capture {
@@ -106,6 +108,12 @@ export class P5Capture {
       throw new Error("options are not set");
     }
 
+    const p5 = this.mergedOptions.p5;
+
+    if(document === undefined || document.body === undefined) {
+      console.log("Trying to initialize p5.capture before the body has been loaded. To use p5.capture, p5 should be initialized only within or after <body>.");
+    }
+
     if (!this.mergedOptions.disableUi) {
       this.uiState = {
         format: this.mergedOptions.format,
@@ -153,12 +161,12 @@ export class P5Capture {
     }
 
     if (this.mergedOptions.disableScaling) {
-      const originalSetup = (window as any).setup as () => void;
+      const originalSetup = p5.setup as () => void;
       const newSetup = () => {
-        pixelDensity(1);
+        p5.pixelDensity(1);
         originalSetup();
       };
-      Object.assign(window, { setup: newSetup });
+      Object.assign(p5, { setup: newSetup });
     }
   }
 
@@ -178,7 +186,7 @@ export class P5Capture {
       throw new Error("options are not set");
     }
 
-    const canvas = (window as any).canvas;
+    const canvas = this.mergedOptions.p5.canvas;
     const {
       format,
       framerate,
