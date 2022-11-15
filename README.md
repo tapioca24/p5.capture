@@ -185,6 +185,7 @@ function keyPressed() {
 | autoSaveDuration | `null`                                              | automatically downloads every n frames. convenient for long captures (only available for PNG/JPG/WebP)                   |
 | baseFilename     | see [Base filename option](#base-filename-option)   | function to customize the filename of a video or zip file. see [Base filename option](#base-filename-option) for details |
 | imageFilename    | see [Image filename option](#image-filename-option) | function to customize the filename of a image file. see [Image filename option](#image-filename-option) for details      |
+| beforeDownload   | `undefined`                                         | function called before file download. see [Before download option](#before-download-option) for details                  |
 | verbose          | `false`                                             | dumps info on the console                                                                                                |
 | disableUi        | `false`                                             | (only `P5Capture.setDefaultOptions()`) hides the UI                                                                      |
 | disableScaling   | `false`                                             | (only `P5Capture.setDefaultOptions()`) disables pixel scaling for high pixel density displays                            |
@@ -238,6 +239,32 @@ function imageFilename(index) {
 ```
 
 Note that the extension is automatically assigned and is not included in the return value of the function.
+
+### Before download option
+
+You can interrupt and add your own code before the file download.
+
+```js
+P5Capture.setDefaultOptions({
+  beforeDownload(blob, context, next) {
+    // call your own code to do before file download.
+    console.log(blob.size, context);
+
+    // calling `next` callback will start the file download.
+    // this can be omitted if not needed.
+    next();
+  },
+});
+```
+
+The following arguments are passed:
+
+- `blob`: the generated [Blob](https://developer.mozilla.org/docs/Web/API/Blob) object
+- `context`: provides the context object
+  - `filename`: the filename expected when downloading
+  - `format`: output format
+  - `isSegmented`: true if the `blob` is segmented when using `autoSaveDuration` option
+- `next`: callback function to start the download
 
 ## Browser compatibility
 
