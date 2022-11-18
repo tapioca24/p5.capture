@@ -17,7 +17,6 @@ export type P5CaptureOptions = {
     context: {
       filename: string;
       format: P5CaptureFormat;
-      isSegmented: boolean;
     },
     next: () => void,
   ) => Promise<void> | void;

@@ -263,7 +263,6 @@ The following arguments are passed:
 - `context`: provides the context object
   - `filename`: the filename expected when downloading
   - `format`: output format
-  - `isSegmented`: true if the `blob` is segmented when using `autoSaveDuration` option
 - `next`: callback function to start the download
 
 ## Browser compatibility

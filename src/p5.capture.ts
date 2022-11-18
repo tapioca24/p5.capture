@@ -25,7 +25,7 @@ export type P5CaptureOptions = {
   imageFilename?: (index: number) => string;
   beforeDownload?: (
     blob: Blob,
-    context: { filename: string; format: OutputFormat; isSegmented: boolean },
+    context: { filename: string; format: OutputFormat },
     next: () => void,
   ) => Promise<void> | void;
   verbose?: boolean;
@@ -291,7 +291,7 @@ export class P5Capture {
     recorder.on("finished", (blob, filename) => {
       this.log("✅ done");
       if (beforeDownload) {
-        beforeDownload(blob, { filename, format, isSegmented: false }, () => {
+        beforeDownload(blob, { filename, format }, () => {
           downloadBlob(blob, filename);
         });
       } else {
@@ -302,7 +302,7 @@ export class P5Capture {
     recorder.on("segmented", (blob, filename) => {
       this.log(`💾 save segmented file: ${filename}`);
       if (beforeDownload) {
-        beforeDownload(blob, { filename, format, isSegmented: true }, () => {
+        beforeDownload(blob, { filename, format }, () => {
           downloadBlob(blob, filename);
         });
       } else {
