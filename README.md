@@ -67,7 +67,7 @@ Insert a link to the p5.capture _after_ p5.js in your html file:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.min.js"></script>
 <!-- insert after p5.js -->
-<script src="https://cdn.jsdelivr.net/npm/p5.capture@1.3.0/dist/p5.capture.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5.capture@1.4.0/dist/p5.capture.umd.min.js"></script>
 ```
 
 You can find all versions in the [jsDelivr](https://www.jsdelivr.com/package/npm/p5.capture).
