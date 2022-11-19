@@ -1,3 +1,8 @@
+## 1.4.0 (November 19, 2022)
+
+- Partial support for p5.js instance mode (https://github.com/tapioca24/p5.capture/pull/20)
+- Support for file download interrupt option (https://github.com/tapioca24/p5.capture/pull/19)
+
 ## 1.3.0 (August 11, 2022)
 
 - Support for filename customization (https://github.com/tapioca24/p5.capture/pull/13)
