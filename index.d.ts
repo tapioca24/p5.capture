@@ -12,6 +12,14 @@ export type P5CaptureOptions = {
   autoSaveDuration?: number | null;
   baseFilename?: (date: Date) => string;
   imageFilename?: (index: number) => string;
+  beforeDownload?: (
+    blob: Blob,
+    context: {
+      filename: string;
+      format: P5CaptureFormat;
+    },
+    next: () => void,
+  ) => Promise<void> | void;
   verbose?: boolean;
 };
 

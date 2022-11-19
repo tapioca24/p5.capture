@@ -23,6 +23,11 @@ export type P5CaptureOptions = {
   autoSaveDuration?: number | null;
   baseFilename?: (date: Date) => string;
   imageFilename?: (index: number) => string;
+  beforeDownload?: (
+    blob: Blob,
+    context: { filename: string; format: OutputFormat },
+    next: () => void,
+  ) => Promise<void> | void;
   verbose?: boolean;
 };
 
@@ -189,6 +194,7 @@ export class P5Capture {
       autoSaveDuration,
       baseFilename,
       imageFilename,
+      beforeDownload,
     } = this.mergedOptions;
     let recorder;
 
@@ -284,12 +290,24 @@ export class P5Capture {
     });
     recorder.on("finished", (blob, filename) => {
       this.log("✅ done");
-      downloadBlob(blob, filename);
+      if (beforeDownload) {
+        beforeDownload(blob, { filename, format }, () => {
+          downloadBlob(blob, filename);
+        });
+      } else {
+        downloadBlob(blob, filename);
+      }
       this.updateUi?.(framerate);
     });
     recorder.on("segmented", (blob, filename) => {
       this.log(`💾 save segmented file: ${filename}`);
-      downloadBlob(blob, filename);
+      if (beforeDownload) {
+        beforeDownload(blob, { filename, format }, () => {
+          downloadBlob(blob, filename);
+        });
+      } else {
+        downloadBlob(blob, filename);
+      }
     });
     recorder.on("error", (error) => {
       console.error(error.message);
