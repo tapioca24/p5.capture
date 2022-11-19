@@ -54,6 +54,7 @@ export class P5Capture {
     | ((framerate?: number, encodingProgress?: number) => void)
     | null = null;
   protected mergedOptions: P5CaptureGlobalOptions | null = null;
+  protected p5: any;
 
   protected static globalOptions: P5CaptureGlobalOptions = {};
   protected static instance: P5Capture | null = null;
@@ -105,7 +106,9 @@ export class P5Capture {
     }
   }
 
-  initialize() {
+  initialize(p5: any) {
+    this.p5 = p5;
+
     this.mergeOptions();
     if (!this.mergedOptions) {
       throw new Error("options are not set");
@@ -158,12 +161,7 @@ export class P5Capture {
     }
 
     if (this.mergedOptions.disableScaling) {
-      const originalSetup = (window as any).setup as () => void;
-      const newSetup = () => {
-        pixelDensity(1);
-        originalSetup();
-      };
-      Object.assign(window, { setup: newSetup });
+      this.p5.pixelDensity(1);
     }
   }
 
@@ -183,7 +181,7 @@ export class P5Capture {
       throw new Error("options are not set");
     }
 
-    const canvas = (window as any).canvas;
+    const canvas = this.p5.canvas;
     const {
       format,
       framerate,

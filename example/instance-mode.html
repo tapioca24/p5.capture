@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5"></script>
+    <script src="../dist/p5.capture.umd.js"></script>
+  </head>
+  <body style="margin: 0">
+    <script>
+      P5Capture.setDefaultOptions({
+        format: "webm",
+        framerate: 30,
+        quality: 0.98,
+        verbose: true,
+        disableScaling: true,
+      });
+      const s = (sketch) => {
+        sketch.setup = () => {
+          sketch.createCanvas(480, 480, sketch.WEBGL);
+          sketch.frameRate(30);
+        };
+        sketch.draw = () => {
+          sketch.background(0);
+          sketch.normalMaterial();
+          sketch.rotateX(sketch.frameCount * 0.02);
+          sketch.rotateY(sketch.frameCount * 0.03);
+          sketch.torus(sketch.width * 0.2, sketch.width * 0.1, 64, 64);
+        };
+      };
+      new p5(s);
+    </script>
+  </body>
+</html>
