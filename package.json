@@ -48,11 +48,11 @@
     "@types/gif.js": "^0.2.2",
     "@types/p5": "^1.4.0",
     "@types/prettier": "^2.4.4",
-    "happy-dom": "^2.49.2",
+    "happy-dom": "^8.1.4",
     "prettier": "^2.5.1",
     "strict-event-emitter-types": "^2.0.0",
     "typescript": "^4.5.4",
-    "vite": "^2.8.0",
-    "vitest": "^0.7.7"
+    "vite": "^4.0.4",
+    "vitest": "^0.27.1"
   }
 }
