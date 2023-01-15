@@ -63,7 +63,7 @@ There is sure to be something you want.
 Insert a link to the p5.capture _after_ p5.js in your html file:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5/lib/p5.min.js"></script>
 <!-- insert after p5.js -->
 <script src="https://cdn.jsdelivr.net/npm/p5.capture@{{ version }}/dist/p5.capture.umd.min.js"></script>
 ```
