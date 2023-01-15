@@ -1,3 +1,7 @@
+## 1.4.1 (January 15, 2023)
+
+- Update dependencies (https://github.com/tapioca24/p5.capture/pull/23)
+
 ## 1.4.0 (November 19, 2022)
 
 - Partial support for p5.js instance mode (https://github.com/tapioca24/p5.capture/pull/20)
