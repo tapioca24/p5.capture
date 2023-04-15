@@ -286,7 +286,9 @@ The browser versions used for testing are
 
 ## Limitations
 
-With [p5.js instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode), only one instance can be used. Currently p5.capture does not support multiple instances.
+- Multiple instances is not supported
+  - In [p5.js instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode), only one instance can be used
+- Module bundlers is not supported
 
 ## Donation
 
