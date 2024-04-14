@@ -297,4 +297,4 @@ The browser versions used for testing are
 This project is open source and always will be, even if I don't get donations. That said, I know there are people out there that may still want to donate just to show their appreciation so this is for you guys. All donations will be used for sustainable software development. Thanks in advance!
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J3E5YAN)  
-[Tezos wallet](https://app.tezos.domains/domain/tapioca.tez)
+[Tezos Profile](https://tzprofiles.com/view/mainnet/tz2PAo222y74mShW4wRon24BKaR5HcKhFqY8)
