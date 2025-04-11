@@ -13,15 +13,13 @@ const main = async () => {
 
   let newFile = WARNING_COMMENT;
   newFile += file.replace(/\{\{ version \}\}/g, package.version);
+  const readme = await prettier.format(newFile, {
+    parser: "markdown",
+    printWidth: 100,
+    trailingComma: "all",
+  });
 
-  await fs.writeFile(
-    OUTPUT_FILENAME,
-    prettier.format(newFile, {
-      parser: "markdown",
-      printWidth: 100,
-      trailingComma: "all",
-    }),
-  );
+  await fs.writeFile(OUTPUT_FILENAME, readme);
 };
 
 main();

@@ -30,10 +30,10 @@ describe("#getEncodingProgressStr", () => {
 });
 
 describe("#createUi", () => {
-  it("inserts the UI into the parent element", () => {
+  it("inserts the UI into the parent element", async () => {
     const parent = document.createElement("div");
     ui.createUi(parent, { format: "webm", framerate: 30 });
-    const html = prettier.format(parent.innerHTML, { parser: "html" });
+    const html = await prettier.format(parent.innerHTML, { parser: "html" });
     expect(html).toMatchSnapshot();
   });
 
