@@ -43,7 +43,7 @@
     "webm-writer": "^1.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.19.2",
+    "@playwright/test": "^1.51.1",
     "@types/events": "^3.0.0",
     "@types/gif.js": "^0.2.2",
     "@types/p5": "^1.4.0",
