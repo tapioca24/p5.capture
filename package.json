@@ -46,7 +46,7 @@
     "@playwright/test": "^1.51.1",
     "@types/events": "^3.0.0",
     "@types/gif.js": "^0.2.2",
-    "@types/p5": "^1.4.0",
+    "@types/p5": "^1.7.6",
     "@types/prettier": "^2.4.4",
     "happy-dom": "^8.1.4",
     "prettier": "^2.5.1",
