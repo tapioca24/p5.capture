@@ -47,7 +47,7 @@
     "@types/events": "^3.0.0",
     "@types/gif.js": "^0.2.2",
     "@types/p5": "^1.7.6",
-    "happy-dom": "^8.1.4",
+    "happy-dom": "^17.4.4",
     "prettier": "^3.5.3",
     "strict-event-emitter-types": "^2.0.0",
     "typescript": "^4.5.4",
