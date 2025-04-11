@@ -100,7 +100,8 @@ export class Mp4Recorder extends Recorder {
       return imageData.data;
     }
 
-    const gl = this.canvas.getContext("webgl");
+    const gl =
+      this.canvas.getContext("webgl2") ?? this.canvas.getContext("webgl");
     if (gl) {
       const pixels = new Uint8Array(width * height * 4);
       gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
