@@ -1,3 +1,8 @@
+## 1.5.0 (April 13, 2025)
+
+- Support for WebGL2
+- Update dependencies
+
 ## 1.4.1 (January 15, 2023)
 
 - Update dependencies (https://github.com/tapioca24/p5.capture/pull/23)
