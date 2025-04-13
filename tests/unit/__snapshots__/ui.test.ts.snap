@@ -1,21 +1,21 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`#createUi > inserts the UI into the parent element 1`] = `
-"<div class=\\"p5c-container idle\\">
-  <div class=\\"p5c-options\\">
-    <label for=\\"p5c-format\\">format</label
-    ><select id=\\"p5c-format\\" class=\\"p5c-format\\">
-      <option value=\\"webm\\">WebM</option>
-      <option value=\\"gif\\">GIF</option>
-      <option value=\\"mp4\\">MP4</option>
-      <option value=\\"png\\">PNG</option>
-      <option value=\\"jpg\\">JPG</option>
-      <option value=\\"webp\\">WebP</option></select
-    ><label for=\\"p5c-framerate\\">framerate</label
-    ><input id=\\"p5c-framerate\\" class=\\"p5c-framerate\\" type=\\"number\\" min=\\"1\\" />
+"<div class="p5c-container idle">
+  <div class="p5c-options">
+    <label for="p5c-format">format</label
+    ><select id="p5c-format" class="p5c-format">
+      <option value="webm">WebM</option>
+      <option value="gif">GIF</option>
+      <option value="mp4">MP4</option>
+      <option value="png">PNG</option>
+      <option value="jpg">JPG</option>
+      <option value="webp">WebP</option></select
+    ><label for="p5c-framerate">framerate</label
+    ><input id="p5c-framerate" class="p5c-framerate" type="number" min="1" />
   </div>
-  <div class=\\"p5c-main\\">
-    <button class=\\"p5c-btn\\"></button><span class=\\"p5c-counter\\"></span>
+  <div class="p5c-main">
+    <button class="p5c-btn"></button><span class="p5c-counter"></span>
   </div>
 </div>
 "
