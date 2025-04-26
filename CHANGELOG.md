@@ -1,3 +1,7 @@
+## 1.6.0 (April 26, 2025)
+
+- Support for p5.js v2
+
 ## 1.5.0 (April 13, 2025)
 
 - Support for WebGL2
