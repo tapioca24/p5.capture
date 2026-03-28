@@ -6,27 +6,27 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20.16.0"
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: jdx/mise-action@v2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
       - uses: actions/cache@v4
-        id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
-      - uses: actions/checkout@v4
+            ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Install Playwright
-        run: yarn playwright install --with-deps
+        run: pnpm playwright install --with-deps
       - name: Build
-        run: yarn build
+        run: pnpm build
       - name: Run unit test
-        run: yarn test:unit
+        run: pnpm test:unit
       - name: Run e2e test
-        run: yarn test:e2e:skipbuild --project=chromium
+        run: pnpm test:e2e:skipbuild --project=chromium
