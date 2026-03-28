@@ -1,5 +1,5 @@
 const { resolve } = require("path");
-const { defineConfig } = require("vitest/config");
+const { defineConfig } = require("vite");
 
 module.exports = defineConfig({
   build: {
