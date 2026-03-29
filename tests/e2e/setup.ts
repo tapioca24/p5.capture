@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 
 const build = () => {
   return new Promise((resolve) => {
-    const build = spawn("yarn", ["build"]);
+    const build = spawn("pnpm", ["build"]);
 
     build.stdout.on("data", (data) => {
       console.log(data.toString());
