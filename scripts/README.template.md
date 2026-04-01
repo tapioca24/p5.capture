@@ -217,7 +217,7 @@ function baseFilename(date) {
   const minutes = zeroPadding(date.getMinutes());
   const seconds = zeroPadding(date.getSeconds());
   return `${years}${months}${days}-${hours}${minutes}${seconds}`;
-};
+}
 ```
 
 Note that the extension is automatically assigned and is not included in the return value of the function.
@@ -233,7 +233,7 @@ By default, the following function is used to determine the filename.
 ```js
 function imageFilename(index) {
   return index.toString().padStart(7, "0");
-};
+}
 ```
 
 Note that the extension is automatically assigned and is not included in the return value of the function.
@@ -246,12 +246,12 @@ You can interrupt and add your own code before the file download.
 P5Capture.setDefaultOptions({
   beforeDownload(blob, context, next) {
     // call your own code to do before file download.
-    console.log(blob.size, context)
+    console.log(blob.size, context);
 
     // calling `next` callback will start the file download.
     // this can be omitted if not needed.
-    next()
-  }
+    next();
+  },
 });
 ```
 
