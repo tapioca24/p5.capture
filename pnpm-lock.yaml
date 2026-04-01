@@ -9,50 +9,50 @@ importers:
   .:
     dependencies:
       events:
-        specifier: ^3.3.0
+        specifier: 3.3.0
         version: 3.3.0
       fflate:
-        specifier: ^0.7.3
+        specifier: 0.7.4
         version: 0.7.4
       gif.js:
-        specifier: ^0.2.0
+        specifier: 0.2.0
         version: 0.2.0
       h264-mp4-encoder:
-        specifier: ^1.0.12
+        specifier: 1.0.12
         version: 1.0.12
       webm-writer:
-        specifier: ^1.0.0
+        specifier: 1.0.0
         version: 1.0.0
     devDependencies:
       '@playwright/test':
-        specifier: ^1.51.1
+        specifier: 1.58.2
         version: 1.58.2
       '@types/events':
-        specifier: ^3.0.0
+        specifier: 3.0.3
         version: 3.0.3
       '@types/gif.js':
-        specifier: ^0.2.2
+        specifier: 0.2.5
         version: 0.2.5
       '@types/p5':
-        specifier: ^1.7.6
+        specifier: 1.7.7
         version: 1.7.7
       happy-dom:
-        specifier: ^17.4.4
+        specifier: 17.6.3
         version: 17.6.3
       prettier:
-        specifier: ^3.5.3
+        specifier: 3.8.1
         version: 3.8.1
       strict-event-emitter-types:
-        specifier: ^2.0.0
+        specifier: 2.0.0
         version: 2.0.0
       typescript:
-        specifier: ^4.5.4
+        specifier: 4.9.5
         version: 4.9.5
       vite:
-        specifier: ^4.5.13
+        specifier: 4.5.14
         version: 4.5.14
       vitest:
-        specifier: ^3.1.1
+        specifier: 3.2.4
         version: 3.2.4(happy-dom@17.6.3)
 
 packages:
