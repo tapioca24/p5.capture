@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "events": "3.3.0",
-    "fflate": "0.7.4",
+    "fflate": "0.8.2",
     "gif.js": "0.2.0",
     "h264-mp4-encoder": "1.0.12",
     "webm-writer": "1.0.0"
