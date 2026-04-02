@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pnpm format 2>/dev/null || true",
+            "statusMessage": "フォーマット中..."
+          }
+        ]
+      }
+    ]
+  }
+}
