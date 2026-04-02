@@ -7,7 +7,7 @@
           {
             "type": "command",
             "command": "pnpm format 2>/dev/null || true",
-            "statusMessage": "フォーマット中..."
+            "statusMessage": "Formatting..."
           }
         ]
       }
