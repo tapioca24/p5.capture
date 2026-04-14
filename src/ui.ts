@@ -103,6 +103,11 @@ const createFormatSelector = (parent: HTMLElement) => {
     option.textContent = label;
     select.appendChild(option);
   });
+  
+  // Fix clicking on format selector causing endless drag on container (Safari 26.4)
+  select.addEventListener("mousedown", (e) => {
+    e.stopPropagation();
+  });
 
   return { label, select };
 };
