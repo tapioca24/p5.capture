@@ -1,4 +1,5 @@
 /// <reference types="p5/global" />
+/// <reference types="vite/client" />
 
 type Lifecycles = Record<
   "presetup" | "postsetup" | "predraw" | "postdraw" | "remove",

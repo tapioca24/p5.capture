@@ -1,5 +1,5 @@
 import { CaptureState } from "@/recorders/base";
-import styleStr from "@/style.css";
+import styleStr from "@/style.css?inline";
 import { OutputFormat } from "@/p5.capture";
 
 export const getFrameCountStr = (count: number) => {
