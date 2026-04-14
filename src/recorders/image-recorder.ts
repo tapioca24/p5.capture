@@ -157,7 +157,7 @@ export class ImageRecorder extends Recorder {
 
     const dirname = this.getBaseFilename(new Date());
     const zip = zipSync({ [dirname]: images });
-    const blob = new Blob([zip], { type: "application/zip" });
+    const blob = new Blob([new Uint8Array(zip)], { type: "application/zip" });
     const filename = `${dirname}.zip`;
     return { blob, filename };
   }

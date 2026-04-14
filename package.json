@@ -43,15 +43,15 @@
     "webm-writer": "1.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.58.2",
+    "@playwright/test": "1.59.1",
     "@types/events": "3.0.3",
     "@types/gif.js": "0.2.5",
     "@types/p5": "1.7.7",
-    "happy-dom": "17.6.3",
+    "happy-dom": "20.8.9",
     "prettier": "3.8.1",
     "strict-event-emitter-types": "2.0.0",
-    "typescript": "4.9.5",
-    "vite": "4.5.14",
-    "vitest": "3.2.4"
+    "typescript": "6.0.2",
+    "vite": "8.0.6",
+    "vitest": "4.1.2"
   }
 }

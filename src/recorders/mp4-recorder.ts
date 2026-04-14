@@ -79,7 +79,9 @@ export class Mp4Recorder extends Recorder {
           const uint8Array = this.encoder.FS.readFile(
             this.encoder.outputFilename,
           );
-          const blob = new Blob([uint8Array], { type: "video/mp4" });
+          const blob = new Blob([new Uint8Array(uint8Array)], {
+            type: "video/mp4",
+          });
           const filename = `${this.getBaseFilename(new Date())}.mp4`;
           this.emit("finished", blob, filename);
           break;
