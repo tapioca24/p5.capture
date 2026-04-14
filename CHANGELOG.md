@@ -1,3 +1,11 @@
+## 1.6.1 (April 15, 2026)
+
+- Fix endless dragging on Safari
+- Fix CSS import for Vite 6 compatibility
+- Fix copying Uint8Array into ArrayBuffer before creating Blob
+- Fix deprecated TypeScript 6.0 tsconfig options
+- Update dependencies
+
 ## 1.6.0 (April 26, 2025)
 
 - Support for p5.js v2
