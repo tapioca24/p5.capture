@@ -38,7 +38,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish to npm
-        run: pnpm publish --no-git-checks
+        run: pnpm publish --no-git-checks --ignore-scripts
       - name: Create GitHub Release
         run: |
           VERSION=${GITHUB_REF_NAME#v}
