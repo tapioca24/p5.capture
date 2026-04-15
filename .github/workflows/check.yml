@@ -1,7 +1,9 @@
 name: Check
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - main
+  pull_request:
 
 permissions:
   contents: read
@@ -23,6 +25,8 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Check format
+        run: pnpm format:check
       - name: Install Playwright
         run: pnpm playwright install --with-deps
       - name: Build

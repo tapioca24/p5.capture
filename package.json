@@ -28,6 +28,7 @@
   "scripts": {
     "build": "tsc && vite build",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "setup": "playwright install",
     "prepublishOnly": "pnpm build && pnpm test:unit run && pnpm test:e2e:skipbuild",
     "test:e2e": "playwright test",
