@@ -16,6 +16,7 @@ export type P5CaptureOptions = {
   format?: OutputFormat;
   framerate?: number;
   bitrate?: number;
+  gop?: number;
   quality?: number;
   width?: number;
   height?: number;
@@ -186,6 +187,7 @@ export class P5Capture {
       format,
       framerate,
       bitrate,
+      gop,
       quality,
       width,
       height,
@@ -225,6 +227,7 @@ export class P5Capture {
         const mp4RecorderOptions: Mp4RecorderOptions = {
           framerate,
           bitrate,
+          gop,
           width,
           height,
           baseFilename,

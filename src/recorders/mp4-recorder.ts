@@ -5,6 +5,7 @@ import { omitUndefinedProperty } from "@/utils";
 type Mp4RecorderOriginalOptions = {
   framerate?: number;
   bitrate?: number;
+  gop?: number;
 };
 
 export type Mp4RecorderOptions = RecorderOptions & Mp4RecorderOriginalOptions;
@@ -32,13 +33,17 @@ export class Mp4Recorder extends Recorder {
     encoder.height = this.canvas.height;
     encoder.outputFilename = "video.mp4";
 
-    const { framerate, bitrate } = this.mergedMp4Options;
+    const { framerate, bitrate, gop } = this.mergedMp4Options;
     if (framerate != null) {
       encoder.frameRate = framerate;
-      encoder.groupOfPictures = Math.floor(framerate / 2);
+      // Setting GOP to the framerate will produce an I-Frame every second, which should be a good default setting
+      encoder.groupOfPictures = Math.floor(framerate);
     }
     if (bitrate != null) {
       encoder.kbps = bitrate;
+    }
+    if (gop != null) {
+      encoder.groupOfPictures = Math.floor(gop);
     }
 
     encoder.initialize();
